@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>Gridea</title>
-    <updated>2020-03-13T04:10:03.704Z</updated>
+    <updated>2020-03-13T07:12:50.557Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[2020年美赛总结]]></title>
+        <id>https://besonn.github.io/post/2020-nian-mei-sai-zong-jie/</id>
+        <link href="https://besonn.github.io/post/2020-nian-mei-sai-zong-jie/">
+        </link>
+        <updated>2020-03-13T06:17:35.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[First thing first……]]></title>
         <id>https://besonn.github.io/post/first-thing-first/</id>
