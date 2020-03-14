@@ -1,0 +1,181 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>2020年美赛总结 | 伊维的笔记本</title>
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1584197085354">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="2020年美赛总结 | 伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="美赛结束了好几天了，打算一篇博客总结一下。
+11月份的时候萌生的参见2020年美赛的想法，当时组队的时候还发生了一些波折，好在最后都安顿了下来。
+我作为队里唯一一个学的和计算机相关的专业，理所当然的主要负责编程的任务。matlab我在暑假的..." />
+    <meta name="keywords" content="数学建模" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://besonn.github.io">
+  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1584197085354" alt="">
+  </a>
+  <h1 class="site-title">
+    伊维的笔记本
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              2020年美赛总结
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-13
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://besonn.github.io/bndXaDhsB/" class="post-tag">
+                  # 数学建模
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>美赛结束了好几天了，打算一篇博客总结一下。</p>
+<p>11月份的时候萌生的参见2020年美赛的想法，当时组队的时候还发生了一些波折，好在最后都安顿了下来。</p>
+<p>我作为队里唯一一个学的和计算机相关的专业，理所当然的主要负责编程的任务。matlab我在暑假的时候就有学习，当时就学了点简单的语法，还没有真正的实践。</p>
+<p>于是寒假开始，我最主要的任务就是进一步学习matlab，积累相关算法，还打算再学学python。在寒假里我过了一遍matlab的基础，包括了画图解方程等等的操作。python也是过了相关的语法一遍，学了下matlibplot, numpy, pandas 这些包的用法，拿了一个小项目练手。算法方面，我们准备比赛的时候做B题，这需要用到一些优化类的算法，比如蚁群算法、粒子群算法、模拟退火、遗传算法等等，在这一阶段我也只是简单了解了一下，代码都没来得及准备。</p>
+<p>原本我们是打算2月6号就回到学校开始准备，然而由于疫情的原因，我们没能返校。美赛也因为这个原因将部分比赛定在了一个月后，这也给我们多了一个月的准备时间。比赛之前我们选择2012年的B题作为模拟，那是个类似车道模拟的问题，建模的同学说这个题需要用到元胞自动机，我花了些时间写代码，但效果一直不理想，加上那段时间我一直要出去做志愿服务，所以说实话，那段时间的模拟效果不佳。</p>
+<p>再不久就开学了。美赛的开始时间是周五的早上六点。那天我本来有早课的，但就根本来不及听课了。我们没有考虑去做F题，原来的B题是一道非常复杂的分析题，是如何在海滩上建造一个最持久的沙堡，要受力分析等等等等，我们就直接去做C题了。C题给出亚马逊的三个商品的评论集，需要我们根据这些数据来回答一些问题。</p>
+<p>在我们确定好题目之后，我第一天的任务就是处理一下这些数据。这涉及到多表查询等等，此时我十分后悔重装了系统，自己的MySQL 没法用了，本来使用数据库十分简单的问题，让我又是用excel、python、spss、matlab等等工具才做好了一个图，发现自己是python没学好matlab也没学好....</p>
+<p>第二天第三天，队友的模型逐渐完善，发现要对评论文本做情感分析。于是我开始了自己自然语言处理的极限上手，跳过入门直接实践...套模型调参，一直没做出来结果...最后队友告诉我在github上发现现成的包，可以直接调用。自己写论文时才基本搞懂流程是啥。这个一会再写一篇博客作为我对于机器学习自然语言处理的基本理解吧。</p>
+<p>第四天模型基本确定了，现学了stata做了些回归分析，最后的结果还算正常。还有很多公式要做，可是时间不等人，已经到了最后一天的晚上，自己的matlab太烂了耽误了好多时间。最后一晚通宵写论文，没有来得及把处理好的数据做完，只是把公式写了上去，甚至最后差点没写完，离截止时间只差3分钟的时候才提交，好在还是成功提交了。</p>
+<p>比赛结果要等到四月底才能出。之间队友们的目标是M，在比赛过程中也感觉的队友十分认真，能给出很多质量很高的模型以及建议。但是我感觉自己是掉链子的那一环，无论是画图还是求数据，速度太慢。归其原因在于学的不扎实，或者说没有实践，在实践中寻找不足。这使得自己拖慢了队伍的速度，明显能感觉到很多时候两个队友都是在等自己，等我的数据，等我的结果。对于这道题目来说，最重要的是对数据的处理，而我们大多数情况直接一个方法。我觉得M奖很难，H奖倒是可能性大一些。</p>
+<p>还是同样的问题，后面需要把一些东西学专学精了才可以，这也需要大量的练习和总结，只是流于形式的浏览是肯定不行的。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://besonn.github.io/first-thing-first/">
+              <h3 class="post-title">
+                First thing first……
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
