@@ -1,0 +1,282 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数值分析实验一matlab代码总结 | 伊维的笔记本</title>
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1586221284854">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数值分析实验一matlab代码总结 | 伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="从txt文件中读取每一列数据并画图
+x=linspace(-5,5);
+y=x.^3-x.^2+1;
+plot(x,y,'g+');
+hold on;
+txt=load('E://exp1//zhishu//5.txt');
+x1=txt(..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://besonn.github.io">
+  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1586221284854" alt="">
+  </a>
+  <h1 class="site-title">
+    伊维的笔记本
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              数值分析实验一matlab代码总结
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-04-07
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>从txt文件中读取每一列数据并画图</strong></p>
+<pre><code>x=linspace(-5,5);
+y=x.^3-x.^2+1;
+plot(x,y,'g+');
+hold on;
+txt=load('E://exp1//zhishu//5.txt');
+x1=txt(:,1);// 第一列
+y1=txt(:,2); // 第二列
+%x1=xlsread(&quot;E://11(3).xlsx&quot;,'a1:a201'); // 读取excel文件
+%y1=xlsread(&quot;E://11(3).xlsx&quot;,'b1:b201');
+plot(x1,y1,'DisplayName','r-');
+legend('1/1+x^2','插值结果'); // 图例
+print(gcf,'-dpng','1.png') // 保存路径
+</code></pre>
+<p><strong>计算拉格朗日插值的.m代码</strong></p>
+<pre><code>%lagrane.m
+%拉格朗日插值及其误差估计
+%输入的量:X是n+1个节点(x_i,y_i)(i = 1,2, ... , n+1)横坐标向量，Y是纵坐标向量，
+%x是以向量形式输入的m个插值点，M在[a,b]上满足｜f~(n+1)(x)｜≤M
+%注：f~(n+1)(x)表示f(x)的n+1阶导数
+%输出的量：y为m个插值构成的向量，R是误差限
+function [y, R] = lagrange(X, Y, x, M)
+n = length(X);m = length(x);
+for i = 1:m
+    z = x(i);
+    s = 0.0;
+    for k = 1:n
+        p = 1.0; q1 = 1.0; c1 = 1.0;
+        for j = 1:n
+            if j~=k
+                p = p * (z - X(j)) / (X(k) - X(j));
+            end
+            q1 = abs(q1 * (z - X(j)));
+            c1 = c1 * j;
+        end
+        s = p * Y(k) + s;
+    end
+    y(i) = s;
+    R(i) = M * q1 / c1;
+end
+</code></pre>
+<p><strong>画出不同节点的的拉格朗日插值</strong><br>
+牛顿插值同理</p>
+<pre><code>x = linspace(-10,10,100);
+%M = 1; 
+M=1;
+[yy, R] = lagrange(X_3, Y, x, M);
+[yy1, R1] = lagrange(X_5, Y1, x, M);
+[yy2, R2] = lagrange(X_11, Y2, x, M);
+[yy3, R3] = lagrange(X_21, Y3, x, M);
+%yy=sin(x.*pi./10);
+yy=10;
+hold on
+subplot(2,2,1);
+%errorbar(x,y,R,'.g');
+plot(X_3, Y, 'or', x, y, '.k',X_21, Y3, '-b');
+title('离散点: 3节点');
+subplot(2,2,2);
+%errorbar(x,y1,R1,'.g');
+plot(X_5, Y1, 'or', x, yy1, '.k',X_21, Y3, '-b');
+title('离散点: 5节点');
+subplot(2,2,3);
+%errorbar(x,y2,R2,'.g');
+plot(X_11, Y2, 'or', x, yy2, '.k',X_21, Y3, '-b');
+title('离散点: 11节点');
+subplot(2,2,4);
+%errorbar(x,y3,R3,'.g');
+plot(X_21, Y3, 'or', x, yy3, '.k',X_21, Y3, '-b');
+title('离散点: 21节点');
+
+fig = gcf;
+fig.Position(3) = fig.Position(3) + 350;
+
+
+legend('选择的节点','插值结果','离散点');
+Lgnd = legend('show');
+Lgnd.Position(1) = 0.001;
+Lgnd.Position(2) = 0.75;
+
+print(gcf,'-dpng','ex.png')
+</code></pre>
+<p><strong>计算差商</strong></p>
+<pre><code>function[p,q]=chashang(x,y)
+n=length(x);
+p(:,1)=x;
+p(:,2)=y;
+for j=3:n+1,
+p(1:n+2-j,j)=diff(p(1:n+3-j,j-1))./(x(j-1:n)-x(1:n+2-j));
+end
+q=p(1,2:n+1)';
+</code></pre>
+<p><strong>计算牛顿插值.m</strong></p>
+<pre><code>function [y,R,A,C,L]=newton(X,Y,x,M)
+n=length(X);m=length(x);
+for t=1:m
+    z=x(t);A=zeros(n,n);A(:,1)=Y';% A?第一列存Y的转置
+    s=0.0;p=1.0;q1=1.0;c1=1.0;
+    for j=2:n
+        for i=j:n
+            A(i,j)=(A(i,j-1)-A(i-1,j-1))/(X(i)-X(i-j+1));
+        end
+        q1=abs(q1*(z-X(j-1)));c1=c1*j;
+    end
+    C=A(n,n);q1=abs(q1*(z-X(n)));
+    for k=(n-1):-1:1
+        C=conv(C,poly(X(k));
+        d=length(C);C(d)=C(d)+A(k,k);
+    end
+    y(k)=polyval(C,z);
+end
+R=M*q1/c1;L(k,:)=poly2sym(C);
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://besonn.github.io/shu-zhi-fen-xi-shi-yan-yi-la-ge-lang-ri-cha-zhi-ji-niu-dun-cha-zhi-suan-fa-de-shi-xian/">
+              <h3 class="post-title">
+                数值分析实验一——拉格朗日插值及牛顿插值算法的实现
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

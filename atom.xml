@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>伊维的笔记本</title>
-    <updated>2020-04-06T13:38:59.102Z</updated>
+    <updated>2020-04-07T01:01:30.209Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,126 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 伊维的笔记本</rights>
+    <entry>
+        <title type="html"><![CDATA[数值分析实验一matlab代码总结]]></title>
+        <id>https://besonn.github.io/shu-zhi-fen-xi-shi-yan-yi-matlab-dai-ma-zong-jie/</id>
+        <link href="https://besonn.github.io/shu-zhi-fen-xi-shi-yan-yi-matlab-dai-ma-zong-jie/">
+        </link>
+        <updated>2020-04-07T00:52:30.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>从txt文件中读取每一列数据并画图</strong></p>
+<pre><code>x=linspace(-5,5);
+y=x.^3-x.^2+1;
+plot(x,y,'g+');
+hold on;
+txt=load('E://exp1//zhishu//5.txt');
+x1=txt(:,1);// 第一列
+y1=txt(:,2); // 第二列
+%x1=xlsread(&quot;E://11(3).xlsx&quot;,'a1:a201'); // 读取excel文件
+%y1=xlsread(&quot;E://11(3).xlsx&quot;,'b1:b201');
+plot(x1,y1,'DisplayName','r-');
+legend('1/1+x^2','插值结果'); // 图例
+print(gcf,'-dpng','1.png') // 保存路径
+</code></pre>
+<p><strong>计算拉格朗日插值的.m代码</strong></p>
+<pre><code>%lagrane.m
+%拉格朗日插值及其误差估计
+%输入的量:X是n+1个节点(x_i,y_i)(i = 1,2, ... , n+1)横坐标向量，Y是纵坐标向量，
+%x是以向量形式输入的m个插值点，M在[a,b]上满足｜f~(n+1)(x)｜≤M
+%注：f~(n+1)(x)表示f(x)的n+1阶导数
+%输出的量：y为m个插值构成的向量，R是误差限
+function [y, R] = lagrange(X, Y, x, M)
+n = length(X);m = length(x);
+for i = 1:m
+    z = x(i);
+    s = 0.0;
+    for k = 1:n
+        p = 1.0; q1 = 1.0; c1 = 1.0;
+        for j = 1:n
+            if j~=k
+                p = p * (z - X(j)) / (X(k) - X(j));
+            end
+            q1 = abs(q1 * (z - X(j)));
+            c1 = c1 * j;
+        end
+        s = p * Y(k) + s;
+    end
+    y(i) = s;
+    R(i) = M * q1 / c1;
+end
+</code></pre>
+<p><strong>画出不同节点的的拉格朗日插值</strong><br>
+牛顿插值同理</p>
+<pre><code>x = linspace(-10,10,100);
+%M = 1; 
+M=1;
+[yy, R] = lagrange(X_3, Y, x, M);
+[yy1, R1] = lagrange(X_5, Y1, x, M);
+[yy2, R2] = lagrange(X_11, Y2, x, M);
+[yy3, R3] = lagrange(X_21, Y3, x, M);
+%yy=sin(x.*pi./10);
+yy=10;
+hold on
+subplot(2,2,1);
+%errorbar(x,y,R,'.g');
+plot(X_3, Y, 'or', x, y, '.k',X_21, Y3, '-b');
+title('离散点: 3节点');
+subplot(2,2,2);
+%errorbar(x,y1,R1,'.g');
+plot(X_5, Y1, 'or', x, yy1, '.k',X_21, Y3, '-b');
+title('离散点: 5节点');
+subplot(2,2,3);
+%errorbar(x,y2,R2,'.g');
+plot(X_11, Y2, 'or', x, yy2, '.k',X_21, Y3, '-b');
+title('离散点: 11节点');
+subplot(2,2,4);
+%errorbar(x,y3,R3,'.g');
+plot(X_21, Y3, 'or', x, yy3, '.k',X_21, Y3, '-b');
+title('离散点: 21节点');
+
+fig = gcf;
+fig.Position(3) = fig.Position(3) + 350;
+
+
+legend('选择的节点','插值结果','离散点');
+Lgnd = legend('show');
+Lgnd.Position(1) = 0.001;
+Lgnd.Position(2) = 0.75;
+
+print(gcf,'-dpng','ex.png')
+</code></pre>
+<p><strong>计算差商</strong></p>
+<pre><code>function[p,q]=chashang(x,y)
+n=length(x);
+p(:,1)=x;
+p(:,2)=y;
+for j=3:n+1,
+p(1:n+2-j,j)=diff(p(1:n+3-j,j-1))./(x(j-1:n)-x(1:n+2-j));
+end
+q=p(1,2:n+1)';
+</code></pre>
+<p><strong>计算牛顿插值.m</strong></p>
+<pre><code>function [y,R,A,C,L]=newton(X,Y,x,M)
+n=length(X);m=length(x);
+for t=1:m
+    z=x(t);A=zeros(n,n);A(:,1)=Y';% A?第一列存Y的转置
+    s=0.0;p=1.0;q1=1.0;c1=1.0;
+    for j=2:n
+        for i=j:n
+            A(i,j)=(A(i,j-1)-A(i-1,j-1))/(X(i)-X(i-j+1));
+        end
+        q1=abs(q1*(z-X(j-1)));c1=c1*j;
+    end
+    C=A(n,n);q1=abs(q1*(z-X(n)));
+    for k=(n-1):-1:1
+        C=conv(C,poly(X(k));
+        d=length(C);C(d)=C(d)+A(k,k);
+    end
+    y(k)=polyval(C,z);
+end
+R=M*q1/c1;L(k,:)=poly2sym(C);
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数值分析实验一——拉格朗日插值及牛顿插值算法的实现]]></title>
         <id>https://besonn.github.io/shu-zhi-fen-xi-shi-yan-yi-la-ge-lang-ri-cha-zhi-ji-niu-dun-cha-zhi-suan-fa-de-shi-xian/</id>
