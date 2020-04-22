@@ -1,0 +1,527 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据结构实验二——迷宫的求解 | 伊维的笔记本</title>
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1587556552696">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数据结构实验二——迷宫的求解 | 伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="实验要求和内容
+迷宫只有两个门，一个叫做入口，另一个叫做出口。把一只老鼠从一个无顶盖的大盒子的入口处赶进迷宫。迷宫中设置很多隔壁，对前进方向形成了多处障碍，在迷宫的唯一出口处放置了一块奶酪，吸引老鼠在迷宫中寻找通路以到达出口。求解迷宫问题，..." />
+    <meta name="keywords" content="数据结构" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://besonn.github.io">
+  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1587556552696" alt="">
+  </a>
+  <h1 class="site-title">
+    伊维的笔记本
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              数据结构实验二——迷宫的求解
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-04-20
+              </span>
+              <span>
+                12 min read
+              </span>
+              
+                <a href="https://besonn.github.io/H9FI8--2D/" class="post-tag">
+                  # 数据结构
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="实验要求和内容">实验要求和内容</h3>
+<p>迷宫只有两个门，一个叫做入口，另一个叫做出口。把一只老鼠从一个无顶盖的大盒子的入口处赶进迷宫。迷宫中设置很多隔壁，对前进方向形成了多处障碍，在迷宫的唯一出口处放置了一块奶酪，吸引老鼠在迷宫中寻找通路以到达出口。求解迷宫问题，即找出从入口到出口的路径。</p>
+<h3 id="实验思路">实验思路</h3>
+<p>考虑到迷宫的性质以及我们走迷宫的步骤，我们选择回溯法来寻找通路，选择栈这种数据结构用来保存一条完整的从入口到出口的路线。即从入口出发，按某一方向向前探索，若能走通（未走过的），即某处可以到达，则到达新点，否则试探下一方向 ; 若所有的方向均没有通路，则沿原路返回前一点，换下一个方向再继续试探，直到所有可能的通路都探索到，或找到一条通路，或无路可走又返回到入口点。</p>
+<h3 id="实验内容和实验步骤">实验内容和实验步骤</h3>
+<h4 id="需求分析">需求分析</h4>
+<p>首先我们将迷宫设定为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi><mspace width="1em"/><mo>(</mo><mn>0</mn><mo>&lt;</mo><mi>n</mi><mo>&lt;</mo><mn>100</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">n×n \quad(0&lt;n&lt;100)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:1em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mclose">)</span></span></span></span>个空格组成的矩阵 **（也可以设置成n×m，但个人感觉意义不大）**在程序中，我用一个map[100][100]的数组来储存地图，接着我选择用数字来表示地图：0 代表一个空格，1 代表障碍，2 代表起点，3 代表终点。</p>
+<p>其次，为了满足用户需求，我提供用户自行输入地图，和程序随机生成地图<strong>两种模式</strong>。其中随机生成地图障碍和空格的比例大致为1：10，用户也可以自行调整。</p>
+<p>最后，我们将找到的那一条从起点到终点的通路连同地图打印出来。</p>
+<h4 id="概要设计">概要设计</h4>
+<p>为了表示一个坐标x,y,我们选择使用结构体来存储一个坐标点。为了保存一条完整的路径，我们自定义一个栈来存储。</p>
+<p>定义如下：</p>
+<pre><code>// 结构体表示坐标
+typedef struct {
+int x;
+int y;
+}PointPos;
+
+
+// 栈数据类型的定义
+typedef struct
+{
+PointPos data[StackSize];
+int top;
+}SeqStack;
+
+
+// 定义栈的主要功能
+// 初始化一个栈
+void InitStack(SeqStack &amp;S);
+// 判断栈是否为空
+int StackEmpty(SeqStack S);
+// 判断栈是否为满
+int StackFull(SeqStack S);
+// 压栈
+void push(SeqStack &amp;S, PointPos x);
+// 弹出
+PointPos pop(SeqStack &amp;S);
+// 返回栈顶元素
+PointPos top(SeqStack S);
+</code></pre>
+<p>主程序的流程：请用户选择自行输入还是随机生成地图 -&gt; 确定地图 -&gt; 寻找起点和终点 -&gt; 利用Stack实现深度优先搜索 -&gt; 将结果打印在屏幕上</p>
+<h4 id="详细设计以及代码分析">详细设计以及代码分析</h4>
+<p><strong>用户选择</strong></p>
+<p>为了实现用户选择的功能，我编写了两个函数。</p>
+<pre><code class="language-c">// 用户自行输入函数
+void Choose(int n)
+{
+	printf(&quot;0 代表空格子，1 代表墙壁，2 代表起点，3 代表终点\n&quot;);
+	for (int i = 0; i &lt; n; i++)
+		for (int j = 0; j &lt; n; j++)
+			cin &gt;&gt; map[i][j];
+}
+// 随机生成函数
+void Random(int n)
+{
+	for (int i = 0; i &lt; n; i++)
+		for (int j = 0; j &lt; n; j++)
+		{
+			// 设置空格和障碍的比例为10：1
+			if (rand() % 10 == 1)
+				map[i][j] = 1;
+			else
+				map[i][j] = 0;
+		}
+	// 随机设置起点和终点
+	int a, b, c, d;
+	a = rand() % n;
+	b = rand() % n;
+	c = rand() % n;
+	d = rand() % n;
+	map[a][b] = 2;
+	map[c][d] = 3;
+	printf(&quot;\n随机生成的地图是：\n&quot;);
+	for (int i = 0; i &lt; n; i++)
+	{
+		for (int j = 0; j &lt; n; j++)
+		{
+			printf(&quot;%d &quot;, map[i][j]);
+		}
+		printf(&quot;\n&quot;);
+	}
+}
+</code></pre>
+<p>时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p><strong>寻找起点和终点</strong></p>
+<p>遍历一遍地图，记录下起点和终点</p>
+<pre><code class="language-c">void FindPos(PointPos&amp; start, PointPos&amp; end)
+{
+	// 找到起点和终点坐标
+	int f = 0;
+	SeqStack pointstack;
+	// 初始化栈
+	InitStack(pointstack);
+	for (int i = 0; i &lt; n; i++)
+	{
+		for (int j = 0; j &lt; n; j++)
+		{
+			if (2 == map[i][j])
+			{
+				// 找到起点
+				start.x = i;
+				start.y = j;
+				f = f + 1;
+			}
+			else if (map[i][j] == 3)
+			{
+				// 找到终点
+				end.x = i;
+				end.y = j;
+				f = f + 1;
+			}
+			if (2 == f) break;
+		}
+		if (2 == f) break;
+	}
+}
+</code></pre>
+<p>最坏时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p><strong>利用栈实现深度优先遍历算法</strong></p>
+<p>深度优先搜索（DFS）（栈类实现），可以被形象的描述为“打破沙锅问到底”，具体一点就是访问一个顶点之后，我继续访问它的下一个邻接的顶点，如此往复，直到当前顶点被访问或者它不存在邻接的顶点。</p>
+<p>具体思路如下：先从起点开始，依次寻找上下左右的坐标，如果是障碍就跳过，如果不是障碍就把这个点入栈，并且标记下来，如此往复。与此同时，我给每个遍历过的点增加一定的权值，在相同条件下，优先走权值大的点。如果找不到任何通路，就做一个标记，打印”没有任何通路“。</p>
+<p>在一定条件下，可以保证有<strong>曼哈顿距离的<mark>最优解</mark></strong>。</p>
+<p>具体代码实现</p>
+<pre><code class="language-c">void dfs(PointPos start, PointPos end)
+{
+	// 定义存储栈
+	SeqStack pointstack;
+	InitStack(pointstack);
+	// 标记路径权值，定义点坐标和临时变量
+	int flag = 4;
+	PointPos pointpos, temp;
+	// 将起点坐标入栈，并进入循环搜索
+	int cnt = 0;
+	push(pointstack, start);
+	while (!StackEmpty(pointstack))
+	{
+		cnt = 0;
+		pointpos = top(pointstack);
+		pop(pointstack);
+		// count记录每个坐标点有路径的方向个数
+		int i, j, count = 0;
+		i = pointpos.x;
+		j = pointpos.y;
+		//如果为搜索过的路径，置为权值
+		if (0 == map[i][j]) map[i][j] = flag;
+		// 坐标点上下是否可走
+		if (i &gt;= 0 &amp;&amp; i &lt;= n - 1)
+		{
+			if (i != 0 &amp;&amp; 0 == map[i - 1][j])
+			{
+				temp.x = i - 1;
+				temp.y = j;
+				push(pointstack, temp);
+				++count;
+			}
+			else if (3 == map[i - 1][j] &amp;&amp; i != 0)
+			{
+				cnt++;
+				break;
+			}
+			if (0 == map[i + 1][j] &amp;&amp; i != n - 1)
+			{
+				temp.x = i + 1;
+				temp.y = j;
+				push(pointstack, temp);
+				++count;
+			}
+			else if (3 == map[i + 1][j] &amp;&amp; i != n - 1)
+			{
+				cnt++;
+				break;
+			}
+		}
+		// 坐标点左右是否可走
+		if (j &gt;= 0 &amp;&amp; j &lt;= n - 1)
+		{
+			if (0 == map[i][j - 1] &amp;&amp; j != 0)
+			{
+				temp.x = i;
+				temp.y = j - 1;
+				push(pointstack, temp);
+				++count;
+			}
+			else if (3 == map[i][j - 1] &amp;&amp; j != 0)
+			{
+				cnt++;
+				break;
+			}
+			if (0 == map[i][j + 1] &amp;&amp; j != n - 1)
+			{
+				temp.x = i;
+				temp.y = j + 1;
+				push(pointstack, temp);
+				++count;
+			}
+			else if (3 == map[i][j + 1] &amp;&amp; j != n - 1)
+			{
+				cnt++;
+				break;
+			}
+		}
+		// 关于有多条通路的处理
+		if (1 != count)
+			++flag;
+	}
+	// check=1表示没有通路
+	if (cnt == 0)
+		check = 1;
+}
+</code></pre>
+<p><strong>打印结果</strong></p>
+<p>通过栈已经将可能的路径标记下来了，现在只需要输出就可以。并且如果check=1的话，证明没有通路，可以作为特判条件。</p>
+<p>具体代码实现</p>
+<pre><code class="language-c">void Output(PointPos start)
+{
+	// 特判
+	if (check == 1)
+	{
+		printf(&quot;没有一条合适的路径\n&quot;);
+		return;
+	}
+	// 搜索到达的路径
+	int i, j;
+	int ni = -1; int nj = -1;
+	int max;
+	i = start.x;
+	j = start.y;
+	max = map[i][j];
+	// 如果不是终点
+	while (3 != map[i][j])
+	{
+		// 上下判断
+		if (i &gt;= 0 &amp;&amp; i &lt;= n - 1)
+		{
+			if (map[i - 1][j] &gt; max &amp;&amp; i != 0)
+			{
+				ni = i - 1;
+				nj = j;
+				max = map[i - 1][j];
+			}
+			if (map[i - 1][j] == 3 &amp;&amp; i != 0)
+				break;
+			if (map[i + 1][j] &gt; max&amp;&amp; i != n - 1)
+			{
+				ni = i + 1;
+				nj = j;
+				max = map[i + 1][j];
+			}
+			if (map[i + 1][j] == 3 &amp;&amp; i != n - 1)
+				break;
+		}
+		// 左右判断
+		if (j &gt;= 0 &amp;&amp; j &lt;= n - 1)
+		{
+			if (map[i][j - 1] &gt; max&amp;&amp; j != 0)
+			{
+				ni = i;
+				nj = j - 1;
+				max = map[i][j - 1];
+			}
+			if (map[i][j - 1] == 3 &amp;&amp; j != 0)
+				break;
+			if (map[i][j + 1] &gt; max&amp;&amp; j != n - 1)
+			{
+				ni = i;
+				nj = j + 1;
+				max = map[i][j + 1];
+			}
+			if (3 == map[i][j + 1] &amp;&amp; j != n - 1)
+				break;
+		}
+		// 标记为路径 即 -1
+		if (ni != -1 &amp;&amp; nj != -1)
+			map[ni][nj] = -1;
+		else
+		{
+			//	printf(&quot;没有一条合适的路径\n&quot;);
+			return;
+		}
+		// 设置初始最大值
+		max = 3;
+		// 进入迭代
+		i = ni;
+		j = nj;
+	}
+	// 输出结果
+	for (int i = 0; i &lt; n; i++)
+	{
+		for (int j = 0; j &lt; n; j++)
+		{
+			// 标记为路径
+			if (-1 == map[i][j])
+				cout &lt;&lt; '*' &lt;&lt; ' ';
+			// 恢复原来的值
+			else if (map[i][j] &gt; 3)
+				cout &lt;&lt; 0 &lt;&lt; ' ';
+			else
+				cout &lt;&lt; map[i][j] &lt;&lt; ' ';
+		}
+		cout &lt;&lt; endl;
+	}
+}
+</code></pre>
+<h4 id="调试分析">调试分析</h4>
+<p><strong>调试过程中遇到的问题</strong></p>
+<ol>
+<li>边界条件处理的不好。当i== 0 或者 i==n-1时 需要特殊判断</li>
+<li>一开始无法解决没有通路该如何显示结果。后来想到，当栈为空时还没有访问到终点，证明没有任何一条通路到达终点。这样就能解决这个问题了。</li>
+<li>地图和栈的初始化问题，本来地图初始化是零，但是因为我设置的空格也是0，所以这样就会出现问题。最后我把地图初始化成了-1.</li>
+<li>结果不正确。主要是本来应该存在通路的情况却显示没有。通过我的调试，我发现是因为我在特判时出现了问题。<code>break</code>语句和<code>cnt++</code>语句搞反，导致还没有自增1就退出了循环，debug了很久最终解决。</li>
+</ol>
+<p><strong>算法的时空分析</strong></p>
+<p>根据我的算法，打印地图的时间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。深度优先搜素算法时间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>E</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(E)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mclose">)</span></span></span></span>，也就是所有边的数量，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>×</mo><mo>(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>+</mo><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>=</mo><mn>2</mn><mi>n</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(n-1)\times(2n-1)+(n-1)=2n(n-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，根据我的估算，时间复杂度大致为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。深度优先搜索算法空间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>V</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(V)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mclose">)</span></span></span></span>也就是所有顶点的个数，为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。因此本算法，时空复杂度均为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<h3 id="实验结果">实验结果</h3>
+<p><strong>初始界面</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200418102229622.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>选择用户输入</strong></p>
+<p>需要输入n<br>
+<img src="https://img-blog.csdnimg.cn/20200418102303602.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>输入地图</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200418102349686.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><strong>打印有解情况</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200418102421868.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>若是输入无解</strong></p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200418102453789.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><strong>选择随机生成地图</strong></p>
+<p>保证曼哈顿距离最短<br>
+<img src="https://img-blog.csdnimg.cn/20200418102526100.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
+<h3 id="实验总结">实验总结</h3>
+<ol>
+<li>记得break;要在语句之后，否则还没来得及执行就退出循环了。</li>
+<li>DFS算法也可以用栈实现，但是BFS 算法必须要用到队列这种数据结构。</li>
+<li>在设置地图时要控制好障碍和空格的比例，不然一旦点多了就无法找到结果。</li>
+<li>在无解时，可以通过检查栈为空时是否到达终点来判断。</li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82%E5%92%8C%E5%86%85%E5%AE%B9">实验要求和内容</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%B7%AF">实验思路</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%E5%92%8C%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4">实验内容和实验步骤</a>
+<ul>
+<li><a href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90">需求分析</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81%E8%AE%BE%E8%AE%A1">概要设计</a></li>
+<li><a href="#%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90">详细设计以及代码分析</a></li>
+<li><a href="#%E8%B0%83%E8%AF%95%E5%88%86%E6%9E%90">调试分析</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C">实验结果</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93">实验总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://besonn.github.io/matlabcode/">
+              <h3 class="post-title">
+                数值分析实验一matlab代码总结
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
