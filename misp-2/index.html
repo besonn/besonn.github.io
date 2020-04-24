@@ -1,0 +1,311 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mips学习2 | 伊维的笔记本</title>
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1587696671439">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Mips学习2 | 伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="今天的内容主要是函数和过程调用
+函数
+.text
+	main:
+		jal displayMessage
+		
+		addi $s0,$zero,5
+		
+		# Print number 5 to the screen
+		li $v0,..." />
+    <meta name="keywords" content="计算机组成原理,misp" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://besonn.github.io">
+  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1587696671439" alt="">
+  </a>
+  <h1 class="site-title">
+    伊维的笔记本
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Mips学习2
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-04-24
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://besonn.github.io/SIdbdZbx4/" class="post-tag">
+                  # 计算机组成原理
+                </a>
+              
+                <a href="https://besonn.github.io/SZXiDKbFjj/" class="post-tag">
+                  # misp
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>今天的内容主要是函数和过程调用</p>
+<p><strong>函数</strong></p>
+<pre><code>.text
+	main:
+		jal displayMessage
+		
+		addi $s0,$zero,5
+		
+		# Print number 5 to the screen
+		li $v0,1
+		add $a0,$zero,$s0
+		syscall
+		
+	# Tell the system the program is done
+	li $v0,10 # 看一下Mips手册找一下条件
+	syscall 
+	
+	displayMessage:
+		li $v0,4
+		la $a0,message
+		syscall 
+		jr $ra
+</code></pre>
+<p>调用函数：jal   函数名；<br>
+函数内部中：jr     <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>a</mi><mi mathvariant="normal">跳</mi><mi mathvariant="normal">转</mi><mi mathvariant="normal">回</mi><mi mathvariant="normal">原</mi><mi mathvariant="normal">来</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi></mrow><annotation encoding="application/x-tex">ra 跳转回原来地址
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">跳</span><span class="mord cjk_fallback">转</span><span class="mord cjk_fallback">回</span><span class="mord cjk_fallback">原</span><span class="mord cjk_fallback">来</span><span class="mord cjk_fallback">地</span><span class="mord cjk_fallback">址</span></span></span></span>ra 中用来保存原函数的返回地址</p>
+<p><strong>函数的传参</strong></p>
+<pre><code>.data
+
+.text
+	main:
+		addi $a1,$zero,100
+		addi $a2,$zero,59
+		
+		jal addNumbers
+		
+		li $v0,1
+		add $a0,$zero,$v1
+		syscall
+		
+	# Tell the system that the program is done.
+	li $v0,10
+	syscall
+	
+	addNumbers:
+		add $v1,$a1,$a2
+		jr $ra
+</code></pre>
+<p>函数中的传参：a寄存器可以作为子函数的参数寄存器，一般在main函数里面都是$a0寄存器返回结果。子函数结果返回用v寄存器。</p>
+<p><strong>s寄存器的使用</strong></p>
+<pre><code>.data
+	newLine: .asciiz &quot;\n&quot;
+.text
+	main:
+		addi $s0, $zero, 10
+		jal addNumbers
+	
+		# Print Value
+		li,$v0,4
+		la $a0,newLine
+		syscall
+		li,$v0,1
+		move $a0,$s0
+		syscall
+	
+	# Tell the system the program is done.
+	li $v0,10
+	syscall
+	
+	addNumbers:
+		addi $sp,$sp,-4
+		#sw $t0, 0($sp)
+		
+		addi $s0,$s0,40
+		
+		#Print new value in function
+		
+		li $v0,1
+		move $a0,$s0
+		syscall
+		
+		#lw $t0,0($sp)
+		addi $sp,$sp,4
+		
+		jr $ra
+</code></pre>
+<p>通过s寄存器观察过程调用前后值的变化，s寄存器在传入子函数前后需要保证值是一样的，所以在子函数中，需要用栈帧sp来保存一下s寄存器中的值，在结束之后，将栈帧中保存的值返回到s当中去.</p>
+<p>进入子函数需要拓展一下存放参数地址的空间。</p>
+<p>与其相对的，t寄存器的值可以任意使用，只不过这样就不能保证里面存放的值是否是之前的了。</p>
+<p><strong>函数的嵌套</strong></p>
+<pre><code>.data
+	newLine: .asciiz &quot;\n&quot;
+.text
+	main:
+		addi $s0, $zero, 10
+		jal addNumbers
+		li,$v0,4
+		la $a0,newLine
+		syscall
+		# Print Value
+		jal printValue
+	
+	# Tell the system the program is done.
+	li $v0,10
+	syscall
+	
+	addNumbers:
+		addi $sp,$sp,-8
+		sw $s0, 0($sp)
+		sw $ra, 4($sp)
+		
+		addi $s0,$s0,40
+		
+		#Print new value in function
+		jal printValue
+		
+		lw $s0,0($sp)
+		lw $ra,4($sp)
+		addi $sp,$sp,8
+		
+		jr $ra
+	printValue:
+		li,$v0,1
+		move $a0,$s0
+		syscall
+		
+		jr $ra
+</code></pre>
+<p>函数的嵌套需要注意一点：被嵌套的子函数需要将其返回地址一样的保存到其上一级函数的栈帧当中，因此调用函数需要增加4个空间的值。<code>addi $sp,$sp,-8</code> 然后再保存返回地址到栈帧当中去，<code>sw $ra, 4($sp)</code></p>
+<p>最后不要忘记了释放掉栈帧中的空间。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://besonn.github.io/misp-1/">
+              <h3 class="post-title">
+                Misp学习1
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

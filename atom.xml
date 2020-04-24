@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>伊维的笔记本</title>
-    <updated>2020-04-24T01:31:31.253Z</updated>
+    <updated>2020-04-24T02:51:17.232Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,175 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 伊维的笔记本</rights>
+    <entry>
+        <title type="html"><![CDATA[CUDA学习1]]></title>
+        <id>https://besonn.github.io/cuda-1/</id>
+        <link href="https://besonn.github.io/cuda-1/">
+        </link>
+        <updated>2020-04-24T02:38:30.000Z</updated>
+        <content type="html"><![CDATA[<p>写在前面，这一部分主要是CPU、GPU的体系结构和GPU的编程模型，我对这一部分的理解还不是很充分，所以先占个坑，后面的时候再加以补充。</p>
+<p>第一个问题：为什么用GPU进行大型计算不用CPU进行呢？</p>
+<p>简单来说，CPU中除了有一些计算单元之外，还有许多其他的存储单元，计算单元的数量十分有限。然而GPU中的计算单元非常的多，可以用来加速计算，十分的方便，也很快。</p>
+<p>第二个问题：一些基本的软硬件概念。</p>
+<ol>
+<li>
+<p>线程<br>
+线程可以看作一个问题，一个for循环就可以看成是一个线程。</p>
+</li>
+<li>
+<p>线程块<br>
+顾名思义就是许多线程组成的一个模块（blocks）</p>
+</li>
+<li>
+<p>Kernel （核）<br>
+一个Kernel包含许多的线程块</p>
+</li>
+<li>
+<p>Shared Memory（SM）<br>
+SM中存放许多的Kernel。</p>
+</li>
+</ol>
+<p>前面3个的属于软件范畴，后面的SM之后的内容都属于硬件的范畴。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mips学习2]]></title>
+        <id>https://besonn.github.io/misp-2/</id>
+        <link href="https://besonn.github.io/misp-2/">
+        </link>
+        <updated>2020-04-24T01:28:35.000Z</updated>
+        <content type="html"><![CDATA[<p>今天的内容主要是函数和过程调用</p>
+<p><strong>函数</strong></p>
+<pre><code>.text
+	main:
+		jal displayMessage
+		
+		addi $s0,$zero,5
+		
+		# Print number 5 to the screen
+		li $v0,1
+		add $a0,$zero,$s0
+		syscall
+		
+	# Tell the system the program is done
+	li $v0,10 # 看一下Mips手册找一下条件
+	syscall 
+	
+	displayMessage:
+		li $v0,4
+		la $a0,message
+		syscall 
+		jr $ra
+</code></pre>
+<p>调用函数：jal   函数名；<br>
+函数内部中：jr     <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>a</mi><mi mathvariant="normal">跳</mi><mi mathvariant="normal">转</mi><mi mathvariant="normal">回</mi><mi mathvariant="normal">原</mi><mi mathvariant="normal">来</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi></mrow><annotation encoding="application/x-tex">ra 跳转回原来地址
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">跳</span><span class="mord cjk_fallback">转</span><span class="mord cjk_fallback">回</span><span class="mord cjk_fallback">原</span><span class="mord cjk_fallback">来</span><span class="mord cjk_fallback">地</span><span class="mord cjk_fallback">址</span></span></span></span>ra 中用来保存原函数的返回地址</p>
+<p><strong>函数的传参</strong></p>
+<pre><code>.data
+
+.text
+	main:
+		addi $a1,$zero,100
+		addi $a2,$zero,59
+		
+		jal addNumbers
+		
+		li $v0,1
+		add $a0,$zero,$v1
+		syscall
+		
+	# Tell the system that the program is done.
+	li $v0,10
+	syscall
+	
+	addNumbers:
+		add $v1,$a1,$a2
+		jr $ra
+</code></pre>
+<p>函数中的传参：a寄存器可以作为子函数的参数寄存器，一般在main函数里面都是$a0寄存器返回结果。子函数结果返回用v寄存器。</p>
+<p><strong>s寄存器的使用</strong></p>
+<pre><code>.data
+	newLine: .asciiz &quot;\n&quot;
+.text
+	main:
+		addi $s0, $zero, 10
+		jal addNumbers
+	
+		# Print Value
+		li,$v0,4
+		la $a0,newLine
+		syscall
+		li,$v0,1
+		move $a0,$s0
+		syscall
+	
+	# Tell the system the program is done.
+	li $v0,10
+	syscall
+	
+	addNumbers:
+		addi $sp,$sp,-4
+		#sw $t0, 0($sp)
+		
+		addi $s0,$s0,40
+		
+		#Print new value in function
+		
+		li $v0,1
+		move $a0,$s0
+		syscall
+		
+		#lw $t0,0($sp)
+		addi $sp,$sp,4
+		
+		jr $ra
+</code></pre>
+<p>通过s寄存器观察过程调用前后值的变化，s寄存器在传入子函数前后需要保证值是一样的，所以在子函数中，需要用栈帧sp来保存一下s寄存器中的值，在结束之后，将栈帧中保存的值返回到s当中去.</p>
+<p>进入子函数需要拓展一下存放参数地址的空间。</p>
+<p>与其相对的，t寄存器的值可以任意使用，只不过这样就不能保证里面存放的值是否是之前的了。</p>
+<p><strong>函数的嵌套</strong></p>
+<pre><code>.data
+	newLine: .asciiz &quot;\n&quot;
+.text
+	main:
+		addi $s0, $zero, 10
+		jal addNumbers
+		li,$v0,4
+		la $a0,newLine
+		syscall
+		# Print Value
+		jal printValue
+	
+	# Tell the system the program is done.
+	li $v0,10
+	syscall
+	
+	addNumbers:
+		addi $sp,$sp,-8
+		sw $s0, 0($sp)
+		sw $ra, 4($sp)
+		
+		addi $s0,$s0,40
+		
+		#Print new value in function
+		jal printValue
+		
+		lw $s0,0($sp)
+		lw $ra,4($sp)
+		addi $sp,$sp,8
+		
+		jr $ra
+	printValue:
+		li,$v0,1
+		move $a0,$s0
+		syscall
+		
+		jr $ra
+</code></pre>
+<p>函数的嵌套需要注意一点：被嵌套的子函数需要将其返回地址一样的保存到其上一级函数的栈帧当中，因此调用函数需要增加4个空间的值。<code>addi $sp,$sp,-8</code> 然后再保存返回地址到栈帧当中去，<code>sw $ra, 4($sp)</code></p>
+<p>最后不要忘记了释放掉栈帧中的空间。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Misp学习1]]></title>
         <id>https://besonn.github.io/misp-1/</id>
@@ -1372,16 +1541,6 @@ Polynomial p1, p2;
 <p>第四天模型基本确定了，现学了stata做了些回归分析，最后的结果还算正常。还有很多公式要做，可是时间不等人，已经到了最后一天的晚上，自己的matlab太烂了耽误了好多时间。最后一晚通宵写论文，没有来得及把处理好的数据做完，只是把公式写了上去，甚至最后差点没写完，离截止时间只差3分钟的时候才提交，好在还是成功提交了。</p>
 <p>比赛结果要等到四月底才能出。之间队友们的目标是M，在比赛过程中也感觉的队友十分认真，能给出很多质量很高的模型以及建议。但是我感觉自己是掉链子的那一环，无论是画图还是求数据，速度太慢。归其原因在于学的不扎实，或者说没有实践，在实践中寻找不足。这使得自己拖慢了队伍的速度，明显能感觉到很多时候两个队友都是在等自己，等我的数据，等我的结果。对于这道题目来说，最重要的是对数据的处理，而我们大多数情况直接一个方法。我觉得M奖很难，H奖倒是可能性大一些。</p>
 <p>还是同样的问题，后面需要把一些东西学专学精了才可以，这也需要大量的练习和总结，只是流于形式的浏览是肯定不行的。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[First thing first……]]></title>
-        <id>https://besonn.github.io/first-thing-first/</id>
-        <link href="https://besonn.github.io/first-thing-first/">
-        </link>
-        <updated>2020-03-13T04:04:21.000Z</updated>
-        <content type="html"><![CDATA[<p>Okk……github pages 搞定，就打算用这个网站写技术型的的博客了，对markdown友好，还能同步到github。懒得把原来csdn和wordpress搭的网站上的资料转移过来了（也没有多少……</p>
-<p>后面再慢慢更新吧！</p>
 ]]></content>
     </entry>
 </feed>
