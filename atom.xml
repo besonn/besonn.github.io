@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>伊维的笔记本</title>
-    <updated>2020-04-22T12:35:38.439Z</updated>
+    <updated>2020-04-24T01:31:31.253Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -16,79 +16,6 @@
         <link href="https://besonn.github.io/misp-1/">
         </link>
         <updated>2020-04-22T11:58:48.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>先叨叨两句：最近这个更博速度不行……每天就学了这么些东西再不总结下到头来全忘了。打算每天简单总结一下，过几天整理成一篇博客。就这样吧。</p>
-</blockquote>
-<p>OK...今天算是正式开始学Misp的第一天，有了上学期x86的基础，感觉上手还挺快的。今天主要总结基本语句啥的。u1s1这个Mars简直太好用了……比起上学期那什么dosbox简直不要好太多，dosbox与Mars之间的差距估计就象dos和Win10吧hhhhh......</p>
-<p>多说一句，一开始我的Mars程序本身的字体很小，没有找到地方改。后来谷歌搜了下，需要首先找到javaw.exe文件（注意是Jre下的！！！！不是Jdk的！！！）。右键属性-&gt;兼容性-&gt;改一下高DPI设置-&gt;选择系统（增强）。然后再重启应用就好了 : )</p>
-<p>简单说程序分成两块，.data和.text，前者放存储器中的数据，后者对寄存器进行操作。</p>
-<p>直接放代码</p>
-<p><strong>打印字符串</strong></p>
-<pre><code># 注释用# 类似Python
-# 打印字符串
-.data
-    myMessage: .asciiz &quot;Hello World&quot;
-    myInt : .word 6 # 保存数字
-.text
-    li $v0,4
-    # li $v1,1
-    la $a0,myMessage
-    # lw #$a1, myInt
-# 结果打印出&quot;Hello World&quot; / 6
-</code></pre>
-<p>v0,v1 是用来存放一个子程序(函数)的非浮点 运算的结果或返回值。如果这两个寄存器不够存放 需要返回的值，编译器将会通过内存来完成。<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mn>0</mn><mo>−</mo><mi>a</mi><mn>3</mn><mo>:</mo><mi mathvariant="normal">用</mi><mi mathvariant="normal">来</mi><mi mathvariant="normal">传</mi><mi mathvariant="normal">递</mi><mi mathvariant="normal">子</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">前</mi><mn>4</mn><mi mathvariant="normal">个</mi><mi mathvariant="normal">非</mi><mi mathvariant="normal">浮</mi><mi mathvariant="normal">点</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mo>∗</mo><mo>∗</mo><mi mathvariant="normal">保</mi><mi mathvariant="normal">存</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mo>∗</mo><mo>∗</mo></mrow><annotation encoding="application/x-tex">a0-a3 : 用来传递子函数调用时前4个非 浮点参数。**保存参数**
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">来</span><span class="mord cjk_fallback">传</span><span class="mord cjk_fallback">递</span><span class="mord cjk_fallback">子</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">前</span><span class="mord">4</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">非</span><span class="mord cjk_fallback">浮</span><span class="mord cjk_fallback">点</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span><span class="mord cjk_fallback">保</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span></span></span></span>t0-t9 : 依照约定，一个子函数可以不用保 存并随便的使用这些寄存器。 <strong>临时变量</strong><br>
-$s0-s8:依照约定 z子函数必须保证当函数返回时这些寄存器的内 容必须恢复到函数调用以前的值， z或者在子函数里不用这些寄存器或把它们保存 在堆栈上并在函数退出时恢复。 <strong>适合保存寄存器的值，对寄存器的操作</strong></p>
-<p>la: load address    lw: load words      sw: save words 对存储器的操作</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mn>0</mn><mo>−</mo></mrow><annotation encoding="application/x-tex">f0-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord">0</span><span class="mord">−</span></span></span></span>f31用来保存浮点运算的值</p>
-<p><strong>实现整数加减</strong></p>
-<pre><code>.data 
-	
-.text
-    # 把立即数中的值保存到临时变量中
-	addi $t0,$zero,2000
-	addi $t1,$zero,10
-    # 打印到屏幕上去
-    li $v0,1
-	add $a0, $zero, $s0
-	add $a1,$zero,$s1
-	syscall
-</code></pre>
-<p><strong>乘运算</strong></p>
-<pre><code>.data 
-	
-.text
-    addi $t0,$zero,2000
-	addi $t1,$zero,10
-    mult $t0,$t1
-	mul $t2,$t1,$t2
-	
-	mflo $s0
-	mfhi $s1
-    li $v0,1
-	add $a0, $zero, $s0
-	add $a1,$zero,$s1
-    syscall
-</code></pre>
-<p>mult 两个参数，高位低位分别保存到hi 和 lo 里面，分别用mfhi 和 mflo 获取。（move from high/low）</p>
-<pre><code>.data 
-	
-.text
-    addi $t0,$zero,2000
-	addi $t1,$zero,10
-    div $t0,$t1
-	# div $t2,$t1,$t2
-	
-	mflo $s0
-	mfhi $s1
-    li $v0,1
-	add $a0, $zero, $s0
-	add $a1,$zero,$s1
-    syscall
-</code></pre>
-<p>div 比较特殊，lo中存商，hi中存余数，也是分别获取。</p>
-]]></summary>
         <content type="html"><![CDATA[<blockquote>
 <p>先叨叨两句：最近这个更博速度不行……每天就学了这么些东西再不总结下到头来全忘了。打算每天简单总结一下，过几天整理成一篇博客。就这样吧。</p>
 </blockquote>
@@ -107,12 +34,12 @@ $s0-s8:依照约定 z子函数必须保证当函数返回时这些寄存器的�
     # li $v1,1
     la $a0,myMessage
     # lw #$a1, myInt
-# 结果打印出&quot;Hello World&quot; / 6
+# 结果打印出&quot;Hello World&quot; 
 </code></pre>
-<p>v0,v1 是用来存放一个子程序(函数)的非浮点 运算的结果或返回值。如果这两个寄存器不够存放 需要返回的值，编译器将会通过内存来完成。<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mn>0</mn><mo>−</mo><mi>a</mi><mn>3</mn><mo>:</mo><mi mathvariant="normal">用</mi><mi mathvariant="normal">来</mi><mi mathvariant="normal">传</mi><mi mathvariant="normal">递</mi><mi mathvariant="normal">子</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">前</mi><mn>4</mn><mi mathvariant="normal">个</mi><mi mathvariant="normal">非</mi><mi mathvariant="normal">浮</mi><mi mathvariant="normal">点</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mo>∗</mo><mo>∗</mo><mi mathvariant="normal">保</mi><mi mathvariant="normal">存</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mo>∗</mo><mo>∗</mo></mrow><annotation encoding="application/x-tex">a0-a3 : 用来传递子函数调用时前4个非 浮点参数。**保存参数**
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">来</span><span class="mord cjk_fallback">传</span><span class="mord cjk_fallback">递</span><span class="mord cjk_fallback">子</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">前</span><span class="mord">4</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">非</span><span class="mord cjk_fallback">浮</span><span class="mord cjk_fallback">点</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span><span class="mord cjk_fallback">保</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span></span></span></span>t0-t9 : 依照约定，一个子函数可以不用保 存并随便的使用这些寄存器。 <strong>临时变量</strong><br>
-$s0-s8:依照约定 z子函数必须保证当函数返回时这些寄存器的内 容必须恢复到函数调用以前的值， z或者在子函数里不用这些寄存器或把它们保存 在堆栈上并在函数退出时恢复。 <strong>适合保存寄存器的值，对寄存器的操作</strong></p>
+<p>v0,v1 是用来存放一个子程序(函数)的非浮点 运算的结果或返回值。如果这两个寄存器不够存放 需要返回的值，编译器将会通过内存来完成。</p>
+<p>$a0-a3 : 用来传递子函数调用时前4个非 浮点参数。<strong>保存参数</strong></p>
+<p>$t0-t9 : 依照约定，一个子函数可以不用保 存并随便的使用这些寄存器。 <strong>临时变量</strong></p>
+<p>$s0-s8:依照约定 子函数必须保证当函数返回时这些寄存器的内 容必须恢复到函数调用以前的值， 或者在子函数里不用这些寄存器或把它们保存 在堆栈上并在函数退出时恢复。 <strong>适合保存寄存器的值，对寄存器的操作</strong></p>
 <p>la: load address    lw: load words      sw: save words 对存储器的操作</p>
 <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mn>0</mn><mo>−</mo></mrow><annotation encoding="application/x-tex">f0-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord">0</span><span class="mord">−</span></span></span></span>f31用来保存浮点运算的值</p>
 <p><strong>实现整数加减</strong></p>
@@ -161,8 +88,6 @@ $s0-s8:依照约定 z子函数必须保证当函数返回时这些寄存器的�
     syscall
 </code></pre>
 <p>div 比较特殊，lo中存商，hi中存余数，也是分别获取。</p>
-<!-- more -->
-<!-- more -->
 ]]></content>
     </entry>
     <entry>
