@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>伊维的笔记本</title>
-    <updated>2020-05-15T03:57:42.571Z</updated>
+    <updated>2020-06-24T02:02:31.410Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,729 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 伊维的笔记本</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构实验四]]></title>
+        <id>https://besonn.github.io/data-structure-lab4/</id>
+        <link href="https://besonn.github.io/data-structure-lab4/">
+        </link>
+        <updated>2020-06-24T01:57:36.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="实验题目校园导游咨询">实验题目：校园导游咨询</h1>
+<h2 id="实验目的">实验目的</h2>
+<p>掌握图的存储方法和最短路经算法。</p>
+<h2 id="实验内容">实验内容</h2>
+<p>设计一个校园导游程序，为来访客人提供各种信息查询服务。测试数据根据实际情况指定。提示：一般情况下，校园的道路是双向通行的，可设校园平面图是一个无向图。顶点和边均含有相关信息。</p>
+<h2 id="实验要求">实验要求</h2>
+<ol>
+<li>设计所在学校的校园平面图，所含景点不少于10个。以图中顶点表示校内各景点，存放景点名称、代号、简介等信息；以边表示路径，存放路径长度等相关信息。   2. 为来访客人提供图中任意景点相关信息的查询。</li>
+<li>为来访客人提供图中任意景点的纹路查询，即查询任意两个景点之间的一条最短的简单路径。</li>
+</ol>
+<h2 id="实验内容-2">实验内容</h2>
+<h3 id="需求分析">需求分析</h3>
+<p>为了能够更好的展现学校的信息，表示学校内部各个景点的信息和路径信息。我设计了一个校内咨询网页，这个网页内部包括学校的地图，12个景点的信息，还有每两个景点之间的最短路径。</p>
+<p><strong>学校地图</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193330878.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>输入信息</strong></p>
+<ol>
+<li>景点介绍<br>
+当用户需要了解景点信息时，需要点击了解景点的单选框。</li>
+<li>最短路径<br>
+当用户想要访问两个顶点的最短路径时，需要输入（选择）起点和终点。</li>
+</ol>
+<p><strong>输出信息</strong></p>
+<ol>
+<li>景点介绍<br>
+用户选中后，页面显示景点的图片和介绍。</li>
+<li>最短路径<br>
+用户选择了起点和终点之后，在页面上输出最短路径信息。</li>
+</ol>
+<h3 id="概要设计">概要设计</h3>
+<p><strong>信息存储</strong><br>
+我们的信息存储主要有两个部分：景点信息和路径信息。</p>
+<ol>
+<li>景点信息<br>
+为了使得网页上的访问更加方便，我们不能用一般的数组或结构体来存储景点的信息。这里我选择的XML结构来保存景点信息。里面有景点的名称、介绍等等。<br>
+<img src="https://img-blog.csdnimg.cn/20200617192913426.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></li>
+<li>路径信息<br>
+为了保存路径，我将景点和景点之间的边保存在了一个邻接矩阵里面。</li>
+</ol>
+<p><strong>最短路径的算法</strong><br>
+由于本次设计需要用户输入起点和终点，也是就是说需要求任意两点之间的最短路径。所以我们使用Floyd算法来求任意两点之间的最短路径。</p>
+<h3 id="详细设计">详细设计</h3>
+<p>为了侧重重点，我在实验报告里不再展示网页设计相关的代码，只展示算法的代码部分。</p>
+<p><strong>邻接矩阵</strong></p>
+<pre><code class="language-csharp">static int inf = 0x3f3f3f;
+        public int[,] Arr = new int[12, 12] {
+            { 0, inf,inf,inf,inf,inf, 1,inf,inf,inf,inf,inf },
+            { inf, 0, 1 ,inf,inf,inf, 1,inf,inf,inf,inf,inf },
+            { inf, 1,0 , 5 ,inf, 3, inf,inf,inf,inf,inf,inf },
+            { inf,inf,5,0,inf,inf, inf,inf,inf,inf,12,inf },
+            { inf, inf,inf,inf,0,inf, inf,inf,inf,inf,2,2   },
+            { inf, inf,3,inf,inf,0, inf,inf,inf,2,inf,inf },
+            { 1, 1,inf,inf,inf,inf, 0, 1,inf,inf,inf,inf },
+            { inf, inf,inf,inf,inf,inf, 1,0,1,2,inf,inf },
+            { inf, inf,inf,inf,inf,inf, inf,1,0,inf,1,2 },
+            { inf, inf,inf,inf,inf,2, inf,2,inf,0,2,inf },
+            { inf, inf,inf,inf,2,inf, inf,inf,1,2,0,3 },
+            { inf, inf,inf,inf,inf,inf, inf,inf,2,inf,3,0 },
+        };
+</code></pre>
+<p><strong>路径保存</strong><br>
+我们用一个-1的矩阵来保存路径</p>
+<pre><code class="language-csharp">public int[,] path = new int[12, 12] {
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+        };
+</code></pre>
+<p><strong>最短路算法</strong><br>
+采用Floyd算法</p>
+<pre><code class="language-csharp">public void Shortest()
+        {
+            for (int k = 0; k &lt; 12; k++)
+                for (int i = 0; i &lt; 12; i++)
+                    for (int j = 0; j &lt; 12; j++)
+                        if(Arr[i, j] &gt;  Arr[i, k] + Arr[k, j])
+                        {
+                            Arr[i, j] = Arr[i, k] + Arr[k, j];
+                            path[i, j] = k;
+                        }
+            string p = DropDownList1.SelectedValue.ToString();
+            string[]p1 = p.Split('-');
+            string q = DropDownList2.SelectedValue.ToString();
+            string[] q1 = q.Split('-');
+            int pp = int.Parse(p1[0]);
+            int qq = int.Parse(q1[0]);
+            if(Arr[pp,qq]!=inf)
+            {
+                label1.Text = &quot;&quot;;
+                label1.Text += p1[0] + p1[1] + &quot;-&gt;&quot;;
+                print(pp, qq);
+                label1.Text += q1[0] + q1[1];
+            }
+            
+            label2.Text = DropDownList1.SelectedItem.Text + &quot;-&gt;&quot; + DropDownList2.SelectedItem.Text + &quot;的最短路径是&quot; + Arr[pp, qq];
+        }
+</code></pre>
+<p><strong>路径输出</strong></p>
+<pre><code class="language-csharp">public void print(int a, int b)
+        {
+            if (path[a,b] == -1) return;//因为开始初始化为-1，这里就可以避免相邻的再次输出 
+            print(a, path[a,b]);//前半部 
+            //cout &lt;&lt; path[a,b] &lt;&lt; &quot;--&gt;&quot;;//输出该点
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Server.MapPath(&quot;~/App_Data/cons.xml&quot;));
+            XmlNode xn = doc.SelectSingleNode(&quot;Constellation&quot;);
+            XmlNodeList xnl = xn.ChildNodes;
+            // 遍历子节点
+            foreach (XmlNode xnd in xnl)
+            {
+                // 运用实体类保存信息
+                ConsModel cm = new ConsModel();
+                XmlElement xe = (XmlElement)xnd;
+                XmlNodeList xnl0 = xe.ChildNodes;
+                cm.ConsNum = xnl0.Item(0).InnerText;
+                cm.ConsName = xnl0.Item(1).InnerText;
+                if(path[a,b].ToString()==cm.ConsNum)
+                {
+                    label1.Text += path[a, b] + cm.ConsName+&quot;-&gt;&quot;;
+                    break;
+                }
+                    
+            }
+            print(path[a,b], b);//后半部 
+        }
+</code></pre>
+<h3 id="调试分析">调试分析</h3>
+<p><strong>问题及解决办法</strong></p>
+<ol>
+<li>
+<p>网页设计遇到的问题和解决办法<br>
+遇到最大的问题就是我本人对于前端设计不算了解，不能实现较为复杂的页面。我在调控一些网页控件时也遇到了对功能不了解而出现的错误。</p>
+<p>我的解决办法就是尽可能简化网页设计部分，用最少的控件解决问题。</p>
+</li>
+<li>
+<p>算法遇到的问题和解决办法<br>
+算法遇到的最大的问题就是路径的输出。根据Floyd算法，可以很简单的求出每两个点之间的最短路径。但是输出是个问题。</p>
+<p>经过一番思考，我在求解最短路径的时候记录下节点的信息，然后在求解的时候用递归输出。</p>
+</li>
+</ol>
+<p><strong>算法的时空分析</strong></p>
+<ol>
+<li>空间复杂度<br>
+由于邻接矩阵的存在，空间复杂度至少是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>N</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">N^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>的。在这里我选择了12个景点，空间复杂度还可以接受。</li>
+<li>时间复杂度<br>
+由于我使用了floyd算法，时间复杂度就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>N</mi><mn>3</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。但我的景点数是12个，所以这个时间复杂度还是可以接受的。</li>
+</ol>
+<h2 id="实验结果">实验结果</h2>
+<p><strong>欢迎界面</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193234328.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>景点选择界面</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193403778.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>展示景点</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423740.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423751.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423723.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>最短路查询</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193447528.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200617193447524.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="实验总结">实验总结</h2>
+<p>通过这个实验我有以下体会</p>
+<ol>
+<li>我学会使用了多源最短路径之一的floyd算法，该算法形式简单，但对于数据规模较大的数据来说，时间复杂度较高。</li>
+<li>我将数据结构面向对象化，制作网页很多时候需要用到面向对象的技术。我这次实验将面向对象和数据结构进行了一个结合，感觉使用起来更加的方便了。</li>
+<li>我将.NET课上学到的ASP.NET 技术和数据结构与算法相结合，实现了技术上的交叉。</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="实验题目校园导游咨询">实验题目：校园导游咨询</h1>
+<h2 id="实验目的">实验目的</h2>
+<p>掌握图的存储方法和最短路经算法。</p>
+<h2 id="实验内容">实验内容</h2>
+<p>设计一个校园导游程序，为来访客人提供各种信息查询服务。测试数据根据实际情况指定。提示：一般情况下，校园的道路是双向通行的，可设校园平面图是一个无向图。顶点和边均含有相关信息。</p>
+<h2 id="实验要求">实验要求</h2>
+<ol>
+<li>设计所在学校的校园平面图，所含景点不少于10个。以图中顶点表示校内各景点，存放景点名称、代号、简介等信息；以边表示路径，存放路径长度等相关信息。   2. 为来访客人提供图中任意景点相关信息的查询。</li>
+<li>为来访客人提供图中任意景点的纹路查询，即查询任意两个景点之间的一条最短的简单路径。</li>
+</ol>
+<h2 id="实验内容-2">实验内容</h2>
+<h3 id="需求分析">需求分析</h3>
+<p>为了能够更好的展现学校的信息，表示学校内部各个景点的信息和路径信息。我设计了一个校内咨询网页，这个网页内部包括学校的地图，12个景点的信息，还有每两个景点之间的最短路径。</p>
+<p><strong>学校地图</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193330878.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>输入信息</strong></p>
+<ol>
+<li>景点介绍<br>
+当用户需要了解景点信息时，需要点击了解景点的单选框。</li>
+<li>最短路径<br>
+当用户想要访问两个顶点的最短路径时，需要输入（选择）起点和终点。</li>
+</ol>
+<p><strong>输出信息</strong></p>
+<ol>
+<li>景点介绍<br>
+用户选中后，页面显示景点的图片和介绍。</li>
+<li>最短路径<br>
+用户选择了起点和终点之后，在页面上输出最短路径信息。</li>
+</ol>
+<h3 id="概要设计">概要设计</h3>
+<p><strong>信息存储</strong><br>
+我们的信息存储主要有两个部分：景点信息和路径信息。</p>
+<ol>
+<li>景点信息<br>
+为了使得网页上的访问更加方便，我们不能用一般的数组或结构体来存储景点的信息。这里我选择的XML结构来保存景点信息。里面有景点的名称、介绍等等。<br>
+<img src="https://img-blog.csdnimg.cn/20200617192913426.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></li>
+<li>路径信息<br>
+为了保存路径，我将景点和景点之间的边保存在了一个邻接矩阵里面。</li>
+</ol>
+<p><strong>最短路径的算法</strong><br>
+由于本次设计需要用户输入起点和终点，也是就是说需要求任意两点之间的最短路径。所以我们使用Floyd算法来求任意两点之间的最短路径。</p>
+<h3 id="详细设计">详细设计</h3>
+<p>为了侧重重点，我在实验报告里不再展示网页设计相关的代码，只展示算法的代码部分。</p>
+<p><strong>邻接矩阵</strong></p>
+<pre><code class="language-csharp">static int inf = 0x3f3f3f;
+        public int[,] Arr = new int[12, 12] {
+            { 0, inf,inf,inf,inf,inf, 1,inf,inf,inf,inf,inf },
+            { inf, 0, 1 ,inf,inf,inf, 1,inf,inf,inf,inf,inf },
+            { inf, 1,0 , 5 ,inf, 3, inf,inf,inf,inf,inf,inf },
+            { inf,inf,5,0,inf,inf, inf,inf,inf,inf,12,inf },
+            { inf, inf,inf,inf,0,inf, inf,inf,inf,inf,2,2   },
+            { inf, inf,3,inf,inf,0, inf,inf,inf,2,inf,inf },
+            { 1, 1,inf,inf,inf,inf, 0, 1,inf,inf,inf,inf },
+            { inf, inf,inf,inf,inf,inf, 1,0,1,2,inf,inf },
+            { inf, inf,inf,inf,inf,inf, inf,1,0,inf,1,2 },
+            { inf, inf,inf,inf,inf,2, inf,2,inf,0,2,inf },
+            { inf, inf,inf,inf,2,inf, inf,inf,1,2,0,3 },
+            { inf, inf,inf,inf,inf,inf, inf,inf,2,inf,3,0 },
+        };
+</code></pre>
+<p><strong>路径保存</strong><br>
+我们用一个-1的矩阵来保存路径</p>
+<pre><code class="language-csharp">public int[,] path = new int[12, 12] {
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+        };
+</code></pre>
+<p><strong>最短路算法</strong><br>
+采用Floyd算法</p>
+<pre><code class="language-csharp">public void Shortest()
+        {
+            for (int k = 0; k &lt; 12; k++)
+                for (int i = 0; i &lt; 12; i++)
+                    for (int j = 0; j &lt; 12; j++)
+                        if(Arr[i, j] &gt;  Arr[i, k] + Arr[k, j])
+                        {
+                            Arr[i, j] = Arr[i, k] + Arr[k, j];
+                            path[i, j] = k;
+                        }
+            string p = DropDownList1.SelectedValue.ToString();
+            string[]p1 = p.Split('-');
+            string q = DropDownList2.SelectedValue.ToString();
+            string[] q1 = q.Split('-');
+            int pp = int.Parse(p1[0]);
+            int qq = int.Parse(q1[0]);
+            if(Arr[pp,qq]!=inf)
+            {
+                label1.Text = &quot;&quot;;
+                label1.Text += p1[0] + p1[1] + &quot;-&gt;&quot;;
+                print(pp, qq);
+                label1.Text += q1[0] + q1[1];
+            }
+            
+            label2.Text = DropDownList1.SelectedItem.Text + &quot;-&gt;&quot; + DropDownList2.SelectedItem.Text + &quot;的最短路径是&quot; + Arr[pp, qq];
+        }
+</code></pre>
+<p><strong>路径输出</strong></p>
+<pre><code class="language-csharp">public void print(int a, int b)
+        {
+            if (path[a,b] == -1) return;//因为开始初始化为-1，这里就可以避免相邻的再次输出 
+            print(a, path[a,b]);//前半部 
+            //cout &lt;&lt; path[a,b] &lt;&lt; &quot;--&gt;&quot;;//输出该点
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Server.MapPath(&quot;~/App_Data/cons.xml&quot;));
+            XmlNode xn = doc.SelectSingleNode(&quot;Constellation&quot;);
+            XmlNodeList xnl = xn.ChildNodes;
+            // 遍历子节点
+            foreach (XmlNode xnd in xnl)
+            {
+                // 运用实体类保存信息
+                ConsModel cm = new ConsModel();
+                XmlElement xe = (XmlElement)xnd;
+                XmlNodeList xnl0 = xe.ChildNodes;
+                cm.ConsNum = xnl0.Item(0).InnerText;
+                cm.ConsName = xnl0.Item(1).InnerText;
+                if(path[a,b].ToString()==cm.ConsNum)
+                {
+                    label1.Text += path[a, b] + cm.ConsName+&quot;-&gt;&quot;;
+                    break;
+                }
+                    
+            }
+            print(path[a,b], b);//后半部 
+        }
+</code></pre>
+<h3 id="调试分析">调试分析</h3>
+<p><strong>问题及解决办法</strong></p>
+<ol>
+<li>
+<p>网页设计遇到的问题和解决办法<br>
+遇到最大的问题就是我本人对于前端设计不算了解，不能实现较为复杂的页面。我在调控一些网页控件时也遇到了对功能不了解而出现的错误。</p>
+<p>我的解决办法就是尽可能简化网页设计部分，用最少的控件解决问题。</p>
+</li>
+<li>
+<p>算法遇到的问题和解决办法<br>
+算法遇到的最大的问题就是路径的输出。根据Floyd算法，可以很简单的求出每两个点之间的最短路径。但是输出是个问题。</p>
+<p>经过一番思考，我在求解最短路径的时候记录下节点的信息，然后在求解的时候用递归输出。</p>
+</li>
+</ol>
+<p><strong>算法的时空分析</strong></p>
+<ol>
+<li>空间复杂度<br>
+由于邻接矩阵的存在，空间复杂度至少是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>N</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">N^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>的。在这里我选择了12个景点，空间复杂度还可以接受。</li>
+<li>时间复杂度<br>
+由于我使用了floyd算法，时间复杂度就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>N</mi><mn>3</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。但我的景点数是12个，所以这个时间复杂度还是可以接受的。</li>
+</ol>
+<h2 id="实验结果">实验结果</h2>
+<p><strong>欢迎界面</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193234328.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>景点选择界面</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193403778.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>展示景点</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423740.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423751.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423723.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>最短路查询</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193447528.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200617193447524.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="实验总结">实验总结</h2>
+<p>通过这个实验我有以下体会</p>
+<ol>
+<li>我学会使用了多源最短路径之一的floyd算法，该算法形式简单，但对于数据规模较大的数据来说，时间复杂度较高。</li>
+<li>我将数据结构面向对象化，制作网页很多时候需要用到面向对象的技术。我这次实验将面向对象和数据结构进行了一个结合，感觉使用起来更加的方便了。</li>
+<li>我将.NET课上学到的ASP.NET 技术和数据结构与算法相结合，实现了技术上的交叉。</li>
+</ol>
+<!-- more -->
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[数据结构实验三——哈夫曼树]]></title>
+        <id>https://besonn.github.io/data-structure-lab3/</id>
+        <link href="https://besonn.github.io/data-structure-lab3/">
+        </link>
+        <updated>2020-05-19T13:46:18.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="实验三哈夫曼编译码器">实验三：哈夫曼编/译码器</h1>
+<p><strong>实验目的</strong>： 掌握哈夫曼树</p>
+<p><strong>实验内容</strong>： 利用哈夫曼编码进行通信可以大大提高信道利用率，缩短信息传输时间，降低传输成本。但是，这要求在发送端通过一个编码系统对待传数据预先编码，在接收端将传来的数据进行译码（复原）。对于双工信道（即可以双向传输信息的信道），每端都需要一个完整的编/译码系统。试为这样的信息收发站写一个哈夫曼码的编/译码系统。</p>
+<p><strong>实验要求：</strong> 编写完整的系统，要求具有以下功能：<br>
+I:初始化（Initialization）。从终端读入字符集大小n，以及n个字符和n个权值，建立哈夫曼树，并将它存入文件hfmTree中。<br>
+E:编码(Encoding)。利用以建好的哈夫曼树（如不在内存，则从文件hfmTree中读入），对文件ToBeTran中的正文进行编码，然后将结果存入文件CodeFile中。<br>
+D：译码(Decoding)。利用已建好的哈夫曼树将文件CodeFile中的代码进行译码，结果存入文件TextFile中。<br>
+P:印代码文件（Print)。将文件CodeFile以紧凑格式显示在终端上，每行50个代码。同时将此字符形式的编码文件写入文件CodePrin中。<br>
+T:印哈夫曼树(Tree printing)。将已在内存中的哈夫曼树以直观的方式（树或凹入表形式）显示在终端上，同时将此字符形式的哈夫曼树写入文件TreePrint中。</p>
+<p><strong>实验过程</strong></p>
+<ol>
+<li>
+<p>需求分析<br>
+首先要确定n个字符及其权值。一篇英语短文包括字母的大小写以及基本的符号，从网上查找资料获得各个字母出现的平均概率，作为各个符号的权值。由于符号众多，我们选择将其保存到文件里面进行读取。<br>
+其次，关于文件的写入操作。我们直接将屏幕上打印出来的内容保存到相应的txt文件中去。<br>
+最后树的打印，我们采取中序遍历树的方式，将一棵树横向的打印到文件中去。</p>
+</li>
+<li>
+<p>概要设计<br>
+相关的数据结构设计：<br>
+哈夫曼树的节点</p>
+<pre><code class="language-cpp">typedef struct Node {
+int weight;//权值
+int parent;//父节点的序号，为0表示根节点
+int lchild, rchild;//左右孩子节点的序号，为0的是叶子节点
+}HTNode, *HuffmanTree;
+</code></pre>
+<p>编译结果的保存</p>
+<pre><code class="language-cpp">struct Ans {
+char ch; // 保存字符
+int wet; // 保存权值
+}ans[maxn];
+</code></pre>
+<p>主程序的流程：</p>
+<ol>
+<li>初始化：从文件中读取权值和字符，建立一棵哈夫曼树。</li>
+<li>编码：编写函数HuffmanCoding确定每个字符的哈夫曼编码。</li>
+<li>译码：利用事先准备好的一篇文章，打印出文章结果。</li>
+<li>打印部分：打印包括代码和哈夫曼树。</li>
+</ol>
+</li>
+<li>
+<p>详细设计</p>
+<ol>
+<li>建立哈夫曼树的过程</li>
+</ol>
+<pre><code>HuffmanTree create_HuffmanTree(struct Ans *p, int n)
+{
+
+int t = 2 * n - 1;
+HuffmanTree HT = (HuffmanTree)malloc(total * sizeof(HTNode));
+int i;
+for (i = 0; i &lt; n; ++i) {//先构造n个叶节点
+	HT[i].parent = 0;//parent后面会改变
+	HT[i].lchild = 0;
+	HT[i].rchild = 0;
+	HT[i].weight = p-&gt;wet;
+	p++;
+}
+for (; i &lt; total; ++i) {
+	HT[i].parent = 0;
+	HT[i].lchild = 0;
+	HT[i].rchild = 0;
+	HT[i].weight = 0;
+}
+
+int min1, min2;//用来保存每一轮选出的两个weight最小且parent为0的节点下标
+
+//每一轮比较后选择出min1和min2构成一课二叉树,最后构成一棵哈夫曼树
+for (i = n; i &lt; t; ++i) {
+	select_min(HT, i, min1, min2); //另外编写的一个函数，用来寻找i之前的结点
+	HT[min1].parent = i;
+	HT[min2].parent = i;
+	//两个最小权值的结点构成子树
+
+
+	HT[i].lchild = min1;
+	HT[i].rchild = min2;
+	HT[i].weight = HT[min1].weight + HT[min2].weight;
+}
+/*
+for(int i=0;i&lt;total;i++)
+{
+    printf(&quot;%d-%d-%d\n&quot;,HT[i].lchild,HT[i].rchild,HT[i].weight);
+    printf(&quot;%c\n&quot;,ans[i].ch);
+}*/
+return HT;
+}
+</code></pre>
+<ol start="2">
+<li>译码过程</li>
+</ol>
+<pre><code>void HuffmanCoding(HuffmanTree HT, int n)
+{
+char temp[maxn + 5];//临时用来保存每次求得的一个哈夫曼编码串
+temp[maxn] = '\0';//结束符
+
+for (int i = 0; i &lt; n; ++i) {
+	int current = i;
+	int fa = HT[i].parent;
+	int start = maxn;  //初始为编码结束符的位置
+	
+	while (fa != 0)
+	{
+		if (HT[fa].lchild == current)
+			temp[--start] = '0';
+		else temp[--start] = '1';
+		current = fa;
+		fa = HT[current].parent;
+	}
+	strcpy(HC[i], temp + start);//将编码串从最后的start编码~\0复制到HC上
+    }
+}
+</code></pre>
+<ol start="3">
+<li>初始化（从文件中读入权值）</li>
+</ol>
+<pre><code>int n;//需要编码的字符数
+void Initialzation()
+{
+FILE *fp1,*fpx;
+fp1 = fopen(&quot;./DataFile.data&quot;, &quot;r&quot;);
+printf(&quot;从文件DataFile.txt中读取编码的字符种类个数\n&quot;);
+fscanf(fp1, &quot;%d&quot;, &amp;n);
+
+printf(&quot;以及这%d个字符及其权值（整型）\n&quot;, n);
+for (int i = 0; i &lt; n; ++i) {
+	fscanf(fp1, &quot; %c %d&quot;, &amp;ans[i].ch, &amp;ans[i].wet);
+}
+HuffmanTree HT = create_HuffmanTree(ans, n);
+HuffmanCoding(HT, n);//求解每个字符的编码
+
+printf(&quot;各字符对应权值的哈夫曼编码为(按照输入顺序):\n&quot;);
+for (int i = 0; i &lt; n; ++i) {
+	printf(&quot;%c :&quot;, ans[i].ch);
+	puts(HC[i]);
+}
+printf(&quot;将它们存入htmtree.txt中去：\n&quot;);
+fpx=fopen(&quot;./htmtree.txt&quot;,&quot;w+&quot;);
+for(int i=0;i&lt;n;i++)
+{
+    fprintf(fpx,&quot;%c %s\n&quot;,ans[i].ch,HC[i]);
+}
+fclose(fp1);
+fclose(fpx);
+printf(&quot;\n******************************************************\n\n&quot;);
+}
+</code></pre>
+<ol start="4">
+<li>编码</li>
+</ol>
+<pre><code>void EnCoding()
+{
+//char ch[maxn*maxn],temp;
+printf(&quot;下面对文件ToBeTran.data中的文本进行编码形成报文\n&quot;);
+printf(&quot;文章写在文件CodeFile.txt中\n&quot;);
+FILE *fp2, *fp3;
+fp2 = fopen(&quot;ToBeTran.txt&quot;, &quot;rb&quot;);
+fp3 = fopen(&quot;CodeFile.txt&quot;, &quot;w&quot;);
+//fscanf(fp2,&quot;%s&quot;,temp);
+char ch;
+do
+{
+	ch = fgetc(fp2);
+	/* read a char from the file */
+	if (ch == ' ') fprintf(fp3, &quot; &quot;);
+	else if (ch == '\n') fprintf(fp3, &quot;\n&quot;);
+	else if(ch-'a'&gt;=0)
+        fprintf(fp3, &quot;%s&quot;, HC[ch - 'a']);
+    else if(ch-'A'&gt;=0)
+        fprintf(fp3, &quot;%s&quot;, HC[ch - 'A'+26]);
+    else if(ch-'0'&gt;=0&amp;&amp;'9'-ch&gt;=0)
+        fprintf(fp3, &quot;%s&quot;, HC[ch - '0'+52]);
+    else if(ch==',')
+        fprintf(fp3, &quot;%s&quot;, HC[62]);
+    else if(ch=='.')
+        fprintf(fp3, &quot;%s&quot;, HC[63]);
+
+
+} while (ch != EOF);
+fclose(fp2);
+fclose(fp3);
+
+for(int i=0;i&lt;n;i++)
+    printf(&quot;%s\n&quot;,HC[i]);
+}
+</code></pre>
+<ol start="5">
+<li>译码</li>
+</ol>
+<pre><code>void Decoding()
+{
+printf(&quot;下面对文件CodeFile.data中的代码进行解码形成原文\n结果存入文件Textfile.txt中\n&quot;);
+FILE *fp4, *fp5;
+fp4 = fopen(&quot;CodeFile.txt&quot;, &quot;rb&quot;);
+fp5 = fopen(&quot;Textfile.txt&quot;, &quot;w&quot;);
+char ch;
+char temp[maxn];
+char *s = temp;
+memset(temp, 0, sizeof(temp));
+//while(fgets(temp,maxn*maxn,fp4))//读到换行符，并加上\0,存入temp
+do
+{
+	ch = fgetc(fp4);
+	if (ch == '\n') memset(temp, 0, sizeof(temp)), s = temp, fprintf(fp5, &quot;\n&quot;);
+	else if (ch == ' ') memset(temp, 0, sizeof(temp)), s = temp, fprintf(fp5, &quot; &quot;);
+	else {
+		*s++ = ch;
+		if (fun(temp) &gt;= 26&amp;&amp;fun(temp)&lt;52) fprintf(fp5, &quot;%c&quot;, 'A' + fun(temp)%26), memset(temp, 0, sizeof(temp)), s = temp;
+		else if(fun(temp)&gt;=0&amp;&amp;fun(temp)&lt;26) fprintf(fp5, &quot;%c&quot;, 'a' + fun(temp)), memset(temp, 0, sizeof(temp)), s = temp;
+		else if(fun(temp)&gt;=52&amp;&amp;fun(temp)&lt;62) fprintf(fp5, &quot;%c&quot;, '0' + fun(temp)%52), memset(temp, 0, sizeof(temp)), s = temp;
+		else if(fun(temp)==62) fprintf(fp5, &quot;%c&quot;, ','), memset(temp, 0, sizeof(temp)), s = temp;
+        else if(fun(temp)==63) fprintf(fp5, &quot;%c&quot;, '.'), memset(temp, 0, sizeof(temp)), s = temp;
+		else continue;
+	}
+} while (ch != EOF);
+fclose(fp4);
+fclose(fp5);
+}
+</code></pre>
+<ol start="6">
+<li>打印</li>
+</ol>
+<pre><code>void print_tree(HuffmanTree HT,int t,int step)//横向打印哈夫曼树
+{
+
+int i;
+if(HT[t].rchild)
+    print_tree(HT, HT[t].rchild, step + 1);
+for (i = 0; i &lt; step; i++)
+{
+    printf(&quot;       &quot;);
+    fprintf(pt,&quot;       &quot;);
+}
+printf(&quot;   -%d-▏\n&quot;, HT[t].weight);
+fprintf(pt,&quot;   -%d-▏\n&quot;,HT[t].weight);
+if(HT[t].lchild)
+    print_tree(HT, HT[t].lchild, step + 1);
+}
+void Output()
+{
+FILE *fp6;
+fp6=fopen(&quot;CodePrin.txt&quot;,&quot;w&quot;);
+for (int i = 0; i &lt; n; ++i) {
+	printf(&quot;%c :%lf\n&quot;, ans[i].ch, ans[i].wet*1.0 / sum);
+}
+printf(&quot;\n******************************************************\n\n&quot;);
+printf(&quot;下面输出输出ToBeTran.data及其报文CodeFile.txt\n\n&quot;);
+FILE *fp2, *fp3;
+fp2 = fopen(&quot;ToBeTran.txt&quot;, &quot;r&quot;);
+fp3 = fopen(&quot;CodeFile.txt&quot;, &quot;r&quot;);
+char ch;
+printf(&quot;ToBeTran.data :\n&quot;);
+do
+{
+	ch = fgetc(fp2);
+	printf(&quot;%c&quot;, ch);
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+printf(&quot;CodeFile.txt :\n&quot;);
+int cnt=0;
+do
+{
+	ch = fgetc(fp3);
+	printf(&quot;%c&quot;, ch);
+	fprintf(fp6,&quot;%c&quot;,ch);
+	cnt+=1;
+	if(cnt%50==0)
+    {
+        printf(&quot;\n&quot;);
+        fprintf(fp6,&quot;\n&quot;);
+    }
+
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+
+printf(&quot;\n******************************************************\n\n&quot;);
+printf(&quot;下面输出CodeFile.data及其原文Textfile.txt\n\n&quot;);
+FILE *fp4, *fp5;
+fp4 = fopen(&quot;CodeFile.txt&quot;, &quot;r&quot;);
+fp5 = fopen(&quot;Textfile.txt&quot;, &quot;r&quot;);
+
+printf(&quot;CodeFile.data :\n&quot;);
+do
+{
+	ch = fgetc(fp4);
+	printf(&quot;%c&quot;, ch);
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+printf(&quot;Textfile.txt :\n&quot;);
+do
+{
+	ch = fgetc(fp5);
+	printf(&quot;%c&quot;, ch);
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+fclose(fp6);
+}
+</code></pre>
+</li>
+<li>
+<p>调试分析<br>
+（1）调试过程中遇到的问题</p>
+<ol>
+<li>大小写以及符号的问题。如果只有小写字母，那我们可以根据Ascii码<code>-'a'</code>来确定每个字符的相对大小，但是引入了大写和符号，所以我们就需要多增加几个条件分支来保存他们的权值。</li>
+<li>如何打印树。如果直接选择常规的方法去遍历树就会像得十分的麻烦，所以我选择了横向打印树的方式，类似下图。<br>
+<img src="https://img-blog.csdnimg.cn/2020051819484140.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></li>
+</ol>
+<p>（2） 算法的时空复杂度。<br>
+假设编码的文本字符串长度为n，字母为k个符号。<br>
+由于我们的权值读入是无序的，因此需要先对权值进行排序，时间复杂度O(k*log(k))</p>
+<p>对于每个编码符号，必须遍历树以解码该符号。树包含k个节点，并且平均需要O（log k）个节点访问来解码符号。所以时间复杂度为O（n log k）。</p>
+<p>空间复杂度为树的O（k）和解码文本的O（n）。</p>
+</li>
+</ol>
+<p><strong>实验结果</strong>：<br>
+首先准备好n个权值和一篇英文文章。</p>
+<p><strong>I:初始化</strong><br>
+67个权值<br>
+<img src="https://img-blog.csdnimg.cn/20200518201553808.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+一篇英语文章<br>
+<img src="https://img-blog.csdnimg.cn/20200518201553855.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p>实验终端打印<br>
+<img src="https://img-blog.csdnimg.cn/20200518202441213.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+文件中打印<br>
+<img src="https://img-blog.csdnimg.cn/20200518202532210.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>E：编码</strong></p>
+<p>将编码结果打印出来并且保存到CodeFile文件里<br>
+<img src="https://img-blog.csdnimg.cn/20200518202623652.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+文章原文<br>
+<img src="https://img-blog.csdnimg.cn/20200518202836975.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+CodeFile文件<br>
+<img src="https://img-blog.csdnimg.cn/20200518202718868.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>D:译码</strong></p>
+<p>将译码之后的结果保存到TextFile文件里<br>
+<img src="https://img-blog.csdnimg.cn/2020051820322964.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/202005182029437.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p><strong>P：打印</strong></p>
+<p>将文件CodeFile以紧凑格式显示在终端上，每行50个代码。同时将此字符形式的编码文件写入文件CodePrin中。<br>
+<img src="https://img-blog.csdnimg.cn/20200518202836954.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+CodePrin文件<br>
+<img src="https://img-blog.csdnimg.cn/20200518203133651.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p><strong>T:印哈夫曼树</strong></p>
+<p>将哈夫曼树打印出来<br>
+<img src="https://img-blog.csdnimg.cn/20200518203514841.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020051820322927.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p><strong>实验总结</strong><br>
+本次实验花费时间比较长，有以下几点感悟：</p>
+<ol>
+<li>注意内存空间的管理，很有可能就出现内存泄漏的情况。</li>
+<li>对于文件的打印，最后一定要记得把文件关掉。</li>
+<li>关于递归问题的文件打印，文件指针最好是要设置成全局变量，不然文件很有可能在中途就关闭。</li>
+<li>哈夫曼树是一种效率很高的数据结构，如果输入权值前就进行好排序，可能时间复杂度会更好。</li>
+<li>横向打印树可以是一种输出树结构的好方式。</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《数值分析》绪论、前三章知识点整理]]></title>
         <id>https://besonn.github.io/shuzhifenxi-zhishidian1/</id>
@@ -911,597 +1634,6 @@ for t=1:m
 end
 R=M*q1/c1;L(k,:)=poly2sym(C);
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[数值分析实验一——拉格朗日插值及牛顿插值算法的实现]]></title>
-        <id>https://besonn.github.io/data-analyse-lab1/</id>
-        <link href="https://besonn.github.io/data-analyse-lab1/">
-        </link>
-        <updated>2020-04-06T13:38:09.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="实验名称">实验名称</h3>
-<p>拉格朗日插值及牛顿插值算法的实现</p>
-<h3 id="实验目的">实验目的</h3>
-<blockquote>
-<p>a. 验证拉格朗日插值算法对于不同函数的插值效果；<br>
-b. 验证随着插值结点的增多插值曲线的变化情况。<br>
-c. 验证插商的基本性质；<br>
-d. 比较拉格朗日插值与牛顿插值的插值结果。</p>
-</blockquote>
-<h3 id="实验内容">实验内容</h3>
-<h4 id="一-验证拉格朗日插值算法对于不同函数的插值效果">一、 验证拉格朗日插值算法对于不同函数的插值效果</h4>
-<p>为了验证对不同函数的插值效果，我们选择了多项式函数、指数函数、三角函数、对数函数、分式函数五种不同类型的函数进行验证。</p>
-<p>为了方便起见，我们统一将插值节点数设置成11个。</p>
-<p>并且根据拉格朗日余项公式计算误差</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>−</mo><msub><mi>p</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msup><mi>f</mi><mrow><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></msup><mo>(</mo><mi>ε</mi><mo>)</mo></mrow><mrow><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>n</mi></munderover><mo>(</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f(x)-p_n(x)=\frac{f^{(n+1)}(\varepsilon)}{(n+1)!}\prod_{i=0}^n(x-x_k)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.565em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">ε</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
-<p><strong>多项式函数</strong></p>
-<p>我们选择的多项式函数为，函数的范围是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mo>−</mo><mn>10</mn><mo separator="true">,</mo><mn>10</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[-10,10]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">1</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mclose">]</span></span></span></span></p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x)= x^3-x^2+1
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span></p>
-<p>下面是我们的结果</p>
-<p><img src="https://img-blog.csdnimg.cn/20200403105430336.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<em><strong>误差分析</strong></em><br>
-由于多项式函数的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>阶导数为0，所以误差<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>−</mo><msub><mi>p</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">f(x)-p_n(x)=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></p>
-<p><strong>三角函数</strong></p>
-<p>我们选择的三角函数为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>s</mi><mi>i</mi><mi>n</mi><mo>(</mo><mfrac><mi>π</mi><mn>10</mn></mfrac><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(x)=sin(\frac{\pi}{10}x)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.7935600000000003em;vertical-align:-0.686em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.10756em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">0</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></span></p>
-<p>下面是我们的结果<br>
-<img src="https://img-blog.csdnimg.cn/20200403110546423.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<em><strong>误差分析</strong></em><br>
-经过计算，误差方程为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>−</mo><msub><mi>p</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msup><mfrac><mrow><mi>p</mi><mi>i</mi></mrow><mn>10</mn></mfrac><mrow><mo>(</mo><mn>10</mn><mo>+</mo><mn>1</mn><mo>)</mo></mrow></msup><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mfrac><mrow><mi>p</mi><mi>i</mi></mrow><mn>10</mn></mfrac><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mn>10</mn><mo>+</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>n</mi></munderover><mo>(</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f(x)-p_n(x)=\frac{\frac{pi}{10}^{(10+1)}cos(\frac{pi}{10}x)}{(10+1)!}\prod_{i=0}^n(x-x_k)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.198341em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.9206720000000002em;"><span style="top:-2.4996720000000003em;"><span class="pstrut" style="height:3.1856720000000003em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span><span style="top:-3.4156720000000003em;"><span class="pstrut" style="height:3.1856720000000003em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.9206720000000006em;"><span class="pstrut" style="height:3.1856720000000003em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.907772em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.185672em;"><span style="top:-3.360672em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.907772em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
-<p>计算得到的误差限为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1.6130</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1.6130×10^{-6}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">6</span><span class="mord">1</span><span class="mord">3</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.864108em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p><strong>指数函数</strong></p>
-<p>我们选择的指数函数为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup></mrow><annotation encoding="application/x-tex">f(x)=e^x
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7143919999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>由于指数函数的上升非常快，为了画图方便，我们选择<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mo>−</mo><mn>5</mn><mo separator="true">,</mo><mn>5</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[-5,5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span>的表示区间</p>
-<p>下面是我们的结果<br>
-<img src="https://img-blog.csdnimg.cn/20200403111207713.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<em><strong>误差分析</strong></em><br>
-我们得到的误差方程为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>−</mo><msub><mi>p</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><msup><mi>e</mi><mi>x</mi></msup><mrow><mo>(</mo><mn>10</mn><mo>+</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>n</mi></munderover><mo>(</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f(x)-p_n(x)=\frac{e^x}{(10+1)!}\prod_{i=0}^n(x-x_k)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.341392em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
-<p>计算得到误差限为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0.0104</mn></mrow><annotation encoding="application/x-tex">0.0104
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">4</span></span></span></span></span></p>
-<p><strong>对数函数</strong></p>
-<p>我们选择的对数函数为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>l</mi><mi>n</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">f(x)=lnx
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">n</span><span class="mord mathdefault">x</span></span></span></span></span></p>
-<p>区间为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>5</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">(0,5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></p>
-<p>下面是我们的结果<br>
-<img src="https://img-blog.csdnimg.cn/20200403111534498.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<em><strong>误差分析</strong></em></p>
-<p>我们得到的误差方程为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>−</mo><msub><mi>p</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mo>−</mo><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>11</mn></msup><mo>(</mo><mn>10</mn><mo>+</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow></mfrac><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>n</mi></munderover><mo>(</mo><mi>x</mi><mo>−</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f(x)-p_n(x)=\frac{-1}{x^{11}(10+1)!}\prod_{i=0}^n(x-x_k)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000002em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
-<p>计算得到误差限为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9.7656</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow><annotation encoding="application/x-tex">9.7656×10^{-4}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">9</span><span class="mord">.</span><span class="mord">7</span><span class="mord">6</span><span class="mord">5</span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.864108em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p><strong>分式函数</strong></p>
-<p>我们选择的分式函数为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">f(x)=\frac{1}{1+x^2}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.09077em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p>区间为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mo>−</mo><mn>5</mn><mo separator="true">,</mo><mn>5</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[-5,5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></p>
-<p>我们得到的结果是<br>
-<img src="https://img-blog.csdnimg.cn/20200403170949756.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="11节点" loading="lazy"><br>
-可以看到，在较为靠近0的区间里，函数的拟合效果比较好，两侧的效果并不是很好，发生了龙格现象。</p>
-<p>根据误差公式，我们计算得到的误差限为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0.0104</mn></mrow><annotation encoding="application/x-tex">0.0104
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">4</span></span></span></span></span></p>
-<h4 id="二-验证随着插值结点的增多插值曲线的变化情况">二、 验证随着插值结点的增多插值曲线的变化情况</h4>
-<p>为了进行实验，我们选择了3、5、11、21节点来验证随着插值结点的增多插值曲线的变化情况。</p>
-<p><strong>三角函数</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200404151307808.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
-<p><strong>指数函数</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200404150204999.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<strong>对数函数</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200404151815874.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<strong>分式函数</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200404152223795.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
-<p>由以上结果可以发现，随着插值节点数增多，曲线的拟合效果更好。为了更加精确的表示，我们将以上函数的误差限做成以下的表格。<br>
-<img src="https://img-blog.csdnimg.cn/20200404203127614.png#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-总体随着插值个数增多，误差变小。</p>
-<h4 id="三-验证插商的基本性质">三、 验证插商的基本性质</h4>
-<p>为了验证插商的基本性质，我们选择函数形式比较好的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup></mrow><annotation encoding="application/x-tex">f(x)=e^x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span></span></span></span>函数来进行实验。</p>
-<p><strong>性质一</strong><br>
-k阶插商可以表示成k+1个函数值的线性组合<br>
-<img src="https://img-blog.csdnimg.cn/20200404203618170.png" alt="在这里插入图片描述" loading="lazy"><br>
-首先求出该函数的1~5阶差商<br>
-<img src="https://img-blog.csdnimg.cn/20200404214104205.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200404205230332.png#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-第5阶插商为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0.11239</mn></mrow><annotation encoding="application/x-tex">0.11239</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">1</span><span class="mord">2</span><span class="mord">3</span><span class="mord">9</span></span></span></span></p>
-<p>求插商主要代码如下</p>
-<pre><code class="language-cpp">for(i=0;i&lt;=k;i++)  //求差商 函数值的线性组合
-	{
-		temp_a=1;
-		x=X[i];
-		y=Y[i];
-		for(j=0;j&lt;=k;j++)
-		{
-			if(i!=j)
-			{
-				temp_a *=(X[i]-X[j]);
-			}
-		}
-		temp_b=y/temp_a;
-		temp_c +=temp_b;
-		if(i&gt;0)
-		{
-			temp_d*=(newx-X[i-1]);	/*temp_d表示累和 x-x[i]*/
-		}
-	}
-</code></pre>
-<p>等式右边主要计算代码如下</p>
-<pre><code class="language-cpp">float sum=0;
-float cnt=1.0;
-for(int i=1;i&lt;=5;i++)
-{
-    cnt=1;
-    for(int j=1;j&lt;=5;j++)
-    {
-        if(i!=j)
-            cnt=cnt*(X[i]-X[j]);
-    }
-    sum=sum+Y[i]/cnt;
-}
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/20200404214953771.PNG#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-验证结果是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi><mo>=</mo><mn>0.112371</mn></mrow><annotation encoding="application/x-tex">sum=0.112371</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">1</span><span class="mord">2</span><span class="mord">3</span><span class="mord">7</span><span class="mord">1</span></span></span></span></p>
-<p>结果成立。</p>
-<p><strong>性质二</strong><br>
-验证对称性。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200404210459865.png" alt="在这里插入图片描述" loading="lazy"><br>
-根据性质一中的函数，我们可以得知</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><msub><mi>x</mi><mn>3</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>]</mo><mo>=</mo><mn>0.1124</mn></mrow><annotation encoding="application/x-tex">f[x_3,x_2,x_1,x_0,x_4] = 0.1124
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">1</span><span class="mord">2</span><span class="mord">4</span></span></span></span></span></p>
-<p>下面求等式右边的结果</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><msub><mi>x</mi><mn>3</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>]</mo><mo>=</mo><mn>1.2244</mn></mrow><annotation encoding="application/x-tex">f[x_3,x_1,x_2,x_4] = 1.2244
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">2</span><span class="mord">2</span><span class="mord">4</span><span class="mord">4</span></span></span></span></span></p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><msub><mi>x</mi><mn>3</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>0</mn></msub><mo>]</mo><mo>=</mo><mn>0.1005</mn></mrow><annotation encoding="application/x-tex">f[x_3,x_1,x_2,x_0] = 0.1005
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">5</span></span></span></span></span></p>
-<p>整个分式结果</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>1.2244</mn><mo>−</mo><mn>0.1005</mn></mrow><mrow><mn>5</mn><mo>−</mo><mo>(</mo><mo>−</mo><mn>5</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mn>0.11239</mn><mo>≈</mo><mn>0.1124</mn></mrow><annotation encoding="application/x-tex">\frac{1.2244-0.1005}{5-(-5)}=0.11239\approx 0.1124
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.25744em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mopen">(</span><span class="mord">−</span><span class="mord">5</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">2</span><span class="mord">2</span><span class="mord">4</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">1</span><span class="mord">2</span><span class="mord">3</span><span class="mord">9</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">1</span><span class="mord">2</span><span class="mord">4</span></span></span></span></span></p>
-<p>性质成立</p>
-<p><strong>性质三</strong><br>
-由于我们的程序无法直接算出阶数，因此我们决定验证<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>&gt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">k&gt;n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">k=n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>的情况</p>
-<p>我们取多项式</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x)= x^3-x^2+1
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span></p>
-<p>计算k&gt;3时的差商<br>
-<img src="https://img-blog.csdnimg.cn/2020040619373717.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-显然，可以证明，当k=n时差商是一个常数，不随x值发生变化；当k&gt;n时，差商为0。</p>
-<p><strong>性质四</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/202004042125163.png" alt="在这里插入图片描述" loading="lazy"><br>
-为了验证以上等式，我们可以将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mclose">!</span></span></span></span>转移到等号左边，判断和右边的关系。</p>
-<p>由上面我们可以知道</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><msub><mi>x</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>]</mo><mo>×</mo><mi>n</mi><mo>!</mo><mo>=</mo><mn>2.6976</mn></mrow><annotation encoding="application/x-tex">f[x_0,x_1,x_2,x_2,x_4] ×n! = 2.6976
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">6</span><span class="mord">9</span><span class="mord">7</span><span class="mord">6</span></span></span></span></span></p>
-<p>然而</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>f</mi><mi>n</mi></msup><mo>(</mo><msup><mi>e</mi><mi>ε</mi></msup><mo>)</mo><mo>=</mo><msup><mi>e</mi><mi>ε</mi></msup><mspace width="1em"/><mi>ε</mi><mo>∈</mo><mo>[</mo><mo>−</mo><mn>5</mn><mo separator="true">,</mo><mn>5</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f^n(e^\varepsilon)=e^\varepsilon\quad \varepsilon \in[-5,5]
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">ε</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7534919999999999em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">ε</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault">ε</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></span></p>
-<p>又因为，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow><annotation encoding="application/x-tex">e^x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span></span></span></span>单调递增，所以</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>e</mi><mi>ε</mi></msup><mo>∈</mo><mo>[</mo><mn>0.0067</mn><mo separator="true">,</mo><mn>148.41</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">e^\varepsilon \in[0.0067,148.41]
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7534919999999999em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">ε</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">0</span><span class="mord">6</span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">4</span><span class="mord">8</span><span class="mord">.</span><span class="mord">4</span><span class="mord">1</span><span class="mclose">]</span></span></span></span></span></p>
-<p>结论显然成立</p>
-<h4 id="四-比较拉格朗日插值与牛顿插值的插值结果">四、 比较拉格朗日插值与牛顿插值的插值结果</h4>
-<p>通常的，拉格朗日插值法和牛顿插值法的结果一致。</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>n</mi></msub><mo>(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo><mo>=</mo><msub><mi>N</mi><mi>n</mi></msub><mo>(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo><mo>=</mo><msub><mi>f</mi><mi>n</mi></msub><mo>(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">P_n(x_k)=N_n(x_k)=f_n(x_k)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
-<p>根据余项公式，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>≡</mo><msub><mi>N</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P_n(x)\equiv N_n(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></p>
-<p>为了使得结果更加直观，我们选择了随机数生成了散点图。</p>
-<p>拉格朗日插值<br>
-<img src="https://img-blog.csdnimg.cn/20200406205506189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<p>牛顿插值<br>
-<img src="https://img-blog.csdnimg.cn/20200406205331328.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
-<strong>结论</strong>：拉格朗日插值和牛顿插值计算结果基本相同，但是毫无疑问牛顿插值法更加适合离散的或者不可导的函数。</p>
-<h3 id="心得体会">心得体会</h3>
-<ol>
-<li>实际体会了插值方法的作用，加深了对牛顿插值和拉格朗日插值的理解。</li>
-<li>一般情况下插值的结果在取点数目比较多的情况下会更加精确，但也有例外。</li>
-<li>取点数大于多项式次数时，插值方法总能精确表达出该多项式。</li>
-<li>有些函数不适合使用插值方法，有些函数的某些区间不适合使用插值方法。</li>
-<li>对于同一个函数，区间越小，插值方法的精确度越高。</li>
-<li>用插值方法去推导已知点所处区间之外的点对应的值往往不准确。</li>
-</ol>
-<h2 id="附录">附录</h2>
-<h3 id="拉格朗日插值主要代码">拉格朗日插值主要代码</h3>
-<pre><code class="language-cpp">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-struct point{
-	double x;
-	double y;
-};
-
-double lglr(double x0,point* points,int n)
-{
-	double ret=0;
-	double fenzi;
-	double fenmu;
-	for(int i=0;i&lt;n;i++)
-	{
-		fenzi=1;
-		fenmu=1;
-		for(int j=0;j&lt;n;j++)
-		{
-			if(i!=j)
-			{
-				fenzi*=(x0-points[j].x);
-				fenmu*=(points[i].x-points[j].x);
-			}
-		}
-		ret+=(fenzi*points[i].y/fenmu);
-	}
-	return ret;
-}
-
-int main()
-{
-	int n;
-	printf(&quot;input the number of points\n&quot;);
-	scanf(&quot;%d&quot;,&amp;n);
-	point* points=(point*)malloc(sizeof(point)*n);
-	for(int i=0;i&lt;n;i++)
-	{
-		scanf(&quot;%lf&quot;,&amp;points[i].x);
-		scanf(&quot;%lf&quot;,&amp;points[i].y);
-	}
-	printf(&quot;input x\n&quot;);
-	double x0;
-	while(1)
-	{
-		scanf(&quot;%lf&quot;,&amp;x0);
-		printf(&quot;%lf\n&quot;,lglr(x0,points,n));
-	}
-}
-
-</code></pre>
-<h3 id="牛顿插值主要代码">牛顿插值主要代码</h3>
-<pre><code class="language-cpp">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-struct point{
-	double x;
-	double y;
-};
-
-point* points;
-
-double chafen(int start,int end)
-{
-	if(start==end)
-	{
-		return points[start].y;
-	}
-	return (chafen(start,end-1)-chafen(start+1,end))/(points[start].x-points[end].x);
-}
-
-double nd(double x0,int n)
-{
-	double ret=points[0].y;
-	for(int i=1;i&lt;n;i++)
-	{
-		double r=1;
-		for(int j=0;j&lt;i;j++)
-		{
-			r*=(x0-points[j].x);
-		}
-		ret+=r*chafen(0,i);
-	}
-	return ret;
-}
-
-int main()
-{
-	int n;
-	printf(&quot;input the number of points\n&quot;);
-	scanf(&quot;%d&quot;,&amp;n);
-	points=(point*)malloc(sizeof(point)*n);
-	for(int i=0;i&lt;n;i++)
-	{
-		scanf(&quot;%lf&quot;,&amp;points[i].x);
-		scanf(&quot;%lf&quot;,&amp;points[i].y);
-	}
-	printf(&quot;input x\n&quot;);
-	double x0;
-	while(1)
-	{
-		scanf(&quot;%lf&quot;,&amp;x0);
-		printf(&quot;%lf\n&quot;,nd(x0,n));
-	}
-}
-
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[数据结构实验一]]></title>
-        <id>https://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/</id>
-        <link href="https://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/">
-        </link>
-        <updated>2020-03-20T02:33:14.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>实验题目：多项式加法问题<br>
-实验目的：设计一个一元稀疏多项式简单计算器。实验内容与要求   一元稀疏多项式简单计算器的基本功能是：   （1)输入并建立多项式；   （2）输出多项式，输出形式为整数序列：n,c1,e1,c2,e2,...,cn,en,其中n是多项式的项数，ci和ei分别是第i项的系数和指数，序列按指数降序排列。   （3）多项式a与多项式b相乘，建立多项式。</p>
-</blockquote>
-<h2 id="实验思路">实验思路：</h2>
-<p>最朴素的想法就是用两个数组来表示一个多项式，一个数组存放指数，另一个存放系数，下标相同代表同一项。当实现加法时，就需要寻找指数相同的项进行相加，把得到的结果存入另外一个数组当中去。当实现乘法是，我们就循环遍历两个式子，让他们每个项之间两两相乘，结果保存在另外一个数组中。</p>
-<p>然而注意到是一元稀疏多项式，也就是可能存在这样的式子</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>10</mn><msup><mi>x</mi><mn>1000</mn></msup><mo>+</mo><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">f(x) = 10x^{1000}+6x^{2}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">0</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>那么我们必须至少用长度为1000的数组来存储，并且其中大多数数组的元素为零。这样算法的空间复杂度很高也很浪费。</p>
-<p>因此决定使用链表这一数据结构来表示。</p>
-<p>默认多项式一的长度为n，多项式二的长度为m。</p>
-<h2 id="实验步骤">实验步骤：</h2>
-<h3 id="第一步建立存储的链表">第一步：建立存储的链表</h3>
-<p>第一步我们需要定义一个链表，里面保存每一项的系数和指数。并且分别定义两个这样的链表，来表示需要相加的两个多项式。</p>
-<p><strong>实验代码</strong></p>
-<pre><code>struct  PolyNode
-{
-	float coef; // 指数，考虑小数的情况
-	int expon; // 次数
-	struct PolyNode *link; // 后继节点
-};
-typedef struct PolyNode *Polynomial;
-Polynomial p1, p2;
-</code></pre>
-<h3 id="第二步明确读入数据并保存">第二步：明确读入数据并保存</h3>
-<p>我们的思路是，对于每个需要读入的多项式，首先读入项数。接着，按照指数的高低，分别读入。</p>
-<p>专门写了一个ReadPoly（）函数用来读取多项式</p>
-<p><strong>实验代码</strong></p>
-<pre><code>    Polynomial ReadPoly(int n1)
-{
-	Polynomial P, rear, t;
-	P = (Polynomial)malloc(sizeof(struct PolyNode));
-	P-&gt;link = NULL;
-	rear = P;
-	for (int i = 1; i &lt;= n1; i++)
-	{
-		float c; int f;
-		printf(&quot;第%d项系数：&quot;, i);
-		scanf(&quot;%f&quot;, &amp;c);
-		printf(&quot;第%d项次数：&quot;, i);
-		scanf(&quot;%d&quot;, &amp;f);
-		Attach(c, f, &amp;rear);
-	}
-	t = P; P = P-&gt;link;
-	free(t);
-	return P;
-}
-</code></pre>
-<p>时间复杂度</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mo>+</mo><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N+M)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
-<p>指针P 用来保存多项式的结果。如何将输入的每一组系数和指数联系起来，我们则需要用一个Attach函数去完成。</p>
-<h3 id="第三步将读入的系数和指数连接起来">第三步：将读入的系数和指数连接起来</h3>
-<p>写一个Attach 函数，新开辟一个节点，将指数和系数保存到节点当中，再将节点连接到rear链表的后面。</p>
-<p><strong>实验代码</strong></p>
-<pre><code class="language-C">void Attach(int c, int e, Polynomial *pRear)
-{
-	Polynomial p;
-	p = (Polynomial)malloc(sizeof(struct PolyNode)); // 开辟新节点
-	p-&gt;coef = c; 
-	p-&gt;expon = e;
-	p-&gt;link = NULL;
-	(*pRear)-&gt;link = p;
-	*pRear = p;
-}
-</code></pre>
-<h3 id="第四步进行排序">第四步：进行排序</h3>
-<p>我们默认输入是随机的，可以不按照次数降序排列。因此需要一个排序的函数进行排序。</p>
-<p><strong>实验代码</strong></p>
-<pre><code>Polynomial Sort(Polynomial pHead)//链表排序
-{
-	Polynomial P = pHead;
-	Polynomial p = NULL;
-	Polynomial q = NULL;
-	int temp;
-	float tmp2;
-	for (p= pHead; p != NULL; p = p-&gt;link)
-	{
-		for (q = p-&gt;link; q != NULL; q = q-&gt;link)
-		{
-			if (p-&gt;expon &lt; q-&gt;expon)
-			{
-				temp = p-&gt;expon;
-				tmp2 = p-&gt;coef;
-				p-&gt;expon = q-&gt;expon;
-				p-&gt;coef = q-&gt;coef;
-				q-&gt;expon = temp;
-				q-&gt;coef = tmp2;
-			}
-		}
-	}
-	return pHead;
-}
-</code></pre>
-<p>时间复杂度</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(NM)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
-<h3 id="第四步进行相加">第四步：进行相加</h3>
-<p>我们使用PolyAdd() 函数进行相加。逻辑如下：</p>
-<p>首先开辟一个新的链表用来保存相加之后的结果。<br>
-比较两个多项式的每一项，如果相同就进行系数相加并且存入新的链表。如果第一个的指数大，那么第二个就向后移动一个；如果第一个的指数小，那么第一个就向后移动一个。</p>
-<p>只要当p1和p2任何一个为空时，那么比较就结束，p1或p2剩余没有比较的部分就自动存到p3后面。</p>
-<p><strong>实验代码</strong></p>
-<pre><code>Polynomial PolyAdd(Polynomial p1, Polynomial p2)
-{
-	Polynomial Front, rear, temp;
-	float sum;
-	rear = (Polynomial)malloc(sizeof(struct PolyNode));
-	Front = rear;
-	while (p1&amp;&amp;p2) // 比较条件，都不为空
-	{
-		switch (Compare(p1-&gt;expon, p2-&gt;expon)) { // Compare 来比较大小
-		case 1:
-			Attach(p1-&gt;coef, p1-&gt;expon, &amp;rear);
-			p1 = p1-&gt;link;
-			break;
-		case -1:
-			Attach(p2-&gt;coef, p2-&gt;expon, &amp;rear);
-			p2 = p2-&gt;link;
-			break;
-		case 0:
-			sum = p1-&gt;coef + p2-&gt;coef;
-			if (sum) Attach(sum, p1-&gt;expon, &amp;rear);
-			p1 = p1-&gt;link;
-			p2 = p2-&gt;link;
-			break;
-		}
-	}
-	for (; p1; p1 = p1-&gt;link) Attach(p1-&gt;coef, p1-&gt;expon, &amp;rear); // 保存剩余项
-	for (; p2; p2 = p2-&gt;link) Attach(p2-&gt;coef, p2-&gt;expon, &amp;rear); // 保存剩余项
-	rear-&gt;link = NULL; // 最后为空
-	temp = Front;
-	Front = Front-&gt;link;
-	free(temp);
-	return Front;
-}
-</code></pre>
-<p>时间复杂度</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>N</mi><mo separator="true">,</mo><mi>M</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">O(max(N,M))
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
-<h3 id="第五步进行相乘">第五步：进行相乘</h3>
-<p>与加法类似，首先开辟一个新的链表用来保存相乘之后的结果。</p>
-<p>但是我们需要用两层循环，使得两个多项式中的每一项两两相乘运算。</p>
-<p>最后将结果保存。</p>
-<p><strong>实验代码</strong></p>
-<pre><code>Polynomial PolyMulti(Polynomial p1, Polynomial p2)
-{
-	Polynomial front, rear, temp;
-	front = rear = (Polynomial)malloc(sizeof(struct PolyNode));
-	Polynomial t1, t2;
-	float product_coef; int product_expon;
-	if (!p1 || !p2) return NULL;
-	for (t1 = p2; t1; t1 = t1-&gt;link)
-	{
-		for (t2 = p1; t2; t2 = t2-&gt;link)
-		{
-			product_coef = (t1-&gt;coef)*(t2-&gt;coef);
-			product_expon = (t1-&gt;expon) + (t2-&gt;expon);
-			Attach(product_coef, product_expon, &amp;rear);
-		}
-	}
-	temp = front;
-	front = front-&gt;link;
-	free(temp);
-	return front;
-}
-
-</code></pre>
-<p>时间复杂度</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(NM)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
-<h3 id="第六步输出">第六步：输出</h3>
-<p>输出就非常简单了，重点是输出的格式问题。我是将格式统一为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>e</mi><mi>f</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">coef expon
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span></span></span></span></span></p>
-<p>直接看代码吧</p>
-<p><strong>相加输出代码</strong></p>
-<pre><code>while (p3!=NULL)
-{
-	printf(&quot;%.2f * x^%d&quot;, p3-&gt;coef, p3-&gt;expon);
-	p3 = p3-&gt;link;
-	if (p3 != NULL &amp;&amp; p3-&gt;coef &gt; 0)
-		printf(&quot;+&quot;);
-}
-</code></pre>
-<p>时间复杂度</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mo>+</mo><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N+M)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
-<p><strong>相乘输出代码</strong></p>
-<p>为了将次数一样的项合并，乘法的输出稍微复杂一点</p>
-<pre><code>    float C = p4-&gt;coef;
-	int E = p4-&gt;expon;
-	p4 = p4-&gt;link;
-	if(p4==NULL)
-		printf(&quot;%.2f*x^%d &quot;, C, E);
-	while (p4 != NULL)
-	{
-		int flag = 0;
-		while (p4-&gt;expon == E &amp;&amp; p4!=NULL)
-		{
-			C += p4-&gt;coef;
-			if(p4-&gt;link!=NULL)
-				p4 = p4-&gt;link;
-			flag++;
-		}
-		printf(&quot;%.2f * x^%d &quot;, C,E);
-		C = p4-&gt;coef;
-		E = p4-&gt;expon;
-		p4 = p4-&gt;link;
-		if (p4 != NULL &amp;&amp; p4-&gt;coef &gt; 0)
-			printf(&quot;+&quot;);
-		if(!p4)
-			if (C&gt;0)
-				printf(&quot;+ %.2f * x^%d &quot;, C, E);
-			else
-				printf(&quot;%.2f * x^%d &quot;, C, E);
-	}
-</code></pre>
-<p>时间复杂度</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(NM)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
-<h3 id="时间复杂度分析">时间复杂度分析</h3>
-<p>假设多项式一的项数是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>，多项式二的项数是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span>。由于我的程序各个部分的函数都是独立的，没有什么嵌套的关系，因此时间复杂度就是各部分时间复杂度最大的那个。在本程序里，时间复杂度最高的就是排序和相乘的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(NM)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span>，然而当输入是按照从高到低的次数进行输入的时候，排序的时间复杂度就可以降到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>N</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></p>
-<p>相乘的每两项相乘是不可避免的，因此本实验的时间复杂度为</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(NM)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></span></p>
-<h3 id="运行截图">运行截图</h3>
-<p>测试1：</p>
-<p>多项式1：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>6</mn></msup><mo>+</mo><mn>2</mn><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>7</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">f(x) = x^6+2x^3-7x^2+2 
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">7</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></span></p>
-<p>多项式2：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>4</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">f(x) = 3x^4-4x^3+2x-7
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span></span></p>
-<p>结果：<br>
-相加</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>6</mn></msup><mo>+</mo><mn>3</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>2</mn><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>7</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">f(x) = x^6+3x^4-2x^3-7x^2+2x-5
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">7</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span></span></p>
-<p>相乘</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>10</mn></msup><mo>−</mo><msup><mn>4</mn><mn>9</mn></msup><mo>+</mo><mn>8</mn><msup><mi>x</mi><mn>7</mn></msup><mo>−</mo><mn>36</mn><msup><mi>x</mi><mn>6</mn></msup><mo>+</mo><mn>28</mn><msup><mi>x</mi><mn>5</mn></msup><mo>+</mo><mn>10</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>36</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>49</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi><mo>−</mo><mn>14</mn></mrow><annotation encoding="application/x-tex">f(x) = 3x^{10}-4^9+8x^7-36x^6+28x^5+10x^4-36x^3+49x^2+4x-14
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">8</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">8</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mord">9</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">4</span></span></span></span></span></p>
-<p>测试结果：<br>
-<img src="https://besonn.github.io/post-images/1585704267010.PNG" alt="" loading="lazy"></p>
-<p>测试2：</p>
-<p>多项式1：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>20</mn><msup><mi>x</mi><mn>1000</mn></msup><mo>−</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">f(x) = 20x^{1000}-7
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">0</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span></span></p>
-<p>多项式2：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x) = x^2+1
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span></p>
-<p>结果：<br>
-相加</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>2</mn><msup><mn>0</mn><mn>1000</mn></msup><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">f(x) = 20^{1000}+x^2-6
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">0</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span></span></p>
-<p>相乘</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>2</mn><msup><mn>0</mn><mn>1002</mn></msup><mo>+</mo><mn>2</mn><msup><mn>0</mn><mn>1000</mn></msup><mo>−</mo><mn>7</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">f(x) = 20^{1002}+20^{1000} -7x^2-7
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">0</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">0</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">7</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span></span></p>
-<p>测试结果：<br>
-<img src="https://besonn.github.io/post-images/1585704273843.PNG" alt="" loading="lazy"><br>
-测试3：</p>
-<p>多项式1：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>0.2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>0.1</mn><msup><mi>x</mi><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">f(x) = 0.2x^{2}+0.1x^1
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>多项式2：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>0.4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>0.6</mn><msup><mi>x</mi><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">f(x) = 0.4x^2+0.6x^1
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">4</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>结果：<br>
-相加</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>0.6</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>0.7</mn><msup><mi>x</mi><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">f(x) = 0.6x^{2}+0.7x^1
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>相乘</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>0.08</mn><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><mn>0.16</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>0.06</mn><msup><mi>x</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">f(x) = 0.08x^4+0.16x^3+0.06x^2
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">8</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8641079999999999em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">6</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>测试结果：<br>
-<img src="https://besonn.github.io/post-images/1585704295762.PNG" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>

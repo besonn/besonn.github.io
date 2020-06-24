@@ -1,0 +1,524 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据结构实验三——哈夫曼树 | 伊维的笔记本</title>
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1592964147734">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数据结构实验三——哈夫曼树 | 伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="实验三：哈夫曼编/译码器
+实验目的： 掌握哈夫曼树
+实验内容： 利用哈夫曼编码进行通信可以大大提高信道利用率，缩短信息传输时间，降低传输成本。但是，这要求在发送端通过一个编码系统对待传数据预先编码，在接收端将传来的数据进行译码（复原）。对于..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://besonn.github.io">
+  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1592964147734" alt="">
+  </a>
+  <h1 class="site-title">
+    伊维的笔记本
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              数据结构实验三——哈夫曼树
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-05-19
+              </span>
+              <span>
+                13 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="实验三哈夫曼编译码器">实验三：哈夫曼编/译码器</h1>
+<p><strong>实验目的</strong>： 掌握哈夫曼树</p>
+<p><strong>实验内容</strong>： 利用哈夫曼编码进行通信可以大大提高信道利用率，缩短信息传输时间，降低传输成本。但是，这要求在发送端通过一个编码系统对待传数据预先编码，在接收端将传来的数据进行译码（复原）。对于双工信道（即可以双向传输信息的信道），每端都需要一个完整的编/译码系统。试为这样的信息收发站写一个哈夫曼码的编/译码系统。</p>
+<p><strong>实验要求：</strong> 编写完整的系统，要求具有以下功能：<br>
+I:初始化（Initialization）。从终端读入字符集大小n，以及n个字符和n个权值，建立哈夫曼树，并将它存入文件hfmTree中。<br>
+E:编码(Encoding)。利用以建好的哈夫曼树（如不在内存，则从文件hfmTree中读入），对文件ToBeTran中的正文进行编码，然后将结果存入文件CodeFile中。<br>
+D：译码(Decoding)。利用已建好的哈夫曼树将文件CodeFile中的代码进行译码，结果存入文件TextFile中。<br>
+P:印代码文件（Print)。将文件CodeFile以紧凑格式显示在终端上，每行50个代码。同时将此字符形式的编码文件写入文件CodePrin中。<br>
+T:印哈夫曼树(Tree printing)。将已在内存中的哈夫曼树以直观的方式（树或凹入表形式）显示在终端上，同时将此字符形式的哈夫曼树写入文件TreePrint中。</p>
+<p><strong>实验过程</strong></p>
+<ol>
+<li>
+<p>需求分析<br>
+首先要确定n个字符及其权值。一篇英语短文包括字母的大小写以及基本的符号，从网上查找资料获得各个字母出现的平均概率，作为各个符号的权值。由于符号众多，我们选择将其保存到文件里面进行读取。<br>
+其次，关于文件的写入操作。我们直接将屏幕上打印出来的内容保存到相应的txt文件中去。<br>
+最后树的打印，我们采取中序遍历树的方式，将一棵树横向的打印到文件中去。</p>
+</li>
+<li>
+<p>概要设计<br>
+相关的数据结构设计：<br>
+哈夫曼树的节点</p>
+<pre><code class="language-cpp">typedef struct Node {
+int weight;//权值
+int parent;//父节点的序号，为0表示根节点
+int lchild, rchild;//左右孩子节点的序号，为0的是叶子节点
+}HTNode, *HuffmanTree;
+</code></pre>
+<p>编译结果的保存</p>
+<pre><code class="language-cpp">struct Ans {
+char ch; // 保存字符
+int wet; // 保存权值
+}ans[maxn];
+</code></pre>
+<p>主程序的流程：</p>
+<ol>
+<li>初始化：从文件中读取权值和字符，建立一棵哈夫曼树。</li>
+<li>编码：编写函数HuffmanCoding确定每个字符的哈夫曼编码。</li>
+<li>译码：利用事先准备好的一篇文章，打印出文章结果。</li>
+<li>打印部分：打印包括代码和哈夫曼树。</li>
+</ol>
+</li>
+<li>
+<p>详细设计</p>
+<ol>
+<li>建立哈夫曼树的过程</li>
+</ol>
+<pre><code>HuffmanTree create_HuffmanTree(struct Ans *p, int n)
+{
+
+int t = 2 * n - 1;
+HuffmanTree HT = (HuffmanTree)malloc(total * sizeof(HTNode));
+int i;
+for (i = 0; i &lt; n; ++i) {//先构造n个叶节点
+	HT[i].parent = 0;//parent后面会改变
+	HT[i].lchild = 0;
+	HT[i].rchild = 0;
+	HT[i].weight = p-&gt;wet;
+	p++;
+}
+for (; i &lt; total; ++i) {
+	HT[i].parent = 0;
+	HT[i].lchild = 0;
+	HT[i].rchild = 0;
+	HT[i].weight = 0;
+}
+
+int min1, min2;//用来保存每一轮选出的两个weight最小且parent为0的节点下标
+
+//每一轮比较后选择出min1和min2构成一课二叉树,最后构成一棵哈夫曼树
+for (i = n; i &lt; t; ++i) {
+	select_min(HT, i, min1, min2); //另外编写的一个函数，用来寻找i之前的结点
+	HT[min1].parent = i;
+	HT[min2].parent = i;
+	//两个最小权值的结点构成子树
+
+
+	HT[i].lchild = min1;
+	HT[i].rchild = min2;
+	HT[i].weight = HT[min1].weight + HT[min2].weight;
+}
+/*
+for(int i=0;i&lt;total;i++)
+{
+    printf(&quot;%d-%d-%d\n&quot;,HT[i].lchild,HT[i].rchild,HT[i].weight);
+    printf(&quot;%c\n&quot;,ans[i].ch);
+}*/
+return HT;
+}
+</code></pre>
+<ol start="2">
+<li>译码过程</li>
+</ol>
+<pre><code>void HuffmanCoding(HuffmanTree HT, int n)
+{
+char temp[maxn + 5];//临时用来保存每次求得的一个哈夫曼编码串
+temp[maxn] = '\0';//结束符
+
+for (int i = 0; i &lt; n; ++i) {
+	int current = i;
+	int fa = HT[i].parent;
+	int start = maxn;  //初始为编码结束符的位置
+	
+	while (fa != 0)
+	{
+		if (HT[fa].lchild == current)
+			temp[--start] = '0';
+		else temp[--start] = '1';
+		current = fa;
+		fa = HT[current].parent;
+	}
+	strcpy(HC[i], temp + start);//将编码串从最后的start编码~\0复制到HC上
+    }
+}
+</code></pre>
+<ol start="3">
+<li>初始化（从文件中读入权值）</li>
+</ol>
+<pre><code>int n;//需要编码的字符数
+void Initialzation()
+{
+FILE *fp1,*fpx;
+fp1 = fopen(&quot;./DataFile.data&quot;, &quot;r&quot;);
+printf(&quot;从文件DataFile.txt中读取编码的字符种类个数\n&quot;);
+fscanf(fp1, &quot;%d&quot;, &amp;n);
+
+printf(&quot;以及这%d个字符及其权值（整型）\n&quot;, n);
+for (int i = 0; i &lt; n; ++i) {
+	fscanf(fp1, &quot; %c %d&quot;, &amp;ans[i].ch, &amp;ans[i].wet);
+}
+HuffmanTree HT = create_HuffmanTree(ans, n);
+HuffmanCoding(HT, n);//求解每个字符的编码
+
+printf(&quot;各字符对应权值的哈夫曼编码为(按照输入顺序):\n&quot;);
+for (int i = 0; i &lt; n; ++i) {
+	printf(&quot;%c :&quot;, ans[i].ch);
+	puts(HC[i]);
+}
+printf(&quot;将它们存入htmtree.txt中去：\n&quot;);
+fpx=fopen(&quot;./htmtree.txt&quot;,&quot;w+&quot;);
+for(int i=0;i&lt;n;i++)
+{
+    fprintf(fpx,&quot;%c %s\n&quot;,ans[i].ch,HC[i]);
+}
+fclose(fp1);
+fclose(fpx);
+printf(&quot;\n******************************************************\n\n&quot;);
+}
+</code></pre>
+<ol start="4">
+<li>编码</li>
+</ol>
+<pre><code>void EnCoding()
+{
+//char ch[maxn*maxn],temp;
+printf(&quot;下面对文件ToBeTran.data中的文本进行编码形成报文\n&quot;);
+printf(&quot;文章写在文件CodeFile.txt中\n&quot;);
+FILE *fp2, *fp3;
+fp2 = fopen(&quot;ToBeTran.txt&quot;, &quot;rb&quot;);
+fp3 = fopen(&quot;CodeFile.txt&quot;, &quot;w&quot;);
+//fscanf(fp2,&quot;%s&quot;,temp);
+char ch;
+do
+{
+	ch = fgetc(fp2);
+	/* read a char from the file */
+	if (ch == ' ') fprintf(fp3, &quot; &quot;);
+	else if (ch == '\n') fprintf(fp3, &quot;\n&quot;);
+	else if(ch-'a'&gt;=0)
+        fprintf(fp3, &quot;%s&quot;, HC[ch - 'a']);
+    else if(ch-'A'&gt;=0)
+        fprintf(fp3, &quot;%s&quot;, HC[ch - 'A'+26]);
+    else if(ch-'0'&gt;=0&amp;&amp;'9'-ch&gt;=0)
+        fprintf(fp3, &quot;%s&quot;, HC[ch - '0'+52]);
+    else if(ch==',')
+        fprintf(fp3, &quot;%s&quot;, HC[62]);
+    else if(ch=='.')
+        fprintf(fp3, &quot;%s&quot;, HC[63]);
+
+
+} while (ch != EOF);
+fclose(fp2);
+fclose(fp3);
+
+for(int i=0;i&lt;n;i++)
+    printf(&quot;%s\n&quot;,HC[i]);
+}
+</code></pre>
+<ol start="5">
+<li>译码</li>
+</ol>
+<pre><code>void Decoding()
+{
+printf(&quot;下面对文件CodeFile.data中的代码进行解码形成原文\n结果存入文件Textfile.txt中\n&quot;);
+FILE *fp4, *fp5;
+fp4 = fopen(&quot;CodeFile.txt&quot;, &quot;rb&quot;);
+fp5 = fopen(&quot;Textfile.txt&quot;, &quot;w&quot;);
+char ch;
+char temp[maxn];
+char *s = temp;
+memset(temp, 0, sizeof(temp));
+//while(fgets(temp,maxn*maxn,fp4))//读到换行符，并加上\0,存入temp
+do
+{
+	ch = fgetc(fp4);
+	if (ch == '\n') memset(temp, 0, sizeof(temp)), s = temp, fprintf(fp5, &quot;\n&quot;);
+	else if (ch == ' ') memset(temp, 0, sizeof(temp)), s = temp, fprintf(fp5, &quot; &quot;);
+	else {
+		*s++ = ch;
+		if (fun(temp) &gt;= 26&amp;&amp;fun(temp)&lt;52) fprintf(fp5, &quot;%c&quot;, 'A' + fun(temp)%26), memset(temp, 0, sizeof(temp)), s = temp;
+		else if(fun(temp)&gt;=0&amp;&amp;fun(temp)&lt;26) fprintf(fp5, &quot;%c&quot;, 'a' + fun(temp)), memset(temp, 0, sizeof(temp)), s = temp;
+		else if(fun(temp)&gt;=52&amp;&amp;fun(temp)&lt;62) fprintf(fp5, &quot;%c&quot;, '0' + fun(temp)%52), memset(temp, 0, sizeof(temp)), s = temp;
+		else if(fun(temp)==62) fprintf(fp5, &quot;%c&quot;, ','), memset(temp, 0, sizeof(temp)), s = temp;
+        else if(fun(temp)==63) fprintf(fp5, &quot;%c&quot;, '.'), memset(temp, 0, sizeof(temp)), s = temp;
+		else continue;
+	}
+} while (ch != EOF);
+fclose(fp4);
+fclose(fp5);
+}
+</code></pre>
+<ol start="6">
+<li>打印</li>
+</ol>
+<pre><code>void print_tree(HuffmanTree HT,int t,int step)//横向打印哈夫曼树
+{
+
+int i;
+if(HT[t].rchild)
+    print_tree(HT, HT[t].rchild, step + 1);
+for (i = 0; i &lt; step; i++)
+{
+    printf(&quot;       &quot;);
+    fprintf(pt,&quot;       &quot;);
+}
+printf(&quot;   -%d-▏\n&quot;, HT[t].weight);
+fprintf(pt,&quot;   -%d-▏\n&quot;,HT[t].weight);
+if(HT[t].lchild)
+    print_tree(HT, HT[t].lchild, step + 1);
+}
+void Output()
+{
+FILE *fp6;
+fp6=fopen(&quot;CodePrin.txt&quot;,&quot;w&quot;);
+for (int i = 0; i &lt; n; ++i) {
+	printf(&quot;%c :%lf\n&quot;, ans[i].ch, ans[i].wet*1.0 / sum);
+}
+printf(&quot;\n******************************************************\n\n&quot;);
+printf(&quot;下面输出输出ToBeTran.data及其报文CodeFile.txt\n\n&quot;);
+FILE *fp2, *fp3;
+fp2 = fopen(&quot;ToBeTran.txt&quot;, &quot;r&quot;);
+fp3 = fopen(&quot;CodeFile.txt&quot;, &quot;r&quot;);
+char ch;
+printf(&quot;ToBeTran.data :\n&quot;);
+do
+{
+	ch = fgetc(fp2);
+	printf(&quot;%c&quot;, ch);
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+printf(&quot;CodeFile.txt :\n&quot;);
+int cnt=0;
+do
+{
+	ch = fgetc(fp3);
+	printf(&quot;%c&quot;, ch);
+	fprintf(fp6,&quot;%c&quot;,ch);
+	cnt+=1;
+	if(cnt%50==0)
+    {
+        printf(&quot;\n&quot;);
+        fprintf(fp6,&quot;\n&quot;);
+    }
+
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+
+printf(&quot;\n******************************************************\n\n&quot;);
+printf(&quot;下面输出CodeFile.data及其原文Textfile.txt\n\n&quot;);
+FILE *fp4, *fp5;
+fp4 = fopen(&quot;CodeFile.txt&quot;, &quot;r&quot;);
+fp5 = fopen(&quot;Textfile.txt&quot;, &quot;r&quot;);
+
+printf(&quot;CodeFile.data :\n&quot;);
+do
+{
+	ch = fgetc(fp4);
+	printf(&quot;%c&quot;, ch);
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+printf(&quot;Textfile.txt :\n&quot;);
+do
+{
+	ch = fgetc(fp5);
+	printf(&quot;%c&quot;, ch);
+} while (ch != EOF);
+printf(&quot;\n\n\n&quot;);
+fclose(fp6);
+}
+</code></pre>
+</li>
+<li>
+<p>调试分析<br>
+（1）调试过程中遇到的问题</p>
+<ol>
+<li>大小写以及符号的问题。如果只有小写字母，那我们可以根据Ascii码<code>-'a'</code>来确定每个字符的相对大小，但是引入了大写和符号，所以我们就需要多增加几个条件分支来保存他们的权值。</li>
+<li>如何打印树。如果直接选择常规的方法去遍历树就会像得十分的麻烦，所以我选择了横向打印树的方式，类似下图。<br>
+<img src="https://img-blog.csdnimg.cn/2020051819484140.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></li>
+</ol>
+<p>（2） 算法的时空复杂度。<br>
+假设编码的文本字符串长度为n，字母为k个符号。<br>
+由于我们的权值读入是无序的，因此需要先对权值进行排序，时间复杂度O(k*log(k))</p>
+<p>对于每个编码符号，必须遍历树以解码该符号。树包含k个节点，并且平均需要O（log k）个节点访问来解码符号。所以时间复杂度为O（n log k）。</p>
+<p>空间复杂度为树的O（k）和解码文本的O（n）。</p>
+</li>
+</ol>
+<p><strong>实验结果</strong>：<br>
+首先准备好n个权值和一篇英文文章。</p>
+<p><strong>I:初始化</strong><br>
+67个权值<br>
+<img src="https://img-blog.csdnimg.cn/20200518201553808.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+一篇英语文章<br>
+<img src="https://img-blog.csdnimg.cn/20200518201553855.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p>实验终端打印<br>
+<img src="https://img-blog.csdnimg.cn/20200518202441213.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+文件中打印<br>
+<img src="https://img-blog.csdnimg.cn/20200518202532210.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>E：编码</strong></p>
+<p>将编码结果打印出来并且保存到CodeFile文件里<br>
+<img src="https://img-blog.csdnimg.cn/20200518202623652.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+文章原文<br>
+<img src="https://img-blog.csdnimg.cn/20200518202836975.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+CodeFile文件<br>
+<img src="https://img-blog.csdnimg.cn/20200518202718868.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>D:译码</strong></p>
+<p>将译码之后的结果保存到TextFile文件里<br>
+<img src="https://img-blog.csdnimg.cn/2020051820322964.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/202005182029437.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p><strong>P：打印</strong></p>
+<p>将文件CodeFile以紧凑格式显示在终端上，每行50个代码。同时将此字符形式的编码文件写入文件CodePrin中。<br>
+<img src="https://img-blog.csdnimg.cn/20200518202836954.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+CodePrin文件<br>
+<img src="https://img-blog.csdnimg.cn/20200518203133651.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p><strong>T:印哈夫曼树</strong></p>
+<p>将哈夫曼树打印出来<br>
+<img src="https://img-blog.csdnimg.cn/20200518203514841.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020051820322927.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p><strong>实验总结</strong><br>
+本次实验花费时间比较长，有以下几点感悟：</p>
+<ol>
+<li>注意内存空间的管理，很有可能就出现内存泄漏的情况。</li>
+<li>对于文件的打印，最后一定要记得把文件关掉。</li>
+<li>关于递归问题的文件打印，文件指针最好是要设置成全局变量，不然文件很有可能在中途就关闭。</li>
+<li>哈夫曼树是一种效率很高的数据结构，如果输入权值前就进行好排序，可能时间复杂度会更好。</li>
+<li>横向打印树可以是一种输出树结构的好方式。</li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%AE%9E%E9%AA%8C%E4%B8%89%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8">实验三：哈夫曼编/译码器</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/">
+              <h3 class="post-title">
+                《数值分析》绪论、前三章知识点整理
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
