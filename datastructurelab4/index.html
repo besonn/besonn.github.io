@@ -1,0 +1,369 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据结构实验四 | 伊维的笔记本</title>
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1592966125297">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数据结构实验四 | 伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+实验题目：校园导游咨询
+实验目的
+掌握图的存储方法和最短路经算法。
+实验内容
+设计一个校园导游程序，为来访客人提供各种信息查询服务。测试数据根据实际情况指定。提示：一般情况下，校园的道路是双向通行的，可设校园平面图是一个无向图。顶点和边均..." />
+    <meta name="keywords" content="数据结构" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://besonn.github.io">
+  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1592966125297" alt="">
+  </a>
+  <h1 class="site-title">
+    伊维的笔记本
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              数据结构实验四
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-06-24
+              </span>
+              <span>
+                8 min read
+              </span>
+              
+                <a href="https://besonn.github.io/H9FI8--2D/" class="post-tag">
+                  # 数据结构
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <!-- more -->
+<h1 id="实验题目校园导游咨询">实验题目：校园导游咨询</h1>
+<h2 id="实验目的">实验目的</h2>
+<p>掌握图的存储方法和最短路经算法。</p>
+<h2 id="实验内容">实验内容</h2>
+<p>设计一个校园导游程序，为来访客人提供各种信息查询服务。测试数据根据实际情况指定。提示：一般情况下，校园的道路是双向通行的，可设校园平面图是一个无向图。顶点和边均含有相关信息。</p>
+<h2 id="实验要求">实验要求</h2>
+<ol>
+<li>设计所在学校的校园平面图，所含景点不少于10个。以图中顶点表示校内各景点，存放景点名称、代号、简介等信息；以边表示路径，存放路径长度等相关信息。   2. 为来访客人提供图中任意景点相关信息的查询。</li>
+<li>为来访客人提供图中任意景点的纹路查询，即查询任意两个景点之间的一条最短的简单路径。</li>
+</ol>
+<h2 id="实验内容-2">实验内容</h2>
+<h3 id="需求分析">需求分析</h3>
+<p>为了能够更好的展现学校的信息，表示学校内部各个景点的信息和路径信息。我设计了一个校内咨询网页，这个网页内部包括学校的地图，12个景点的信息，还有每两个景点之间的最短路径。</p>
+<p><strong>学校地图</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193330878.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>输入信息</strong></p>
+<ol>
+<li>景点介绍<br>
+当用户需要了解景点信息时，需要点击了解景点的单选框。</li>
+<li>最短路径<br>
+当用户想要访问两个顶点的最短路径时，需要输入（选择）起点和终点。</li>
+</ol>
+<p><strong>输出信息</strong></p>
+<ol>
+<li>景点介绍<br>
+用户选中后，页面显示景点的图片和介绍。</li>
+<li>最短路径<br>
+用户选择了起点和终点之后，在页面上输出最短路径信息。</li>
+</ol>
+<h3 id="概要设计">概要设计</h3>
+<p><strong>信息存储</strong><br>
+我们的信息存储主要有两个部分：景点信息和路径信息。</p>
+<ol>
+<li>景点信息<br>
+为了使得网页上的访问更加方便，我们不能用一般的数组或结构体来存储景点的信息。这里我选择的XML结构来保存景点信息。里面有景点的名称、介绍等等。<br>
+<img src="https://img-blog.csdnimg.cn/20200617192913426.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></li>
+<li>路径信息<br>
+为了保存路径，我将景点和景点之间的边保存在了一个邻接矩阵里面。</li>
+</ol>
+<p><strong>最短路径的算法</strong><br>
+由于本次设计需要用户输入起点和终点，也是就是说需要求任意两点之间的最短路径。所以我们使用Floyd算法来求任意两点之间的最短路径。</p>
+<h3 id="详细设计">详细设计</h3>
+<p>为了侧重重点，我在实验报告里不再展示网页设计相关的代码，只展示算法的代码部分。</p>
+<p><strong>邻接矩阵</strong></p>
+<pre><code class="language-csharp">static int inf = 0x3f3f3f;
+        public int[,] Arr = new int[12, 12] {
+            { 0, inf,inf,inf,inf,inf, 1,inf,inf,inf,inf,inf },
+            { inf, 0, 1 ,inf,inf,inf, 1,inf,inf,inf,inf,inf },
+            { inf, 1,0 , 5 ,inf, 3, inf,inf,inf,inf,inf,inf },
+            { inf,inf,5,0,inf,inf, inf,inf,inf,inf,12,inf },
+            { inf, inf,inf,inf,0,inf, inf,inf,inf,inf,2,2   },
+            { inf, inf,3,inf,inf,0, inf,inf,inf,2,inf,inf },
+            { 1, 1,inf,inf,inf,inf, 0, 1,inf,inf,inf,inf },
+            { inf, inf,inf,inf,inf,inf, 1,0,1,2,inf,inf },
+            { inf, inf,inf,inf,inf,inf, inf,1,0,inf,1,2 },
+            { inf, inf,inf,inf,inf,2, inf,2,inf,0,2,inf },
+            { inf, inf,inf,inf,2,inf, inf,inf,1,2,0,3 },
+            { inf, inf,inf,inf,inf,inf, inf,inf,2,inf,3,0 },
+        };
+</code></pre>
+<p><strong>路径保存</strong><br>
+我们用一个-1的矩阵来保存路径</p>
+<pre><code class="language-csharp">public int[,] path = new int[12, 12] {
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
+        };
+</code></pre>
+<p><strong>最短路算法</strong><br>
+采用Floyd算法</p>
+<pre><code class="language-csharp">public void Shortest()
+        {
+            for (int k = 0; k &lt; 12; k++)
+                for (int i = 0; i &lt; 12; i++)
+                    for (int j = 0; j &lt; 12; j++)
+                        if(Arr[i, j] &gt;  Arr[i, k] + Arr[k, j])
+                        {
+                            Arr[i, j] = Arr[i, k] + Arr[k, j];
+                            path[i, j] = k;
+                        }
+            string p = DropDownList1.SelectedValue.ToString();
+            string[]p1 = p.Split('-');
+            string q = DropDownList2.SelectedValue.ToString();
+            string[] q1 = q.Split('-');
+            int pp = int.Parse(p1[0]);
+            int qq = int.Parse(q1[0]);
+            if(Arr[pp,qq]!=inf)
+            {
+                label1.Text = &quot;&quot;;
+                label1.Text += p1[0] + p1[1] + &quot;-&gt;&quot;;
+                print(pp, qq);
+                label1.Text += q1[0] + q1[1];
+            }
+            
+            label2.Text = DropDownList1.SelectedItem.Text + &quot;-&gt;&quot; + DropDownList2.SelectedItem.Text + &quot;的最短路径是&quot; + Arr[pp, qq];
+        }
+</code></pre>
+<p><strong>路径输出</strong></p>
+<pre><code class="language-csharp">public void print(int a, int b)
+        {
+            if (path[a,b] == -1) return;//因为开始初始化为-1，这里就可以避免相邻的再次输出 
+            print(a, path[a,b]);//前半部 
+            //cout &lt;&lt; path[a,b] &lt;&lt; &quot;--&gt;&quot;;//输出该点
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Server.MapPath(&quot;~/App_Data/cons.xml&quot;));
+            XmlNode xn = doc.SelectSingleNode(&quot;Constellation&quot;);
+            XmlNodeList xnl = xn.ChildNodes;
+            // 遍历子节点
+            foreach (XmlNode xnd in xnl)
+            {
+                // 运用实体类保存信息
+                ConsModel cm = new ConsModel();
+                XmlElement xe = (XmlElement)xnd;
+                XmlNodeList xnl0 = xe.ChildNodes;
+                cm.ConsNum = xnl0.Item(0).InnerText;
+                cm.ConsName = xnl0.Item(1).InnerText;
+                if(path[a,b].ToString()==cm.ConsNum)
+                {
+                    label1.Text += path[a, b] + cm.ConsName+&quot;-&gt;&quot;;
+                    break;
+                }
+                    
+            }
+            print(path[a,b], b);//后半部 
+        }
+</code></pre>
+<h3 id="调试分析">调试分析</h3>
+<p><strong>问题及解决办法</strong></p>
+<ol>
+<li>
+<p>网页设计遇到的问题和解决办法<br>
+遇到最大的问题就是我本人对于前端设计不算了解，不能实现较为复杂的页面。我在调控一些网页控件时也遇到了对功能不了解而出现的错误。</p>
+<p>我的解决办法就是尽可能简化网页设计部分，用最少的控件解决问题。</p>
+</li>
+<li>
+<p>算法遇到的问题和解决办法<br>
+算法遇到的最大的问题就是路径的输出。根据Floyd算法，可以很简单的求出每两个点之间的最短路径。但是输出是个问题。</p>
+<p>经过一番思考，我在求解最短路径的时候记录下节点的信息，然后在求解的时候用递归输出。</p>
+</li>
+</ol>
+<p><strong>算法的时空分析</strong></p>
+<ol>
+<li>空间复杂度<br>
+由于邻接矩阵的存在，空间复杂度至少是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>N</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">N^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>的。在这里我选择了12个景点，空间复杂度还可以接受。</li>
+<li>时间复杂度<br>
+由于我使用了floyd算法，时间复杂度就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>N</mi><mn>3</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。但我的景点数是12个，所以这个时间复杂度还是可以接受的。</li>
+</ol>
+<h2 id="实验结果">实验结果</h2>
+<p><strong>欢迎界面</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193234328.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>景点选择界面</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193403778.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>展示景点</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423740.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423751.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200617193423723.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<strong>最短路查询</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200617193447528.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200617193447524.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jlc29ubg==,size_1,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="实验总结">实验总结</h2>
+<p>通过这个实验我有以下体会</p>
+<ol>
+<li>我学会使用了多源最短路径之一的floyd算法，该算法形式简单，但对于数据规模较大的数据来说，时间复杂度较高。</li>
+<li>我将数据结构面向对象化，制作网页很多时候需要用到面向对象的技术。我这次实验将面向对象和数据结构进行了一个结合，感觉使用起来更加的方便了。</li>
+<li>我将.NET课上学到的ASP.NET 技术和数据结构与算法相结合，实现了技术上的交叉。</li>
+</ol>
+<!-- more -->
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%AE%9E%E9%AA%8C%E9%A2%98%E7%9B%AE%E6%A0%A1%E5%9B%AD%E5%AF%BC%E6%B8%B8%E5%92%A8%E8%AF%A2">实验题目：校园导游咨询</a>
+<ul>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84">实验目的</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9">实验内容</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82">实验要求</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9-2">实验内容</a>
+<ul>
+<li><a href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90">需求分析</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81%E8%AE%BE%E8%AE%A1">概要设计</a></li>
+<li><a href="#%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1">详细设计</a></li>
+<li><a href="#%E8%B0%83%E8%AF%95%E5%88%86%E6%9E%90">调试分析</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C">实验结果</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93">实验总结</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://besonn.github.io/data-structure-lab3/">
+              <h3 class="post-title">
+                数据结构实验三——哈夫曼树
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
