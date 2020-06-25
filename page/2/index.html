@@ -1,214 +1,398 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>伊维的笔记本</title>
-<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1592983076432">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1593071195367">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="伊维的笔记本 - Atom Feed" href="https://besonn.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-    <meta name="description" content="温故而知新" />
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://besonn.github.io">
-  <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1592983076432" alt="">
-  </a>
-  <h1 class="site-title">
-    伊维的笔记本
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://besonn.github.io">伊维的笔记本</a></h3>
   </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
-
-    
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://besonn.github.io/data-analyse-lab1/">
-        <h2 class="post-title">数值分析实验一——拉格朗日插值及牛顿插值算法的实现</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-04-06
-        </span>
-        <span>
-          11 min read
-        </span>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
         
-          <a href="https://besonn.github.io/4C-LUxpOv/" class="post-tag">
-            # 数值分析
-          </a>
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
         
-      </div>
-      
-      <div class="post-abstract">
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
         
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/">
-        <h2 class="post-title">数据结构实验一</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-20
-        </span>
-        <span>
-          10 min read
-        </span>
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
         
-      </div>
-      
-      <div class="post-abstract">
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
         
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://besonn.github.io/nlp1/">
-        <h2 class="post-title">我对于文本分类和情感分析的简单理解</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-14
-        </span>
-        <span>
-          6 min read
-        </span>
-        
-          <a href="https://besonn.github.io/DUwRPNELg/" class="post-tag">
-            # 自然语言处理
-          </a>
-        
-          <a href="https://besonn.github.io/7DdMdcpl2X/" class="post-tag">
-            # 机器学习
-          </a>
-        
-          <a href="https://besonn.github.io/4sAwUexv_c/" class="post-tag">
-            # 情感分析
-          </a>
-        
-          <a href="https://besonn.github.io/5MzTn9F101/" class="post-tag">
-            # 文本分类
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://besonn.github.io/2020-nian-mei-sai-zong-jie/">
-        <h2 class="post-title">2020年美赛总结</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-13
-        </span>
-        <span>
-          5 min read
-        </span>
-        
-          <a href="https://besonn.github.io/bndXaDhsB/" class="post-tag">
-            # 数学建模
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://besonn.github.io/first-thing-first/">
-        <h2 class="post-title">First thing first……</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-13
-        </span>
-        <span>
-          1 min read
-        </span>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-</div>
-
-    
-        <div class="pagination-container">
-  
-    <a href="https://besonn.github.io/" class="prev-page">上一页</a>
-  
-  
-</div>
-
-    
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
-      </div>
+      </ul>
     </div>
+  </div>
+</nav>
+
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://besonn.github.io/data-analyse-lab1/">数值分析实验一——拉格朗日插值及牛顿插值算法的实现</a>
+    </h2>
+    <p class="article-meta">
+      2020-04-06
+      
+        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge secondary">
+          数值分析
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://besonn.github.io/data-analyse-lab1/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/">数据结构实验一</a>
+    </h2>
+    <p class="article-meta">
+      2020-03-20
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://besonn.github.io/nlp1/">我对于文本分类和情感分析的简单理解</a>
+    </h2>
+    <p class="article-meta">
+      2020-03-14
+      
+        <a href="https://besonn.github.io/DUwRPNELg/" class="badge success">
+          自然语言处理
+        </a>
+      
+        <a href="https://besonn.github.io/7DdMdcpl2X/" class="badge secondary">
+          机器学习
+        </a>
+      
+        <a href="https://besonn.github.io/4sAwUexv_c/" class="badge success">
+          情感分析
+        </a>
+      
+        <a href="https://besonn.github.io/5MzTn9F101/" class="badge secondary">
+          文本分类
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://besonn.github.io/nlp1/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://besonn.github.io/2020-nian-mei-sai-zong-jie/">2020年美赛总结</a>
+    </h2>
+    <p class="article-meta">
+      2020-03-13
+      
+        <a href="https://besonn.github.io/bndXaDhsB/" class="badge secondary">
+          数学建模
+        </a>
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://besonn.github.io/2020-nian-mei-sai-zong-jie/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+  <article class="article">
+    <h2 class="article-title">
+      <a href="https://besonn.github.io/first-thing-first/">First thing first……</a>
+    </h2>
+    <p class="article-meta">
+      2020-03-13
+      
+    </p>
+    <p class="text-lead">
+      
+    </p>
+    <div class="row">
+      <a href="https://besonn.github.io/first-thing-first/" class="readmore-link">
+        <button>
+          Read More
+        </button>
+      </a>
+    </div>
+  </article>
+
+
+        </div>
+        
+        <div class="row flex-edges">
+  
+    <a href="https://besonn.github.io/" class="paper-btn">
+      上一页
+    </a>
+  
+  
+</div>
+
+      </div>
+      
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://besonn.github.io/images/avatar.png?v=1593071195367" class="no-responsive avatar">
+    <div class="text-muted">温故而知新</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://besonn.github.io/datastructurelab4/">数据结构实验四</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/data-structure-lab3/">数据结构实验三——哈夫曼树</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/">《数值分析》绪论、前三章知识点整理</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/shi-jian-lun/">《实践论》摘抄</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/cuda-1/">CUDA学习1</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/misp-2/">Mips学习2</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/misp-1/">Misp学习1</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/Romberg/">龙贝格算法和梯形算法求解积分的比较</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/data-structure-lab2/">数据结构实验二——迷宫的求解</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://besonn.github.io/matlabcode/">数值分析实验一matlab代码总结</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://besonn.github.io/H9FI8--2D/" class="badge success">
+          数据结构
+        </a>
+      
+        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge secondary">
+          数值分析
+        </a>
+      
+        <a href="https://besonn.github.io/sS2w55-uO/" class="badge secondary">
+          读书笔记
+        </a>
+      
+        <a href="https://besonn.github.io/ur4CiZpgl/" class="badge secondary">
+          CUDA
+        </a>
+      
+        <a href="https://besonn.github.io/MS9C3OIvDR/" class="badge secondary">
+          GPU
+        </a>
+      
+        <a href="https://besonn.github.io/SIdbdZbx4/" class="badge secondary">
+          计算机组成原理
+        </a>
+      
+        <a href="https://besonn.github.io/SZXiDKbFjj/" class="badge success">
+          misp
+        </a>
+      
+        <a href="https://besonn.github.io/DUwRPNELg/" class="badge warning">
+          自然语言处理
+        </a>
+      
+        <a href="https://besonn.github.io/7DdMdcpl2X/" class="badge warning">
+          机器学习
+        </a>
+      
+        <a href="https://besonn.github.io/4sAwUexv_c/" class="badge secondary">
+          情感分析
+        </a>
+      
+        <a href="https://besonn.github.io/5MzTn9F101/" class="badge success">
+          文本分类
+        </a>
+      
+        <a href="https://besonn.github.io/bndXaDhsB/" class="badge success">
+          数学建模
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+
   </body>
 </html>
