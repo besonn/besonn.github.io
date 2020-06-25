@@ -4,353 +4,66 @@
     <meta charset="utf-8" >
 
 <title>伊维的笔记本</title>
-<meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1593071195367">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1593072636499">
 <link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
 
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
+
+    <meta name="description" content="温故而知新">
+    
   </head>
   <body>
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://besonn.github.io">伊维的笔记本</a></h3>
-  </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
-        
-          <li>
-            
-              <a href="/" class="menu">
-                首页
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/archives" class="menu">
-                归档
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/tags" class="menu">
-                标签
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/post/about" class="menu">
-                关于
-              </a>
-            
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+    <div id="app" class="main">
 
-
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/datastructurelab4/">数据结构实验四</a>
-    </h2>
-    <p class="article-meta">
-      2020-06-24
-      
-        <a href="https://besonn.github.io/H9FI8--2D/" class="badge secondary">
-          数据结构
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/datastructurelab4/" class="readmore-link">
-        <button>
-          Read More
-        </button>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://besonn.github.io">
+        <img src="https://besonn.github.io/images/avatar.png?v=1593072636499" class="site-logo">
+        <h1 class="site-title">伊维的笔记本</h1>
       </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/data-structure-lab3/">数据结构实验三——哈夫曼树</a>
-    </h2>
-    <p class="article-meta">
-      2020-05-19
-      
-        <a href="https://besonn.github.io/H9FI8--2D/" class="badge success">
-          数据结构
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/data-structure-lab3/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/">《数值分析》绪论、前三章知识点整理</a>
-    </h2>
-    <p class="article-meta">
-      2020-05-15
-      
-        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge success">
-          数值分析
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/shi-jian-lun/">《实践论》摘抄</a>
-    </h2>
-    <p class="article-meta">
-      2020-05-03
-      
-        <a href="https://besonn.github.io/sS2w55-uO/" class="badge success">
-          读书笔记
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/shi-jian-lun/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/cuda-1/">CUDA学习1</a>
-    </h2>
-    <p class="article-meta">
-      2020-04-24
-      
-        <a href="https://besonn.github.io/ur4CiZpgl/" class="badge secondary">
-          CUDA
-        </a>
-      
-        <a href="https://besonn.github.io/MS9C3OIvDR/" class="badge warning">
-          GPU
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/cuda-1/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/misp-2/">Mips学习2</a>
-    </h2>
-    <p class="article-meta">
-      2020-04-24
-      
-        <a href="https://besonn.github.io/SIdbdZbx4/" class="badge success">
-          计算机组成原理
-        </a>
-      
-        <a href="https://besonn.github.io/SZXiDKbFjj/" class="badge ">
-          misp
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/misp-2/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/misp-1/">Misp学习1</a>
-    </h2>
-    <p class="article-meta">
-      2020-04-22
-      
-        <a href="https://besonn.github.io/SIdbdZbx4/" class="badge secondary">
-          计算机组成原理
-        </a>
-      
-        <a href="https://besonn.github.io/SZXiDKbFjj/" class="badge ">
-          misp
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/misp-1/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/Romberg/">龙贝格算法和梯形算法求解积分的比较</a>
-    </h2>
-    <p class="article-meta">
-      2020-04-20
-      
-        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge secondary">
-          数值分析
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/Romberg/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/data-structure-lab2/">数据结构实验二——迷宫的求解</a>
-    </h2>
-    <p class="article-meta">
-      2020-04-20
-      
-        <a href="https://besonn.github.io/H9FI8--2D/" class="badge success">
-          数据结构
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/data-structure-lab2/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://besonn.github.io/matlabcode/">数值分析实验一matlab代码总结</a>
-    </h2>
-    <p class="article-meta">
-      2020-04-07
-      
-        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge warning">
-          数值分析
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://besonn.github.io/matlabcode/" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-
-        </div>
-        
-        <div class="row flex-edges">
-  
-  
-    <a href="https://besonn.github.io/page/2" class="paper-btn">
-      下一页
-    </a>
-  
-</div>
-
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
+    </div>
+    <div>
       
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://besonn.github.io/images/avatar.png?v=1593071195367" class="no-responsive avatar">
-    <div class="text-muted">温故而知新</div>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
     <div class="social-container">
       
         
@@ -364,160 +77,196 @@
         
       
     </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
+    <div class="site-description">
+      温故而知新
     </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://besonn.github.io/datastructurelab4/">数据结构实验四</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/data-structure-lab3/">数据结构实验三——哈夫曼树</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/">《数值分析》绪论、前三章知识点整理</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/shi-jian-lun/">《实践论》摘抄</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/cuda-1/">CUDA学习1</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/misp-2/">Mips学习2</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/misp-1/">Misp学习1</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/Romberg/">龙贝格算法和梯形算法求解积分的比较</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/data-structure-lab2/">数据结构实验二——迷宫的求解</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/matlabcode/">数值分析实验一matlab代码总结</a>
-            </li>
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      </ul>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
     </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-        <a href="https://besonn.github.io/H9FI8--2D/" class="badge warning">
-          数据结构
-        </a>
-      
-        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge secondary">
-          数值分析
-        </a>
-      
-        <a href="https://besonn.github.io/sS2w55-uO/" class="badge ">
-          读书笔记
-        </a>
-      
-        <a href="https://besonn.github.io/ur4CiZpgl/" class="badge ">
-          CUDA
-        </a>
-      
-        <a href="https://besonn.github.io/MS9C3OIvDR/" class="badge ">
-          GPU
-        </a>
-      
-        <a href="https://besonn.github.io/SIdbdZbx4/" class="badge secondary">
-          计算机组成原理
-        </a>
-      
-        <a href="https://besonn.github.io/SZXiDKbFjj/" class="badge ">
-          misp
-        </a>
-      
-        <a href="https://besonn.github.io/DUwRPNELg/" class="badge secondary">
-          自然语言处理
-        </a>
-      
-        <a href="https://besonn.github.io/7DdMdcpl2X/" class="badge secondary">
-          机器学习
-        </a>
-      
-        <a href="https://besonn.github.io/4sAwUexv_c/" class="badge secondary">
-          情感分析
-        </a>
-      
-        <a href="https://besonn.github.io/5MzTn9F101/" class="badge warning">
-          文本分类
-        </a>
-      
-        <a href="https://besonn.github.io/bndXaDhsB/" class="badge ">
-          数学建模
-        </a>
-      
-    </div>
-  </div>
-  <div class="paper">
-    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
   </div>
 </div>
 
-    </div>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/datastructurelab4/">
+                  <h2 class="post-title">数据结构实验四</h2>
+                </a>
+                <div class="post-date">
+                  2020-06-24
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/data-structure-lab3/">
+                  <h2 class="post-title">数据结构实验三——哈夫曼树</h2>
+                </a>
+                <div class="post-date">
+                  2020-05-19
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/">
+                  <h2 class="post-title">《数值分析》绪论、前三章知识点整理</h2>
+                </a>
+                <div class="post-date">
+                  2020-05-15
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/shi-jian-lun/">
+                  <h2 class="post-title">《实践论》摘抄</h2>
+                </a>
+                <div class="post-date">
+                  2020-05-03
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/cuda-1/">
+                  <h2 class="post-title">CUDA学习1</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-24
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/misp-2/">
+                  <h2 class="post-title">Mips学习2</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-24
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/misp-1/">
+                  <h2 class="post-title">Misp学习1</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-22
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/Romberg/">
+                  <h2 class="post-title">龙贝格算法和梯形算法求解积分的比较</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-20
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/data-structure-lab2/">
+                  <h2 class="post-title">数据结构实验二——迷宫的求解</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-20
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://besonn.github.io/matlabcode/">
+                  <h2 class="post-title">数值分析实验一matlab代码总结</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-07
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+    <a href="https://besonn.github.io/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script type="application/javascript">
 
 AOS.init();
 
-hljs.initHighlightingOnLoad()
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
 </script>
+
+
 
 
 

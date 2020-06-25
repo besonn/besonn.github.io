@@ -4,94 +4,97 @@
     <meta charset="utf-8" >
 
 <title>数据结构实验二——迷宫的求解 | 伊维的笔记本</title>
-<meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1593071195367">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1593072636499">
 <link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
 
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
+
+    <meta name="description" content="实验要求和内容
+迷宫只有两个门，一个叫做入口，另一个叫做出口。把一只老鼠从一个无顶盖的大盒子的入口处赶进迷宫。迷宫中设置很多隔壁，对前进方向形成了多处障碍，在迷宫的唯一出口处放置了一块奶酪，吸引老鼠在迷宫中寻找通路以到达出口。求解迷宫问题，..." />
+    <meta name="keywords" content="数据结构" />
   </head>
   <body>
-  
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://besonn.github.io">伊维的笔记本</a></h3>
-  </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://besonn.github.io">
+        <img src="https://besonn.github.io/images/avatar.png?v=1593072636499" class="site-logo">
+        <h1 class="site-title">伊维的笔记本</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
         
-          <li>
-            
-              <a href="/" class="menu">
-                首页
-              </a>
-            
-          </li>
+          <a href="/" class="site-nav">
+            首页
+          </a>
         
-          <li>
-            
-              <a href="/archives" class="menu">
-                归档
-              </a>
-            
-          </li>
+      
         
-          <li>
-            
-              <a href="/tags" class="menu">
-                标签
-              </a>
-            
-          </li>
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
         
-          <li>
-            
-              <a href="/post/about" class="menu">
-                关于
-              </a>
-            
-          </li>
+      
         
-      </ul>
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
     </div>
   </div>
-</nav>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
 
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          <article class="article">
-            <h1>数据结构实验二——迷宫的求解</h1>
-            <p class="article-meta">
-              2020-04-20
-              
-                <a href="https://besonn.github.io/H9FI8--2D/" class="badge warning">
-                  数据结构
-                </a>
-              
-            </p>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">数据结构实验二——迷宫的求解</h2>
+            <div class="post-date">2020-04-20</div>
             
-            <div class="post-content">
+            <div class="post-content" v-pre>
               <h3 id="实验要求和内容">实验要求和内容</h3>
 <p>迷宫只有两个门，一个叫做入口，另一个叫做出口。把一只老鼠从一个无顶盖的大盒子的入口处赶进迷宫。迷宫中设置很多隔壁，对前进方向形成了多处障碍，在迷宫的唯一出口处放置了一块奶酪，吸引老鼠在迷宫中寻找通路以到达出口。求解迷宫问题，即找出从入口到出口的路径。</p>
 <h3 id="实验思路">实验思路</h3>
@@ -430,198 +433,49 @@ void Random(int n)
 </ol>
 
             </div>
-          </article>
-        </div>
-        <div class="paper" data-aos="fade-in">
-          
-            <div class="next-post">
-              <div class="next">
-                下一篇
+            
+              <div class="tag-container">
+                
+                  <a href="https://besonn.github.io/H9FI8--2D/" class="tag">
+                    数据结构
+                  </a>
+                
               </div>
-              <a href="https://besonn.github.io/matlabcode/">
-                <h3 class="post-title">
-                  数值分析实验一matlab代码总结
-                </h3>
-              </a>
-            </div>
-          
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://besonn.github.io/matlabcode/">
+                  <h3 class="post-title">
+                    数值分析实验一matlab代码总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
         </div>
-        
       </div>
-
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://besonn.github.io/images/avatar.png?v=1593071195367" class="no-responsive avatar">
-    <div class="text-muted">温故而知新</div>
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
-    </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://besonn.github.io/datastructurelab4/">数据结构实验四</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/data-structure-lab3/">数据结构实验三——哈夫曼树</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/shuzhifenxi-zhishidian1/">《数值分析》绪论、前三章知识点整理</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/shi-jian-lun/">《实践论》摘抄</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/cuda-1/">CUDA学习1</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/misp-2/">Mips学习2</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/misp-1/">Misp学习1</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/Romberg/">龙贝格算法和梯形算法求解积分的比较</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/data-structure-lab2/">数据结构实验二——迷宫的求解</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://besonn.github.io/matlabcode/">数值分析实验一matlab代码总结</a>
-            </li>
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      </ul>
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-        <a href="https://besonn.github.io/H9FI8--2D/" class="badge warning">
-          数据结构
-        </a>
-      
-        <a href="https://besonn.github.io/4C-LUxpOv/" class="badge success">
-          数值分析
-        </a>
-      
-        <a href="https://besonn.github.io/sS2w55-uO/" class="badge secondary">
-          读书笔记
-        </a>
-      
-        <a href="https://besonn.github.io/ur4CiZpgl/" class="badge success">
-          CUDA
-        </a>
-      
-        <a href="https://besonn.github.io/MS9C3OIvDR/" class="badge success">
-          GPU
-        </a>
-      
-        <a href="https://besonn.github.io/SIdbdZbx4/" class="badge ">
-          计算机组成原理
-        </a>
-      
-        <a href="https://besonn.github.io/SZXiDKbFjj/" class="badge success">
-          misp
-        </a>
-      
-        <a href="https://besonn.github.io/DUwRPNELg/" class="badge secondary">
-          自然语言处理
-        </a>
-      
-        <a href="https://besonn.github.io/7DdMdcpl2X/" class="badge secondary">
-          机器学习
-        </a>
-      
-        <a href="https://besonn.github.io/4sAwUexv_c/" class="badge ">
-          情感分析
-        </a>
-      
-        <a href="https://besonn.github.io/5MzTn9F101/" class="badge success">
-          文本分类
-        </a>
-      
-        <a href="https://besonn.github.io/bndXaDhsB/" class="badge ">
-          数学建模
-        </a>
-      
-    </div>
-  </div>
-  <div class="paper">
-    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
-  </div>
-</div>
-
-
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
 <script type="application/javascript">
 
 AOS.init();
 
-hljs.initHighlightingOnLoad()
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
 </script>
+
+
 
 
 
