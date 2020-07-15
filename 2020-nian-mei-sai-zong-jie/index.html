@@ -1,102 +1,102 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>2020年美赛总结 | 伊维的笔记本</title>
+<meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1593072636499">
+<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1594810633266">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
-    <meta name="description" content="美赛结束了好几天了，打算一篇博客总结一下。
-11月份的时候萌生的参见2020年美赛的想法，当时组队的时候还发生了一些波折，好在最后都安顿了下来。
-我作为队里唯一一个学的和计算机相关的专业，理所当然的主要负责编程的任务。matlab我在暑假的..." />
-    <meta name="keywords" content="数学建模" />
   </head>
   <body>
     <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://besonn.github.io">
-        <img src="https://besonn.github.io/images/avatar.png?v=1593072636499" class="site-logo">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://besonn.github.io">
+        <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1594810633266" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://besonn.github.io">
         <h1 class="site-title">伊维的笔记本</h1>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
     </div>
-    <div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
       
         
-          <a href="/" class="site-nav">
+          <a href="/" class="menu purple-link">
             首页
           </a>
         
       
         
-          <a href="/archives" class="site-nav">
+          <a href="/archives" class="menu purple-link">
             归档
           </a>
         
       
         
-          <a href="/tags" class="site-nav">
+          <a href="/tags" class="menu purple-link">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="site-nav">
+          <a href="/post/about" class="menu purple-link">
             关于
           </a>
         
       
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      温故而知新
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
+</transition>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">2020年美赛总结</h2>
-            <div class="post-date">2020-03-13</div>
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">2020年美赛总结</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-03-13</span>
             
-            <div class="post-content" v-pre>
-              <p>美赛结束了好几天了，打算一篇博客总结一下。</p>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://besonn.github.io/bndXaDhsB/">
+                    数学建模
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>美赛结束了好几天了，打算一篇博客总结一下。</p>
 <p>11月份的时候萌生的参见2020年美赛的想法，当时组队的时候还发生了一些波折，好在最后都安顿了下来。</p>
 <p>我作为队里唯一一个学的和计算机相关的专业，理所当然的主要负责编程的任务。matlab我在暑假的时候就有学习，当时就学了点简单的语法，还没有真正的实践。</p>
 <p>于是寒假开始，我最主要的任务就是进一步学习matlab，积累相关算法，还打算再学学python。在寒假里我过了一遍matlab的基础，包括了画图解方程等等的操作。python也是过了相关的语法一遍，学了下matlibplot, numpy, pandas 这些包的用法，拿了一个小项目练手。算法方面，我们准备比赛的时候做B题，这需要用到一些优化类的算法，比如蚁群算法、粒子群算法、模拟退火、遗传算法等等，在这一阶段我也只是简单了解了一下，代码都没来得及准备。</p>
@@ -108,39 +108,45 @@
 <p>比赛结果要等到四月底才能出。之间队友们的目标是M，在比赛过程中也感觉的队友十分认真，能给出很多质量很高的模型以及建议。但是我感觉自己是掉链子的那一环，无论是画图还是求数据，速度太慢。归其原因在于学的不扎实，或者说没有实践，在实践中寻找不足。这使得自己拖慢了队伍的速度，明显能感觉到很多时候两个队友都是在等自己，等我的数据，等我的结果。对于这道题目来说，最重要的是对数据的处理，而我们大多数情况直接一个方法。我觉得M奖很难，H奖倒是可能性大一些。</p>
 <p>还是同样的问题，后面需要把一些东西学专学精了才可以，这也需要大量的练习和总结，只是流于形式的浏览是肯定不行的。</p>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://besonn.github.io/bndXaDhsB/" class="tag">
-                    数学建模
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://besonn.github.io/first-thing-first/">
-                  <h3 class="post-title">
-                    First thing first……
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
           </div>
-
         </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://besonn.github.io/first-thing-first/">
+              <h3 class="post-title">
+                下一篇：First thing first……
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
     </div>
+    <script type="application/javascript">
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
+hljs.initHighlightingOnLoad()
 
 var app = new Vue({
   el: '#app',
@@ -150,8 +156,6 @@ var app = new Vue({
 })
 
 </script>
-
-
 
 
 
