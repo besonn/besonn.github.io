@@ -1,102 +1,104 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
+    <meta charset="utf-8" >
 
 <title>数学建模——线性规划 | 伊维的笔记本</title>
-<meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1594867676833">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1594882069364">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
 
 
 
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
+    <meta name="description" content="简介
+线性规划的目标函数可以是求最大值，也可以是求最小值。为了方便下面给出标准形式。
+线性规划的标准形式
+min⁡xcTxs.t.Ax≤b\min \limits_{x}c^Tx \quad s.t. \quad Ax \le b 
+xmi..." />
+    <meta name="keywords" content="数学建模" />
   </head>
   <body>
     <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://besonn.github.io">
-        <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1594867676833" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://besonn.github.io">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="http://localhost:4000">
+        <img src="http://localhost:4000/images/avatar.png?v=1594882069364" class="site-logo">
         <h1 class="site-title">伊维的笔记本</h1>
       </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
+    <div>
       
         
-          <a href="/" class="menu purple-link">
+          <a href="/" class="site-nav">
             首页
           </a>
         
       
         
-          <a href="/archives" class="menu purple-link">
+          <a href="/archives" class="site-nav">
             归档
           </a>
         
       
         
-          <a href="/tags" class="menu purple-link">
+          <a href="/tags" class="site-nav">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="menu purple-link">
+          <a href="/post/about" class="site-nav">
             关于
           </a>
         
       
     </div>
   </div>
-</transition>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
 
 
-      <div class="content-container">
-        <div class="post-detail">
-          
-          <h2 class="post-title">数学建模——线性规划</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-07-15</span>
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">数学建模——线性规划</h2>
+            <div class="post-date">2020-07-15</div>
             
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://besonn.github.io/bndXaDhsB/">
-                    数学建模
-                    
-                  </a>
-                
-              </span>
-            
-          </div>
-          <div class="post-content">
-            <h2 id="简介">简介</h2>
+            <div class="post-content" v-pre>
+              <h2 id="简介">简介</h2>
 <p>线性规划的目标函数可以是求最大值，也可以是求最小值。为了方便下面给出标准形式。</p>
 <h2 id="线性规划的标准形式">线性规划的标准形式</h2>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><munder><mi>min</mi><mo>⁡</mo><mi>x</mi></munder><msup><mi>c</mi><mi>T</mi></msup><mi>x</mi><mspace width="1em"/><mi>s</mi><mi mathvariant="normal">.</mi><mi>t</mi><mi mathvariant="normal">.</mi><mspace width="1em"/><mi>A</mi><mi>x</mi><mo>≤</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">\min \limits_{x}c^Tx \quad s.t. \quad Ax \le b 
@@ -197,45 +199,39 @@ x0=[1;1;1;1]; lb=[0;0;0;0]; ub=[];A=[];b=[];Aeq=[];beq=[];
 [x,fval]=fmincon('fun44',x0,A,b,Aeq,beq,lb,ub,'mycon1');
 </code></pre>
 
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="http://localhost:4000/bndXaDhsB/" class="tag">
+                    数学建模
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="http://localhost:4000/datastructurelab4/">
+                  <h3 class="post-title">
+                    数据结构实验四
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
           </div>
+
         </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://besonn.github.io/datastructurelab4/">
-              <h3 class="post-title">
-                下一篇：数据结构实验四
-              </h3>
-            </a>
-          </div>
-          
       </div>
-
-      
-
-      <div class="site-footer">
-  <div class="slogan">温故而知新</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
-</div>
-
-
     </div>
-    <script type="application/javascript">
 
-hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
 
 var app = new Vue({
   el: '#app',
@@ -245,6 +241,8 @@ var app = new Vue({
 })
 
 </script>
+
+
 
 
 

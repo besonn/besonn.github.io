@@ -1,102 +1,106 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
+    <meta charset="utf-8" >
 
 <title>数值分析实验一matlab代码总结 | 伊维的笔记本</title>
-<meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://besonn.github.io/favicon.ico?v=1594867676833">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link rel="stylesheet" href="https://besonn.github.io/styles/main.css">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1594882069364">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
 
 
 
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
+    <meta name="description" content="从txt文件中读取每一列数据并画图
+x=linspace(-5,5);
+y=x.^3-x.^2+1;
+plot(x,y,'g+');
+hold on;
+txt=load('E://exp1//zhishu//5.txt');
+x1=txt(..." />
+    <meta name="keywords" content="数值分析" />
   </head>
   <body>
     <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://besonn.github.io">
-        <img class="avatar" src="https://besonn.github.io/images/avatar.png?v=1594867676833" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://besonn.github.io">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="http://localhost:4000">
+        <img src="http://localhost:4000/images/avatar.png?v=1594882069364" class="site-logo">
         <h1 class="site-title">伊维的笔记本</h1>
       </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
+    <div>
       
         
-          <a href="/" class="menu purple-link">
+          <a href="/" class="site-nav">
             首页
           </a>
         
       
         
-          <a href="/archives" class="menu purple-link">
+          <a href="/archives" class="site-nav">
             归档
           </a>
         
       
         
-          <a href="/tags" class="menu purple-link">
+          <a href="/tags" class="site-nav">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="menu purple-link">
+          <a href="/post/about" class="site-nav">
             关于
           </a>
         
       
     </div>
   </div>
-</transition>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
 
 
-      <div class="content-container">
-        <div class="post-detail">
-          
-          <h2 class="post-title">数值分析实验一matlab代码总结</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-04-07</span>
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">数值分析实验一matlab代码总结</h2>
+            <div class="post-date">2020-04-07</div>
             
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://besonn.github.io/4C-LUxpOv/">
-                    数值分析
-                    
-                  </a>
-                
-              </span>
-            
-          </div>
-          <div class="post-content">
-            <p><strong>从txt文件中读取每一列数据并画图</strong></p>
+            <div class="post-content" v-pre>
+              <p><strong>从txt文件中读取每一列数据并画图</strong></p>
 <pre><code>x=linspace(-5,5);
 y=x.^3-x.^2+1;
 plot(x,y,'g+');
@@ -209,45 +213,39 @@ end
 R=M*q1/c1;L(k,:)=poly2sym(C);
 </code></pre>
 
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="http://localhost:4000/4C-LUxpOv/" class="tag">
+                    数值分析
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="http://localhost:4000/data-analyse-lab1/">
+                  <h3 class="post-title">
+                    数值分析实验一——拉格朗日插值及牛顿插值算法的实现
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
           </div>
+
         </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://besonn.github.io/data-analyse-lab1/">
-              <h3 class="post-title">
-                下一篇：数值分析实验一——拉格朗日插值及牛顿插值算法的实现
-              </h3>
-            </a>
-          </div>
-          
       </div>
-
-      
-
-      <div class="site-footer">
-  <div class="slogan">温故而知新</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://besonn.github.io/atom.xml" target="_blank">RSS</a>
-</div>
-
-
     </div>
-    <script type="application/javascript">
 
-hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
 
 var app = new Vue({
   el: '#app',
@@ -257,6 +255,8 @@ var app = new Vue({
 })
 
 </script>
+
+
 
 
 
