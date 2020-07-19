@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>伊维的笔记本</title>
-    <updated>2020-07-17T09:21:51.092Z</updated>
+    <updated>2020-07-19T03:24:01.583Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,101 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 伊维的笔记本</rights>
+    <entry>
+        <title type="html"><![CDATA[数学建模——模拟退火]]></title>
+        <id>https://besonn.github.io/shu-xue-jian-mo-mo-ni-tui-huo/</id>
+        <link href="https://besonn.github.io/shu-xue-jian-mo-mo-ni-tui-huo/">
+        </link>
+        <updated>2020-07-19T02:47:12.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="简介">简介</h2>
+<p>基本思想：主要来源于固体的退火过程，将固体加热然后再缓慢冷却时，从理论上来讲，如果冷却过程足够缓慢，那么冷却中任意一个温度固体都能达到热平衡，而冷却到低温时将达到这一温度下的内能最小状态。该算法就是需要找到这个最小内能的值。</p>
+<h2 id="算法的主要步骤">算法的主要步骤</h2>
+<ol>
+<li>T=T0，生成刚开始退火时的初始温度，随机生成一个初始解x0，并且计算相应的目标函数值E(x0)</li>
+<li>令T等于下一个状态之下的Ti</li>
+<li>根据当前解xi进行扰动，得到一个新解xj，计算相应的E(xj)，得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>E</mi><mo>=</mo><mi>E</mi><mo>(</mo><msub><mi>x</mi><mi>j</mi></msub><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\Delta E = E(x_j)-E(x_i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
+<li>若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>E</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\Delta E &lt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，则接受新解xj；否则新解将按<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>e</mi><mrow><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>E</mi><mi mathvariant="normal">/</mi><msub><mi>T</mi><mi>i</mi></msub></mrow></msup></mrow><annotation encoding="application/x-tex">e^{-\Delta E/T_i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8879999999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">Δ</span><span class="mord mathdefault mtight" style="margin-right:0.05764em;">E</span><span class="mord mtight">/</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span> 接受，Ti是当前温度。</li>
+<li>判断温度Ti下，重复Li次的扰动和接受过程，重复3和4</li>
+<li>判断T是否已经到达目标温度Tj, 是则终止算法，否则继续执行2</li>
+</ol>
+<h2 id="matlab程序">Matlab程序</h2>
+<p><strong>问题</strong><br>
+背包问题<br>
+有N件物品：第i件物品物品值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">v_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，重量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，vi和wi都是整数。背包容量为W。可以带走哪几样东西使得带走的东西最值钱？</p>
+<p><strong>思路</strong></p>
+<p><img src="https://besonn.github.io/post-images/1595128943199.PNG" alt="" loading="lazy"><br>
+<strong>程序</strong></p>
+<pre><code>clear
+clc
+a = 0.95
+k = [5;10;13;4;3;11;13;10;8;16;7;4];
+k = -k;	% 模拟退火算法是求解最小值，故取负数
+d = [2;5;18;3;2;5;10;4;11;7;14;6];
+restriction = 46;
+num = 12;
+sol_new = ones(1,num);         % 生成初始解
+E_current = inf;E_best = inf;  
+% E_current是当前解对应的目标函数值（即背包中物品总价值）；
+% E_new是新解的目标函数值；
+% E_best是最优解的
+sol_current = sol_new; sol_best = sol_new;
+t0=97; tf=3; t=t0;
+p=1;
+
+while t&gt;=tf
+	for r=1:100
+		%产生随机扰动
+		tmp=ceil(rand.*num);
+		sol_new(1,tmp)=~sol_new(1,tmp);
+		
+		%检查是否满足约束
+		while 1
+			q=(sol_new*d &lt;= restriction);
+			if ~q
+                p=~p;	%实现交错着逆转头尾的第一个1
+                tmp=find(sol_new==1);
+                if p
+                    sol_new(1,tmp)=0;
+                else
+                    sol_new(1,tmp(end))=0;
+                end
+            else
+                break
+			end
+		end
+		
+		% 计算背包中的物品价值
+		E_new=sol_new*k;
+		if E_new&lt;E_current
+            E_current=E_new;
+            sol_current=sol_new;
+            if E_new&lt;E_best
+				% 把冷却过程中最好的解保存下来
+                E_best=E_new;
+                sol_best=sol_new;
+            end
+		else
+            if rand&lt;exp(-(E_new-E_current)./t)
+                E_current=E_new;
+                sol_current=sol_new;
+            else
+                sol_new=sol_current;
+            end
+		end
+	end
+	t=t.*a;
+end
+
+disp('最优解为：')
+sol_best
+disp('物品总价值等于：')
+val=-E_best;
+disp(val)
+disp('背包中物品重量是：')
+disp(sol_best * d)
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数学建模——灰度预测]]></title>
         <id>https://besonn.github.io/huiduyuce/</id>
@@ -1306,116 +1401,6 @@ SM中存放许多的Kernel。</p>
     syscall
 </code></pre>
 <p>div 比较特殊，lo中存商，hi中存余数，也是分别获取。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[龙贝格算法和梯形算法求解积分的比较]]></title>
-        <id>https://besonn.github.io/Romberg/</id>
-        <link href="https://besonn.github.io/Romberg/">
-        </link>
-        <updated>2020-04-20T00:54:32.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>#include &lt;cstdio&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;math.h&gt;
-int Rk = 0; // 龙贝格二分次数
-int Tk = 0; // 梯形二分次数
-double c2[4] = { -1 }, t2[4] = { -1 }, s2[4] = { -1 }; // 分别用来保存龙贝格中间结果
-double fx(double x)
-{
-	return x*x*x-x*x+1; // 自由设置函数
-}
-double Romberg(double a, double b, double e)
-{
-	// 返回龙贝格结果
-	int cnt = 1;
-	double T1, T2, S1, S2, C1, R1,h,S,x;
-	double C2 = 0, R2 = 0;
-	h = b - a;
-	int k = 1;
-	T1 = h / 2.0*(fx(a) + fx(b));
-	while (true)
-	{
-		Rk++;
-		cnt++;
-		S = 0;
-		x = a + h / 2.0;
-		int cnt = 0;
-		do
-		{
-			S = S + fx(x);
-			x = x + h;
-		} while (x &lt; b);
-
-		T2 = T1 / 2.0 + h / 2.0*S;
-		t2[Rk-1] = T2;
-		S2 = T2 + (T2 - T1) / 3.0;
-		s2[Rk-1] = S2;
-		h = h / 2.0;
-		T1 = T2;
-		S1 = S2;
-		C1 = C2;
-		R1 = R2;
-		if (k == 1)
-		{
-			k++;
-			continue;
-		}
-		C2 = S2 + (S2 - S1) / 15.0;
-		c2[Rk - 1] = C2;
-		if (k == 2)
-		{
-			k++;
-			continue;
-		}
-		R2 = C2 + (C2 - C1) / 63.0;
-		if (k == 3)
-		{
-			k++;
-			continue;
-		}
-		if (fabs(R1 - R2) &lt; e || cnt &gt;= 100)
-		{
-			break;
-		}
-	}
-	return R2;
-}
-double Tn(double a, double b, double e)
-{
-	// 返回梯形结果
-	    double T1=0, T2=0;
-	    double h = b - a;
-	    T1 = (fx(a) + fx(b))*h / 2.0;
-	    while (1)
-		{
-		         Tk++;
-				 double s = 0.0;
-				 for (double i = a + h / 2.0; i &lt; b; i += h) 
-				 {
-				       s += fx(i);
-				 }
-		         T2 = (T1 + h * s) / 2.0;
-		         if (fabs(T2 - T1) &lt; e)break;
-		         h /= 2.0;
-		         T1 = T2;
-		}
-	     return T2;
-	 }
-int main()
-{
-	double a, b, e;
-	printf(&quot;请输入a,b,e：&quot;);
-	scanf(&quot;%lf%lf%lf&quot;, &amp;a, &amp;b, &amp;e);
-	double r = Romberg(a, b, e);
-	printf(&quot;\nRomberg:积分值：%.7lf  --  二分次数：%d\n&quot;, r, Rk);
-	// 输出中间结果
-	printf(&quot;%lf %lf %lf %lf\n&quot;, t2[0], t2[1], t2[2], t2[3]);
-	printf(&quot;%lf %lf %lf %lf\n&quot;, s2[0], s2[1], s2[2], s2[3]);
-	printf(&quot;%lf %lf %lf %lf\n&quot;, c2[0], c2[1], c2[2], c2[3]);
-	double t = Tn(a, b, e);
-    printf(&quot;\nTn:积分值：%.7lf  --  二分次数：%d\n&quot;, t, Tk);
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
