@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>数学建模——模拟退火 | 伊维的笔记本</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1595147690626">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="简介
+基本思想：主要来源于固体的退火过程，将固体加热然后再缓慢冷却时，从理论上来讲，如果冷却过程足够缓慢，那么冷却中任意一个温度固体都能达到热平衡，而冷却到低温时将达到这一温度下的内能最小状态。该算法就是需要找到这个最小内能的值。
+算法的主..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="http://localhost:4000">
+        <img src="http://localhost:4000/images/avatar.png?v=1595147690626" class="site-logo">
+        <h1 class="site-title">伊维的笔记本</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">数学建模——模拟退火</h2>
+            <div class="post-date">2020-07-19</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="简介">简介</h2>
+<p>基本思想：主要来源于固体的退火过程，将固体加热然后再缓慢冷却时，从理论上来讲，如果冷却过程足够缓慢，那么冷却中任意一个温度固体都能达到热平衡，而冷却到低温时将达到这一温度下的内能最小状态。该算法就是需要找到这个最小内能的值。</p>
+<h2 id="算法的主要步骤">算法的主要步骤</h2>
+<ol>
+<li>T=T0，生成刚开始退火时的初始温度，随机生成一个初始解x0，并且计算相应的目标函数值E(x0)</li>
+<li>令T等于下一个状态之下的Ti</li>
+<li>根据当前解xi进行扰动，得到一个新解xj，计算相应的E(xj)，得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>E</mi><mo>=</mo><mi>E</mi><mo>(</mo><msub><mi>x</mi><mi>j</mi></msub><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\Delta E = E(x_j)-E(x_i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
+<li>若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>E</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\Delta E &lt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，则接受新解xj；否则新解将按<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>e</mi><mrow><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>E</mi><mi mathvariant="normal">/</mi><msub><mi>T</mi><mi>i</mi></msub></mrow></msup></mrow><annotation encoding="application/x-tex">e^{-\Delta E/T_i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8879999999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">Δ</span><span class="mord mathdefault mtight" style="margin-right:0.05764em;">E</span><span class="mord mtight">/</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span> 接受，Ti是当前温度。</li>
+<li>判断温度Ti下，重复Li次的扰动和接受过程，重复3和4</li>
+<li>判断T是否已经到达目标温度Tj, 是则终止算法，否则继续执行2</li>
+</ol>
+<h2 id="matlab程序">Matlab程序</h2>
+<p><strong>问题</strong><br>
+背包问题<br>
+有N件物品：第i件物品物品值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">v_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，重量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，vi和wi都是整数。背包容量为W。可以带走哪几样东西使得带走的东西最值钱？</p>
+<p><strong>思路</strong></p>
+<p><img src="http://localhost:4000/post-images/1595128943199.PNG" alt="" loading="lazy"><br>
+<strong>程序</strong></p>
+<pre><code>clear
+clc
+a = 0.95
+k = [5;10;13;4;3;11;13;10;8;16;7;4];
+k = -k;	% 模拟退火算法是求解最小值，故取负数
+d = [2;5;18;3;2;5;10;4;11;7;14;6];
+restriction = 46;
+num = 12;
+sol_new = ones(1,num);         % 生成初始解
+E_current = inf;E_best = inf;  
+% E_current是当前解对应的目标函数值（即背包中物品总价值）；
+% E_new是新解的目标函数值；
+% E_best是最优解的
+sol_current = sol_new; sol_best = sol_new;
+t0=97; tf=3; t=t0;
+p=1;
+
+while t&gt;=tf
+	for r=1:100
+		%产生随机扰动
+		tmp=ceil(rand.*num);
+		sol_new(1,tmp)=~sol_new(1,tmp);
+		
+		%检查是否满足约束
+		while 1
+			q=(sol_new*d &lt;= restriction);
+			if ~q
+                p=~p;	%实现交错着逆转头尾的第一个1
+                tmp=find(sol_new==1);
+                if p
+                    sol_new(1,tmp)=0;
+                else
+                    sol_new(1,tmp(end))=0;
+                end
+            else
+                break
+			end
+		end
+		
+		% 计算背包中的物品价值
+		E_new=sol_new*k;
+		if E_new&lt;E_current
+            E_current=E_new;
+            sol_current=sol_new;
+            if E_new&lt;E_best
+				% 把冷却过程中最好的解保存下来
+                E_best=E_new;
+                sol_best=sol_new;
+            end
+		else
+            if rand&lt;exp(-(E_new-E_current)./t)
+                E_current=E_new;
+                sol_current=sol_new;
+            else
+                sol_new=sol_current;
+            end
+		end
+	end
+	t=t.*a;
+end
+
+disp('最优解为：')
+sol_best
+disp('物品总价值等于：')
+val=-E_best;
+disp(val)
+disp('背包中物品重量是：')
+disp(sol_best * d)
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="http://localhost:4000/huiduyuce/">
+                  <h3 class="post-title">
+                    数学建模——灰度预测
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
