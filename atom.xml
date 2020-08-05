@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io</id>
     <title>伊维的笔记本</title>
-    <updated>2020-08-05T07:17:18.193Z</updated>
+    <updated>2020-08-05T07:25:58.433Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,98 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 伊维的笔记本</rights>
+    <entry>
+        <title type="html"><![CDATA[数学建模——神经网络]]></title>
+        <id>https://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/</id>
+        <link href="https://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/">
+        </link>
+        <updated>2020-08-05T07:20:49.000Z</updated>
+        <content type="html"><![CDATA[<p>下面主要是BP神经网络包的主要代码，具体见注释。</p>
+<pre><code>clc;
+close all;
+clear all;
+% 原始数据 
+% 人数(单位：万人)
+sqrs=[20.55 22.44 25.37 27.13 29.45 30.10 30.96 34.06 36.42 38.09 39.13 39.99 ...
+      41.93 44.59 47.30 52.89 55.73 56.76 59.17 60.63];
+%机动车数(单位：万辆)
+sqjdcs=[0.6 0.75 0.85 0.9 1.05 1.35 1.45 1.6 1.7 1.85 2.15 2.2 2.25 2.35 2.5 2.6...
+        2.7 2.85 2.95 3.1];
+%公路面积(单位：万平方公里)
+sqglmj=[0.09 0.11 0.11 0.14 0.20 0.23 0.23 0.32 0.32 0.34 0.36 0.36 0.38 0.49 ... 
+         0.56 0.59 0.59 0.67 0.69 0.79];
+%公路客运量(单位：万人)
+glkyl=[5126 6217 7730 9145 10460 11387 12353 15750 18304 19836 21024 19490 20433 ...
+        22598 25107 33442 36836 40548 42927 43462];
+%公路货运量(单位：万吨)
+glhyl=[1237 1379 1385 1399 1663 1714 1834 4322 8132 8936 11099 11203 10524 11115 ...
+        13320 16762 18673 20724 20803 21804];
+% 输入数据矩阵
+p=[sqrs;sqjdcs;sqglmj];  
+ % 目标数据矩阵
+t=[glkyl;glhyl];   
+% 利用mapminmax函数对数据进行归一化
+[pn,input_str] = mapminmax(p) ;
+[tn,output_str] = mapminmax(t) ;
+
+% 建立BP神经网络，相对旧一点的MATLAB版本，新版本 newff 函数使用更简洁一些
+% 但是本质和性能没有区别
+net=newff(pn,tn,[3 7 2],{'purelin','logsig','purelin'});
+% 10轮回显示一次结果
+net.trainParam.show=10;
+% 学习速度为0.05
+net.trainParam.lr=0.05; 
+% 最大训练次数为5000次
+net.trainParam.epochs=5000;
+% 均方误差
+net.trainParam.goal=0.65*10^(-3);  
+% 网络误差如果连续6次迭代都没有变化，训练将会自动终止（系统默认的）
+% 为了让程序继续运行，用以下命令取消这条设置
+net.divideFcn = '';
+% 开始训练，其中pn,tn分别为输入输出样本
+net=train(net,pn,tn);                   
+% 利用训练好的网络，基于原始数据对BP网络仿真
+an=sim(net,pn);    
+
+% 利用函数mapminmax把仿真得到的数据还原为原始的数量级
+% 新版本推荐训练样本归一化和反归一化都使用 mapminmax 函数
+a = mapminmax('reverse',an,output_str);
+% 本例因样本容量有限使用训练数据进行测试，通常必须用新鲜数据进行测试
+x=1990:2009;
+newk=a(1,:);
+newh=a(2,:);
+figure (2);
+% 绘值公路客运量对比图
+subplot(2,1,1);plot(x,newk,'r-o',x,glkyl,'b--+')    
+legend('网络输出客运量','实际客运量');
+xlabel('年份');ylabel('客运量/万人');
+title('运用工具箱客运量学习和测试对比图');
+% 绘制公路货运量对比图
+subplot(2,1,2);plot(x,newh,'r-o',x,glhyl,'b--+')     
+legend('网络输出货运量','实际货运量');
+xlabel('年份');ylabel('货运量/万吨');
+title('运用工具箱货运量学习和测试对比图');
+% 利用训练好的网络进行预测
+% 2010年和2011年的相关数据
+% 当用训练好的网络对新数据mapminmax进行预测时，也应作相应的处理：
+
+
+
+% 这里是用新值进行预测
+pnew=[73.39 75.55
+      3.9635 4.0975
+      0.9880 1.0268];           
+% 利用原始输入数据的归一化参数对新数据进行归一化
+pnewn = mapminmax('apply',pnew,input_str);
+% 利用归一化后的数据进行仿真
+anewn=sim(net,pnewn);       
+% 把仿真得到的数据还原为原始的数量级
+anew = mapminmax('reverse',anewn,output_str)
+
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数学建模——模拟退火]]></title>
         <id>https://besonn.github.io/monituihuo/</id>
@@ -1322,86 +1414,6 @@ SM中存放许多的Kernel。</p>
 </code></pre>
 <p>函数的嵌套需要注意一点：被嵌套的子函数需要将其返回地址一样的保存到其上一级函数的栈帧当中，因此调用函数需要增加4个空间的值。<code>addi $sp,$sp,-8</code> 然后再保存返回地址到栈帧当中去，<code>sw $ra, 4($sp)</code></p>
 <p>最后不要忘记了释放掉栈帧中的空间。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Misp学习1]]></title>
-        <id>https://besonn.github.io/misp-1/</id>
-        <link href="https://besonn.github.io/misp-1/">
-        </link>
-        <updated>2020-04-22T11:58:48.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>先叨叨两句：最近这个更博速度不行……每天就学了这么些东西再不总结下到头来全忘了。打算每天简单总结一下，过几天整理成一篇博客。就这样吧。</p>
-</blockquote>
-<p>OK...今天算是正式开始学Misp的第一天，有了上学期x86的基础，感觉上手还挺快的。今天主要总结基本语句啥的。u1s1这个Mars简直太好用了……比起上学期那什么dosbox简直不要好太多，dosbox与Mars之间的差距估计就象dos和Win10吧hhhhh......</p>
-<p>多说一句，一开始我的Mars程序本身的字体很小，没有找到地方改。后来谷歌搜了下，需要首先找到javaw.exe文件（注意是Jre下的！！！！不是Jdk的！！！）。右键属性-&gt;兼容性-&gt;改一下高DPI设置-&gt;选择系统（增强）。然后再重启应用就好了 : )</p>
-<p>简单说程序分成两块，.data和.text，前者放存储器中的数据，后者对寄存器进行操作。</p>
-<p>直接放代码</p>
-<p><strong>打印字符串</strong></p>
-<pre><code># 注释用# 类似Python
-# 打印字符串
-.data
-    myMessage: .asciiz &quot;Hello World&quot;
-    myInt : .word 6 # 保存数字
-.text
-    li $v0,4
-    # li $v1,1
-    la $a0,myMessage
-    # lw #$a1, myInt
-# 结果打印出&quot;Hello World&quot; 
-</code></pre>
-<p>v0,v1 是用来存放一个子程序(函数)的非浮点 运算的结果或返回值。如果这两个寄存器不够存放 需要返回的值，编译器将会通过内存来完成。</p>
-<p>$a0-a3 : 用来传递子函数调用时前4个非 浮点参数。<strong>保存参数</strong></p>
-<p>$t0-t9 : 依照约定，一个子函数可以不用保 存并随便的使用这些寄存器。 <strong>临时变量</strong></p>
-<p>$s0-s8:依照约定 子函数必须保证当函数返回时这些寄存器的内 容必须恢复到函数调用以前的值， 或者在子函数里不用这些寄存器或把它们保存 在堆栈上并在函数退出时恢复。 <strong>适合保存寄存器的值，对寄存器的操作</strong></p>
-<p>la: load address    lw: load words      sw: save words 对存储器的操作</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mn>0</mn><mo>−</mo></mrow><annotation encoding="application/x-tex">f0-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord">0</span><span class="mord">−</span></span></span></span>f31用来保存浮点运算的值</p>
-<p><strong>实现整数加减</strong></p>
-<pre><code>.data 
-	
-.text
-    # 把立即数中的值保存到临时变量中
-	addi $t0,$zero,2000
-	addi $t1,$zero,10
-    # 打印到屏幕上去
-    li $v0,1
-	add $a0, $zero, $s0
-	add $a1,$zero,$s1
-	syscall
-</code></pre>
-<p><strong>乘运算</strong></p>
-<pre><code>.data 
-	
-.text
-    addi $t0,$zero,2000
-	addi $t1,$zero,10
-    mult $t0,$t1
-	mul $t2,$t1,$t2
-	
-	mflo $s0
-	mfhi $s1
-    li $v0,1
-	add $a0, $zero, $s0
-	add $a1,$zero,$s1
-    syscall
-</code></pre>
-<p>mult 两个参数，高位低位分别保存到hi 和 lo 里面，分别用mfhi 和 mflo 获取。（move from high/low）</p>
-<pre><code>.data 
-	
-.text
-    addi $t0,$zero,2000
-	addi $t1,$zero,10
-    div $t0,$t1
-	# div $t2,$t1,$t2
-	
-	mflo $s0
-	mfhi $s1
-    li $v0,1
-	add $a0, $zero, $s0
-	add $a1,$zero,$s1
-    syscall
-</code></pre>
-<p>div 比较特殊，lo中存商，hi中存余数，也是分别获取。</p>
 ]]></content>
     </entry>
 </feed>
