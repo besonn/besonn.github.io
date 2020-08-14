@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://besonn.github.io/</id>
+    <id>http://localhost:4000</id>
     <title>伊维的笔记本</title>
-    <updated>2020-08-14T11:48:31.688Z</updated>
+    <updated>2020-08-14T11:53:42.827Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://besonn.github.io/"/>
-    <link rel="self" href="https://besonn.github.io/atom.xml"/>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://besonn.github.io/images/avatar.png</logo>
-    <icon>https://besonn.github.io/favicon.ico</icon>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2020, 伊维的笔记本</rights>
     <entry>
         <title type="html"><![CDATA[数学建模——神经网络]]></title>
-        <id>https://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/</id>
-        <link href="https://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/">
+        <id>http://localhost:4000/shu-xue-jian-mo-shen-jing-wang-luo/</id>
+        <link href="http://localhost:4000/shu-xue-jian-mo-shen-jing-wang-luo/">
         </link>
         <updated>2020-08-05T07:20:49.000Z</updated>
         <content type="html"><![CDATA[<p>下面主要是BP神经网络包的主要代码，具体见注释。</p>
@@ -104,8 +104,8 @@ anew = mapminmax('reverse',anewn,output_str)
     </entry>
     <entry>
         <title type="html"><![CDATA[数学建模——模拟退火]]></title>
-        <id>https://besonn.github.io/monituihuo/</id>
-        <link href="https://besonn.github.io/monituihuo/">
+        <id>http://localhost:4000/monituihuo/</id>
+        <link href="http://localhost:4000/monituihuo/">
         </link>
         <updated>2020-07-19T02:47:12.000Z</updated>
         <content type="html"><![CDATA[<h2 id="简介">简介</h2>
@@ -124,7 +124,7 @@ anew = mapminmax('reverse',anewn,output_str)
 背包问题<br>
 有N件物品：第i件物品物品值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">v_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，重量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，vi和wi都是整数。背包容量为W。可以带走哪几样东西使得带走的东西最值钱？</p>
 <p><strong>思路</strong></p>
-<p><img src="https://besonn.github.io//post-images/1595128943199.PNG" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1595128943199.PNG" alt="" loading="lazy"><br>
 <strong>程序</strong></p>
 <pre><code>clear
 clc
@@ -199,8 +199,8 @@ disp(sol_best * d)
     </entry>
     <entry>
         <title type="html"><![CDATA[数学建模——灰度预测]]></title>
-        <id>https://besonn.github.io/huiduyuce/</id>
-        <link href="https://besonn.github.io/huiduyuce/">
+        <id>http://localhost:4000/huiduyuce/</id>
+        <link href="http://localhost:4000/huiduyuce/">
         </link>
         <updated>2020-07-15T11:04:22.000Z</updated>
         <content type="html"><![CDATA[<h2 id="简介">简介</h2>
@@ -215,7 +215,7 @@ disp(sol_best * d)
 <h3 id="gm11模型">GM(1,1)模型</h3>
 <p>GM(M,N)用来表示一个灰度模型，N表示变量个数，M表示微分方程的阶数。</p>
 <h3 id="灰色关联度矩阵的matlab程序设计">灰色关联度矩阵的Matlab程序设计</h3>
-<figure data-type="image" tabindex="1"><img src="https://besonn.github.io//post-images/1594867029831.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1594867029831.PNG" alt="" loading="lazy"></figure>
 <pre><code>clc;
 close;
 clear all;
@@ -294,10 +294,10 @@ set(handle_date,'HorizontalAlignment','right','VerticalAlignment','top', 'Rotati
 ylabel('y');
 title('投资对收入的作用');
 </code></pre>
-<p><img src="https://besonn.github.io//post-images/1594867385799.PNG" alt="" loading="lazy"><br>
-<img src="https://besonn.github.io//post-images/1594867394248.PNG" alt="" loading="lazy"></p>
+<p><img src="http://localhost:4000/post-images/1594867385799.PNG" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594867394248.PNG" alt="" loading="lazy"></p>
 <h2 id="gm11的程序设计">GM(1,1)的程序设计</h2>
-<p><img src="https://besonn.github.io//post-images/1594867427342.PNG" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1594867427342.PNG" alt="" loading="lazy"><br>
 <strong>方法一</strong></p>
 <pre><code>
 % 在程序的所有节骨眼都进行了详尽的注释
@@ -472,7 +472,7 @@ legend('原始数列','模型数列');
 <li>将参数代入预测模型进行数据预测。</li>
 </ol>
 <h3 id="典型灰度预测程序">典型灰度预测程序</h3>
-<figure data-type="image" tabindex="2"><img src="https://besonn.github.io//post-images/1594867546187.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1594867546187.PNG" alt="" loading="lazy"></figure>
 <pre><code>clear
 syms a b;
 c=[a b]';
@@ -512,8 +512,8 @@ set(gca,  'LineWidth',2);
     </entry>
     <entry>
         <title type="html"><![CDATA[数学建模——线性规划]]></title>
-        <id>https://besonn.github.io/xianxingguihua/</id>
-        <link href="https://besonn.github.io/xianxingguihua/">
+        <id>http://localhost:4000/xianxingguihua/</id>
+        <link href="http://localhost:4000/xianxingguihua/">
         </link>
         <updated>2020-07-15T09:52:16.000Z</updated>
         <content type="html"><![CDATA[<h2 id="简介">简介</h2>
@@ -621,8 +621,8 @@ x0=[1;1;1;1]; lb=[0;0;0;0]; ub=[];A=[];b=[];Aeq=[];beq=[];
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构实验四]]></title>
-        <id>https://besonn.github.io/datastructurelab4/</id>
-        <link href="https://besonn.github.io/datastructurelab4/">
+        <id>http://localhost:4000/datastructurelab4/</id>
+        <link href="http://localhost:4000/datastructurelab4/">
         </link>
         <updated>2020-06-24T01:57:36.000Z</updated>
         <content type="html"><![CDATA[<!-- more -->
@@ -806,8 +806,8 @@ x0=[1;1;1;1]; lb=[0;0;0;0]; ub=[];A=[];b=[];Aeq=[];beq=[];
     </entry>
     <entry>
         <title type="html"><![CDATA[数据结构实验三——哈夫曼树]]></title>
-        <id>https://besonn.github.io/data-structure-lab3/</id>
-        <link href="https://besonn.github.io/data-structure-lab3/">
+        <id>http://localhost:4000/data-structure-lab3/</id>
+        <link href="http://localhost:4000/data-structure-lab3/">
         </link>
         <updated>2020-05-19T13:46:18.000Z</updated>
         <content type="html"><![CDATA[<h1 id="实验三哈夫曼编译码器">实验三：哈夫曼编/译码器</h1>
@@ -1169,8 +1169,8 @@ CodePrin文件<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[《数值分析》绪论、前三章知识点整理]]></title>
-        <id>https://besonn.github.io/shuzhifenxi-zhishidian1/</id>
-        <link href="https://besonn.github.io/shuzhifenxi-zhishidian1/">
+        <id>http://localhost:4000/shuzhifenxi-zhishidian1/</id>
+        <link href="http://localhost:4000/shuzhifenxi-zhishidian1/">
         </link>
         <updated>2020-05-15T03:00:31.000Z</updated>
         <content type="html"><![CDATA[<!-- more -->
@@ -1222,14 +1222,14 @@ CodePrin文件<br>
 <p>可以求出原函数的余项来</p>
 <!-- more -->
 <p><strong>差商、样条函数、最小二乘法</strong><br>
-<img src="https://besonn.github.io//post-images/1589514995530.jpg" alt="" loading="lazy"><br>
-<img src="https://besonn.github.io//post-images/1589514967718.jpg" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1589514995530.jpg" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1589514967718.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[《实践论》摘抄]]></title>
-        <id>https://besonn.github.io/shi-jian-lun/</id>
-        <link href="https://besonn.github.io/shi-jian-lun/">
+        <id>http://localhost:4000/shi-jian-lun/</id>
+        <link href="http://localhost:4000/shi-jian-lun/">
         </link>
         <updated>2020-05-03T13:40:38.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
@@ -1249,8 +1249,8 @@ CodePrin文件<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[CUDA学习1]]></title>
-        <id>https://besonn.github.io/cuda-1/</id>
-        <link href="https://besonn.github.io/cuda-1/">
+        <id>http://localhost:4000/cuda-1/</id>
+        <link href="http://localhost:4000/cuda-1/">
         </link>
         <updated>2020-04-24T02:38:30.000Z</updated>
         <content type="html"><![CDATA[<p>写在前面，这一部分主要是CPU、GPU的体系结构和GPU的编程模型，我对这一部分的理解还不是很充分，所以先占个坑，后面的时候再加以补充。</p>
@@ -1280,8 +1280,8 @@ SM中存放许多的Kernel。</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Mips学习2]]></title>
-        <id>https://besonn.github.io/misp-2/</id>
-        <link href="https://besonn.github.io/misp-2/">
+        <id>http://localhost:4000/misp-2/</id>
+        <link href="http://localhost:4000/misp-2/">
         </link>
         <updated>2020-04-24T01:28:35.000Z</updated>
         <content type="html"><![CDATA[<p>今天的内容主要是函数和过程调用</p>
