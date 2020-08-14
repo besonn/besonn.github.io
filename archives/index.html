@@ -1,58 +1,305 @@
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+<meta charset="utf-8" >
+
 <title>伊维的笔记本</title>
-<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597392898500">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597393034266">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="http://besonn.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="伊维的笔记本 - Atom Feed" href="http://besonn.github.io//atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="温故而知新" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="http://besonn.github.io/">
-  <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597392898500" alt="">
-  </a>
-  <h1 class="site-title">
-    伊维的笔记本
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="http://besonn.github.io/">
+        <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597393034266" alt="" width="32px" height="32px">
+      </a>
+      <a href="http://besonn.github.io/">
+        <h1 class="site-title">伊维的笔记本</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
   </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+        <div class="content-container">
+          
+          
+
+<div class="archives-container">
+  
+    <h2 class="year">2020</h2>
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/">
+            <h2 class="post-title">
+              数学建模——神经网络
+              <small>2020-08-05</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/monituihuo/">
+            <h2 class="post-title">
+              数学建模——模拟退火
+              <small>2020-07-19</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/huiduyuce/">
+            <h2 class="post-title">
+              数学建模——灰度预测
+              <small>2020-07-15</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/xianxingguihua/">
+            <h2 class="post-title">
+              数学建模——线性规划
+              <small>2020-07-15</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/datastructurelab4/">
+            <h2 class="post-title">
+              数据结构实验四
+              <small>2020-06-24</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/data-structure-lab3/">
+            <h2 class="post-title">
+              数据结构实验三——哈夫曼树
+              <small>2020-05-19</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/shuzhifenxi-zhishidian1/">
+            <h2 class="post-title">
+              《数值分析》绪论、前三章知识点整理
+              <small>2020-05-15</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/shi-jian-lun/">
+            <h2 class="post-title">
+              《实践论》摘抄
+              <small>2020-05-03</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/cuda-1/">
+            <h2 class="post-title">
+              CUDA学习1
+              <small>2020-04-24</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/misp-2/">
+            <h2 class="post-title">
+              Mips学习2
+              <small>2020-04-24</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/misp-1/">
+            <h2 class="post-title">
+              Misp学习1
+              <small>2020-04-22</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/Romberg/">
+            <h2 class="post-title">
+              龙贝格算法和梯形算法求解积分的比较
+              <small>2020-04-20</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/data-structure-lab2/">
+            <h2 class="post-title">
+              数据结构实验二——迷宫的求解
+              <small>2020-04-20</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/matlabcode/">
+            <h2 class="post-title">
+              数值分析实验一matlab代码总结
+              <small>2020-04-07</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/data-analyse-lab1/">
+            <h2 class="post-title">
+              数值分析实验一——拉格朗日插值及牛顿插值算法的实现
+              <small>2020-04-06</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/">
+            <h2 class="post-title">
+              数据结构实验一
+              <small>2020-03-20</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/nlp1/">
+            <h2 class="post-title">
+              我对于文本分类和情感分析的简单理解
+              <small>2020-03-14</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/2020-nian-mei-sai-zong-jie/">
+            <h2 class="post-title">
+              2020年美赛总结
+              <small>2020-03-13</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+      
+        <article class="post">
+          <a href="http://besonn.github.io/first-thing-first/">
+            <h2 class="post-title">
+              First thing first……
+              <small>2020-03-13</small>
+            </h2>
+          </a>
+        </article>
+      
+    
+  
+</div>
+
+
+        </div>
+
+        <div class="site-footer">
+  <div class="slogan">温故而知新</div>
   <div class="social-container">
     
       
@@ -66,204 +313,27 @@
       
     
   </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">RSS</a>
 </div>
 
-    
-        
-
-<div class="archives-container">
-  
-    <h2 class="year">2020</h2>
-    
-      
-        <a href="http://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/" class="post">
-          <h2 class="post-title">
-            数学建模——神经网络
-          </h2>
-          <div class="time">2020-08-05</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/monituihuo/" class="post">
-          <h2 class="post-title">
-            数学建模——模拟退火
-          </h2>
-          <div class="time">2020-07-19</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/huiduyuce/" class="post">
-          <h2 class="post-title">
-            数学建模——灰度预测
-          </h2>
-          <div class="time">2020-07-15</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/xianxingguihua/" class="post">
-          <h2 class="post-title">
-            数学建模——线性规划
-          </h2>
-          <div class="time">2020-07-15</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/datastructurelab4/" class="post">
-          <h2 class="post-title">
-            数据结构实验四
-          </h2>
-          <div class="time">2020-06-24</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/data-structure-lab3/" class="post">
-          <h2 class="post-title">
-            数据结构实验三——哈夫曼树
-          </h2>
-          <div class="time">2020-05-19</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/shuzhifenxi-zhishidian1/" class="post">
-          <h2 class="post-title">
-            《数值分析》绪论、前三章知识点整理
-          </h2>
-          <div class="time">2020-05-15</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/shi-jian-lun/" class="post">
-          <h2 class="post-title">
-            《实践论》摘抄
-          </h2>
-          <div class="time">2020-05-03</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/cuda-1/" class="post">
-          <h2 class="post-title">
-            CUDA学习1
-          </h2>
-          <div class="time">2020-04-24</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/misp-2/" class="post">
-          <h2 class="post-title">
-            Mips学习2
-          </h2>
-          <div class="time">2020-04-24</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/misp-1/" class="post">
-          <h2 class="post-title">
-            Misp学习1
-          </h2>
-          <div class="time">2020-04-22</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/Romberg/" class="post">
-          <h2 class="post-title">
-            龙贝格算法和梯形算法求解积分的比较
-          </h2>
-          <div class="time">2020-04-20</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/data-structure-lab2/" class="post">
-          <h2 class="post-title">
-            数据结构实验二——迷宫的求解
-          </h2>
-          <div class="time">2020-04-20</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/matlabcode/" class="post">
-          <h2 class="post-title">
-            数值分析实验一matlab代码总结
-          </h2>
-          <div class="time">2020-04-07</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/data-analyse-lab1/" class="post">
-          <h2 class="post-title">
-            数值分析实验一——拉格朗日插值及牛顿插值算法的实现
-          </h2>
-          <div class="time">2020-04-06</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/" class="post">
-          <h2 class="post-title">
-            数据结构实验一
-          </h2>
-          <div class="time">2020-03-20</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/nlp1/" class="post">
-          <h2 class="post-title">
-            我对于文本分类和情感分析的简单理解
-          </h2>
-          <div class="time">2020-03-14</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/2020-nian-mei-sai-zong-jie/" class="post">
-          <h2 class="post-title">
-            2020年美赛总结
-          </h2>
-          <div class="time">2020-03-13</div>
-        </a>
-      
-    
-      
-        <a href="http://besonn.github.io/first-thing-first/" class="post">
-          <h2 class="post-title">
-            First thing first……
-          </h2>
-          <div class="time">2020-03-13</div>
-        </a>
-      
-    
-  
-</div>
-
-    
-        <div class="pagination-container">
-  
-  
-</div>
-
-    
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
 
       </div>
+      <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
     </div>
   </body>
 </html>

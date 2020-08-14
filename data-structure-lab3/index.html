@@ -1,100 +1,108 @@
+
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+<meta charset="utf-8" >
+
 <title>数据结构实验三——哈夫曼树 | 伊维的笔记本</title>
-<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597392898500">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597393034266">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="http://besonn.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="数据结构实验三——哈夫曼树 | 伊维的笔记本 - Atom Feed" href="http://besonn.github.io//atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
-    <meta name="description" content="实验三：哈夫曼编/译码器
-实验目的： 掌握哈夫曼树
-实验内容： 利用哈夫曼编码进行通信可以大大提高信道利用率，缩短信息传输时间，降低传输成本。但是，这要求在发送端通过一个编码系统对待传数据预先编码，在接收端将传来的数据进行译码（复原）。对于..." />
-    <meta name="keywords" content="数据结构" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="http://besonn.github.io/">
-  <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597392898500" alt="">
-  </a>
-  <h1 class="site-title">
-    伊维的笔记本
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="http://besonn.github.io/">
+        <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597393034266" alt="" width="32px" height="32px">
+      </a>
+      <a href="http://besonn.github.io/">
+        <h1 class="site-title">伊维的笔记本</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
   </div>
 </div>
 
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
         <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              数据结构实验三——哈夫曼树
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-05-19
-              </span>
-              <span>
-                13 min read
-              </span>
-              
-                <a href="http://besonn.github.io/H9FI8--2D/" class="post-tag">
-                  # 数据结构
-                </a>
-              
-            </div>
+          
+          <h2 class="post-title">数据结构实验三——哈夫曼树</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-19</span>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h1 id="实验三哈夫曼编译码器">实验三：哈夫曼编/译码器</h1>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="http://besonn.github.io/H9FI8--2D/">
+                    数据结构
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h1 id="实验三哈夫曼编译码器">实验三：哈夫曼编/译码器</h1>
 <p><strong>实验目的</strong>： 掌握哈夫曼树</p>
 <p><strong>实验内容</strong>： 利用哈夫曼编码进行通信可以大大提高信道利用率，缩短信息传输时间，降低传输成本。但是，这要求在发送端通过一个编码系统对待传数据预先编码，在接收端将传来的数据进行译码（复原）。对于双工信道（即可以双向传输信息的信道），每端都需要一个完整的编/译码系统。试为这样的信息收发站写一个哈夫曼码的编/译码系统。</p>
 <p><strong>实验要求：</strong> 编写完整的系统，要求具有以下功能：<br>
@@ -450,105 +458,86 @@ CodePrin文件<br>
 <li>横向打印树可以是一种输出树结构的好方式。</li>
 </ol>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E5%AE%9E%E9%AA%8C%E4%B8%89%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8">实验三：哈夫曼编/译码器</a></li>
-</ul>
-
-              </div>
-            </div>
-          </article>
+          </div>
         </div>
 
         
           <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="http://besonn.github.io/shuzhifenxi-zhishidian1/">
+            <a class="purple-link" href="http://besonn.github.io/shuzhifenxi-zhishidian1/">
               <h3 class="post-title">
-                《数值分析》绪论、前三章知识点整理
+                下一篇：《数值分析》绪论、前三章知识点整理
               </h3>
             </a>
           </div>
-        
-
-        
           
-            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+      </div>
 
-<div id="gitalk-container"></div>
+      
+        
+          <div id="gitalk-container"></div>
+        
 
-<script>
+        
+      
 
-  var gitalk = new Gitalk({
-    clientID: '89d37c3e1b06e5e8a65c',
-    clientSecret: '6da756f4b52c3c5b4ea575cf30d0133aecae9f91 ',
-    repo: 'besonn.github.io',
-    owner: 'besonn',
-    admin: ['besonn'],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">RSS</a>
+</div>
 
-  gitalk.render('gitalk-container')
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
 </script>
 
-          
 
-          
-        
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
-      </div>
-    </div>
-
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script>
-      hljs.initHighlightingOnLoad()
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+      var gitalk = new Gitalk({
+        clientID: '89d37c3e1b06e5e8a65c',
+        clientSecret: '6da756f4b52c3c5b4ea575cf30d0133aecae9f91 ',
+        repo: 'besonn.github.io',
+        owner: 'besonn',
+        admin: ['besonn'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
-
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
-
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
+      gitalk.render('gitalk-container')
 
     </script>
+  
+
+  
+
+
+
+
   </body>
 </html>

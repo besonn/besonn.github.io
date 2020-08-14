@@ -1,58 +1,149 @@
+
+<!DOCTYPE html>
 <html>
   <head>
-  <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+<meta charset="utf-8" >
+
 <title>情感分析 | 伊维的笔记本</title>
-<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597392898500">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597393034266">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="http://besonn.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="情感分析 | 伊维的笔记本 - Atom Feed" href="http://besonn.github.io//atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-  <meta name="description" content="温故而知新" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="http://besonn.github.io/">
-  <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597392898500" alt="">
-  </a>
-  <h1 class="site-title">
-    伊维的笔记本
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="http://besonn.github.io/">
+        <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597393034266" alt="" width="32px" height="32px">
+      </a>
+      <a href="http://besonn.github.io/">
+        <h1 class="site-title">伊维的笔记本</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
   </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            <i class="icon icon-pricetags-outline"></i> 情感分析
+          </h2> 
+        </div>
+
+        
+<section class="post-item">
+    <div class="content">
+      <a href="http://besonn.github.io/nlp1/">
+        <h2 class="post-title">我对于文本分类和情感分析的简单理解</h2>
+      </a>
+      <div class="post-abstract">
+        
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2020-03-14</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="http://besonn.github.io/DUwRPNELg/">
+                自然语言处理
+                
+                  ，
+                
+              </a>
+            
+              <a href="http://besonn.github.io/7DdMdcpl2X/">
+                机器学习
+                
+                  ，
+                
+              </a>
+            
+              <a href="http://besonn.github.io/4sAwUexv_c/">
+                情感分析
+                
+                  ，
+                
+              </a>
+            
+              <a href="http://besonn.github.io/5MzTn9F101/">
+                文本分类
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
   <div class="social-container">
     
       
@@ -66,65 +157,26 @@
       
     
   </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">RSS</a>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# 情感分析
-            </h2> 
-        </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="http://besonn.github.io/nlp1/">
-        <h2 class="post-title">我对于文本分类和情感分析的简单理解</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2020-03-14
-        </span>
-        <span>
-          6 min read
-        </span>
-        
-          <a href="http://besonn.github.io/DUwRPNELg/" class="post-tag">
-            # 自然语言处理
-          </a>
-        
-          <a href="http://besonn.github.io/7DdMdcpl2X/" class="post-tag">
-            # 机器学习
-          </a>
-        
-          <a href="http://besonn.github.io/4sAwUexv_c/" class="post-tag">
-            # 情感分析
-          </a>
-        
-          <a href="http://besonn.github.io/5MzTn9F101/" class="post-tag">
-            # 文本分类
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-</div>
 
-        <div class="pagination-container">
-  
-  
-</div>
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
-      </div>
     </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
   </body>
 </html>
