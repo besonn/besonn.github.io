@@ -1,107 +1,104 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>数值分析实验一——拉格朗日插值及牛顿插值算法的实现 | 伊维的笔记本</title>
-<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597390532862">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="http://besonn.github.io//favicon.ico?v=1597390884933">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="http://besonn.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="数值分析实验一——拉格朗日插值及牛顿插值算法的实现 | 伊维的笔记本 - Atom Feed" href="http://besonn.github.io//atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
 
-    <meta name="description" content="实验名称
-拉格朗日插值及牛顿插值算法的实现
-实验目的
+  
 
-a. 验证拉格朗日插值算法对于不同函数的插值效果；
-b. 验证随着插值结点的增多插值曲线的变化情况。
-c. 验证插商的基本性质；
-d. 比较拉格朗日插值与牛顿插值的插值结果。
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-实验内..." />
-    <meta name="keywords" content="数值分析" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="http://besonn.github.io/">
-  <img class="avatar" src="http://besonn.github.io//images/avatar.png?v=1597390532862" alt="">
-  </a>
-  <h1 class="site-title">
-    伊维的笔记本
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="http://besonn.github.io/">伊维的笔记本</a></h3>
   </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
   </div>
-</div>
+</nav>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              数值分析实验一——拉格朗日插值及牛顿插值算法的实现
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-04-06
-              </span>
-              <span>
-                11 min read
-              </span>
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>数值分析实验一——拉格朗日插值及牛顿插值算法的实现</h1>
+            <p class="article-meta">
+              2020-04-06
               
-                <a href="http://besonn.github.io/4C-LUxpOv/" class="post-tag">
-                  # 数值分析
+                <a href="http://besonn.github.io/4C-LUxpOv/" class="badge success">
+                  数值分析
                 </a>
               
-            </div>
+            </p>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h3 id="实验名称">实验名称</h3>
+            <div class="post-content">
+              <h3 id="实验名称">实验名称</h3>
 <p>拉格朗日插值及牛顿插值算法的实现</p>
 <h3 id="实验目的">实验目的</h3>
 <blockquote>
@@ -401,129 +398,241 @@ int main()
 
 </code></pre>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#%E5%AE%9E%E9%AA%8C%E5%90%8D%E7%A7%B0">实验名称</a></li>
-<li><a href="#%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84">实验目的</a></li>
-<li><a href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9">实验内容</a>
-<ul>
-<li><a href="#%E4%B8%80-%E9%AA%8C%E8%AF%81%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95%E5%AF%B9%E4%BA%8E%E4%B8%8D%E5%90%8C%E5%87%BD%E6%95%B0%E7%9A%84%E6%8F%92%E5%80%BC%E6%95%88%E6%9E%9C">一、 验证拉格朗日插值算法对于不同函数的插值效果</a></li>
-<li><a href="#%E4%BA%8C-%E9%AA%8C%E8%AF%81%E9%9A%8F%E7%9D%80%E6%8F%92%E5%80%BC%E7%BB%93%E7%82%B9%E7%9A%84%E5%A2%9E%E5%A4%9A%E6%8F%92%E5%80%BC%E6%9B%B2%E7%BA%BF%E7%9A%84%E5%8F%98%E5%8C%96%E6%83%85%E5%86%B5">二、 验证随着插值结点的增多插值曲线的变化情况</a></li>
-<li><a href="#%E4%B8%89-%E9%AA%8C%E8%AF%81%E6%8F%92%E5%95%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B4%A8">三、 验证插商的基本性质</a></li>
-<li><a href="#%E5%9B%9B-%E6%AF%94%E8%BE%83%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E4%B8%8E%E7%89%9B%E9%A1%BF%E6%8F%92%E5%80%BC%E7%9A%84%E6%8F%92%E5%80%BC%E7%BB%93%E6%9E%9C">四、 比较拉格朗日插值与牛顿插值的插值结果</a></li>
-</ul>
-</li>
-<li><a href="#%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A">心得体会</a></li>
-</ul>
-</li>
-<li><a href="#%E9%99%84%E5%BD%95">附录</a>
-<ul>
-<li><a href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E4%B8%BB%E8%A6%81%E4%BB%A3%E7%A0%81">拉格朗日插值主要代码</a></li>
-<li><a href="#%E7%89%9B%E9%A1%BF%E6%8F%92%E5%80%BC%E4%B8%BB%E8%A6%81%E4%BB%A3%E7%A0%81">牛顿插值主要代码</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
           </article>
         </div>
-
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="http://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/">
-              <h3 class="post-title">
-                数据结构实验一
-              </h3>
-            </a>
-          </div>
-        
-
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="http://besonn.github.io/shu-ju-jie-gou-shi-yan-yi/">
+                <h3 class="post-title">
+                  数据结构实验一
+                </h3>
+              </a>
+            </div>
+          
+        </div>
         
           
-            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
 
-<div id="gitalk-container"></div>
+          
+        
+      </div>
 
-<script>
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="http://besonn.github.io//images/avatar.png?v=1597390884933" class="no-responsive avatar">
+    <div class="text-muted">温故而知新</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="http://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/">数学建模——神经网络</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/monituihuo/">数学建模——模拟退火</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/huiduyuce/">数学建模——灰度预测</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/xianxingguihua/">数学建模——线性规划</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/datastructurelab4/">数据结构实验四</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/data-structure-lab3/">数据结构实验三——哈夫曼树</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/shuzhifenxi-zhishidian1/">《数值分析》绪论、前三章知识点整理</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/shi-jian-lun/">《实践论》摘抄</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/cuda-1/">CUDA学习1</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://besonn.github.io/misp-2/">Mips学习2</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="http://besonn.github.io/bndXaDhsB/" class="badge secondary">
+          数学建模
+        </a>
+      
+        <a href="http://besonn.github.io/H9FI8--2D/" class="badge secondary">
+          数据结构
+        </a>
+      
+        <a href="http://besonn.github.io/4C-LUxpOv/" class="badge secondary">
+          数值分析
+        </a>
+      
+        <a href="http://besonn.github.io/sS2w55-uO/" class="badge ">
+          读书笔记
+        </a>
+      
+        <a href="http://besonn.github.io/ur4CiZpgl/" class="badge secondary">
+          CUDA
+        </a>
+      
+        <a href="http://besonn.github.io/MS9C3OIvDR/" class="badge warning">
+          GPU
+        </a>
+      
+        <a href="http://besonn.github.io/SIdbdZbx4/" class="badge secondary">
+          计算机组成原理
+        </a>
+      
+        <a href="http://besonn.github.io/SZXiDKbFjj/" class="badge success">
+          misp
+        </a>
+      
+        <a href="http://besonn.github.io/DUwRPNELg/" class="badge secondary">
+          自然语言处理
+        </a>
+      
+        <a href="http://besonn.github.io/7DdMdcpl2X/" class="badge warning">
+          机器学习
+        </a>
+      
+        <a href="http://besonn.github.io/4sAwUexv_c/" class="badge secondary">
+          情感分析
+        </a>
+      
+        <a href="http://besonn.github.io/5MzTn9F101/" class="badge ">
+          文本分类
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
 
-  var gitalk = new Gitalk({
-    clientID: '',
-    clientSecret: '',
-    repo: '',
-    owner: '',
-    admin: [''],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
 
-  gitalk.render('gitalk-container')
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
 
 </script>
 
-          
 
-          
-        
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://besonn.github.io//atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
-      </div>
-    </div>
-
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script>
-      hljs.initHighlightingOnLoad()
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
-
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
-
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
+      gitalk.render('gitalk-container')
 
     </script>
+  
+
+  
+
+
+
+
   </body>
 </html>
