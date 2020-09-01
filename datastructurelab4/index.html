@@ -6,10 +6,10 @@
 
 <title>数据结构实验四 | 伊维的笔记本</title>
 
-<link rel="shortcut icon" href="https://besonn.github.io//favicon.ico?v=1597479437749">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1598950136991">
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://besonn.github.io//styles/main.css">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
@@ -76,7 +76,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1597479437749" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1598950136991" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>
@@ -95,7 +95,7 @@
                         · 2020-06-24 ·
                     </time>
                     
-                        <a href="https://besonn.github.io/H9FI8--2D/" class="post-tags">
+                        <a href="http://localhost:4000/H9FI8--2D/" class="post-tags">
                             # 数据结构
                         </a>
                     
@@ -286,7 +286,7 @@
         
             <div class="next-post">
                 <div class="next gt-c-content-color-first">下一篇</div>
-                <a href="https://besonn.github.io/data-structure-lab3/" class="post-title gt-a-link">
+                <a href="http://localhost:4000/data-structure-lab3/" class="post-title gt-a-link">
                     数据结构实验三——哈夫曼树
                 </a>
             </div>
@@ -348,11 +348,126 @@
         
     </div>
     <div class="footer-info">
-        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+        <html> 
+<head> 
+<title>follow mouse</title> 
+<style type="text/css"> 
+html { 
+overflow: hidden; 
+} 
+body { 
+position: absolute; 
+height: 100%; 
+width: 100%; 
+margin:0; 
+padding:0; 
+} 
+#screen { 
+background:#000; 
+position: absolute; 
+width: 100%; 
+height: 100%; 
+} 
+#screen span { 
+background: #fff; 
+font-size: 0; 
+overflow: hidden; 
+width: 2px; 
+height: 2px; 
+} 
+</style> 
+  <script type="text/javascript">  
+var Follow = function () { 
+var $ = function (i) {return document.getElementById(i)}, 
+addEvent = function (o, e, f) {o.addEventListener ? o.addEventListener(e, f, false) : o.attachEvent('on'+e, function(){f.call(o)})}, 
+OBJ = [], sp, rs, N = 0, m; 
+var init = function (id, config) { 
+this.config = config || {}; 
+this.obj = $(id); 
+sp = this.config.speed || 4; 
+rs = this.config.animR || 1; 
+m = {x: $(id).offsetWidth * .5, y: $(id).offsetHeight * .5}; 
+this.setXY(); 
+this.start(); 
+} 
+init.prototype = { 
+setXY : function () { 
+var _this = this; 
+addEvent(this.obj, 'mousemove', function (e) { 
+ee = e || window.event; 
+m.x = e.clientX; 
+m.y = e.clientY; 
+}) 
+}, 
+start : function () { 
+var k = 180 / Math.PI, OO, o, _this = this, fn = this.config.fn; 
+OBJ[N++] = OO = new CObj(null, 0, 0); 
+for(var i=0;i<360;i+=20){ 
+var O = OO; 
+for(var j=10; j<35; j+=1){ 
+var x = fn(i, j).x, 
+y = fn(i, j).y; 
+OBJ[N++] = o = new CObj(O , x, y); 
+O = o; 
+} 
+} 
+setInterval(function() { 
+for (var i = 0; i < N; i++) OBJ[i].run(); 
+}, 16); 
+} 
+} 
+var CObj = function (p, cx, cy) { 
+var obj = document.createElement("span"); 
+this.css = obj.style; 
+this.css.position = "absolute"; 
+this.css.left = "-1000px"; 
+this.css.zIndex = 1000 - N; 
+document.getElementById("screen").appendChild(obj); 
+this.ddx = 0; 
+this.ddy = 0; 
+this.PX = 0; 
+this.PY = 0; 
+this.x = 0; 
+this.y = 0; 
+this.x0 = 0; 
+this.y0 = 0; 
+this.cx = cx; 
+this.cy = cy; 
+this.parent = p; 
+} 
+CObj.prototype.run = function () { 
+if (!this.parent) { 
+this.x0 = m.x; 
+this.y0 = m.y; 
+} else { 
+thisthis.x0 = this.parent.x; 
+thisthis.y0 = this.parent.y; 
+} 
+thisthis.x = this.PX += (this.ddx += ((this.x0 - this.PX - this.ddx) + this.cx) / rs) / sp; 
+thisthis.y = this.PY += (this.ddy += ((this.y0 - this.PY - this.ddy) + this.cy) / rs) / sp; 
+this.css.left = Math.round(this.x) + 'px'; 
+this.css.top = Math.round(this.y) + 'px'; 
+} 
+return init; 
+}(); 
+</script></head> 
+<body> 
+<div id="screen"></div> 
+<script type="text/javascript"> 
+new Follow('screen', {speed: 4, 
+animR : 2, 
+fn : function (i, j) { 
+return { 
+x : j/4*Math.cos(i), 
+y : j/4*Math.sin(i) 
+} 
+}}) 
+</script></body> 
+</html> 
     </div>
     <div>
         Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
-                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://besonn.github.io//atom.xml" target="_blank">RSS</a></a>
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="http://localhost:4000/atom.xml" target="_blank">RSS</a></a>
     </div>
 </div>
 
