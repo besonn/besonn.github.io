@@ -1,0 +1,407 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>SQL Server 学习1 | 伊维的笔记本</title>
+
+<link rel="shortcut icon" href="https://besonn.github.io//favicon.ico?v=1615598307844">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://besonn.github.io//styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            伊维的笔记本
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1615598307844" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    SQL Server 学习1
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-03-13 ·
+                    </time>
+                    
+                        <a href="https://besonn.github.io/ECiQ2ZKja/" class="post-tags">
+                            # 数据库
+                        </a>
+                    
+                        <a href="https://besonn.github.io/_5HG3VA_G_/" class="post-tags">
+                            # sql
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p><strong>从开始接触后台到现在有一个月的时间了，把自己的东西整理一下吧</strong></p>
+<h2 id="if语句的使用">IF语句的使用</h2>
+<p>标准的SQL语言是不支持if 这些判断语句的，如果要加入条件，一般得用到where子句。<br>
+比如，要查找customer表中的人名为‘张三’的，写成sql语句为<br>
+select * from customer where name='张三'。<br>
+在表达式中可以使用CASE语句达到IF()的效果。<br>
+例如：<br>
+SELECT MAX(CASE WHEN Field1&gt;=Field2 THEN Field1 ELSE Field2) FROM TableName</p>
+<p>IF 表达式<br>
+IF( expr1 , expr2 , expr3 )<br>
+expr1 的值为 TRUE，则返回值为 expr2<br>
+expr2 的值为FALSE，则返回值为 expr3</p>
+<p>如下：</p>
+<pre><code class="language-sql">SELECT IF(TRUE,1+1,1+2);
+-&gt; 2
+
+SELECT IF(FALSE,1+1,1+2);
+-&gt; 3
+
+SELECT IF(STRCMP(&quot;111&quot;,&quot;222&quot;),&quot;不相等&quot;,&quot;相等&quot;);
+-&gt; 不相等
+</code></pre>
+<p>那么这个 IF 有啥用处呢？举个例子：<br>
+查找出售价为 50 的书，如果是 java 书的话，就要标注为 已售完<br>
+那么对应的SQL语句该怎样去写呢？</p>
+<pre><code class="language-sql">select *,if(book_name='java','已卖完','有货') as product_status from book where price =50
+</code></pre>
+<h2 id="xml使用的方法">XML使用的方法</h2>
+<p>values</p>
+<pre><code class="language-sql">value (XQuery, SQLType)
+</code></pre>
+<p><strong>XML格式的数据可以使用values的方法来获取值</strong><br>
+<strong>Example</strong></p>
+<pre><code class="language-sql">DECLARE @myDoc XML  
+DECLARE @ProdID INT  
+SET @myDoc = '&lt;Root&gt;  
+&lt;ProductDescription ProductID=&quot;1&quot; ProductName=&quot;Road Bike&quot;&gt;  
+&lt;Features&gt;  
+  &lt;Warranty&gt;1 year parts and labor&lt;/Warranty&gt;  
+  &lt;Maintenance&gt;3 year parts and labor extended maintenance is available&lt;/Maintenance&gt;  
+&lt;/Features&gt;  
+&lt;/ProductDescription&gt;  
+&lt;/Root&gt;'  
+  
+SET @ProdID =  @myDoc.value('(/Root/ProductDescription/@ProductID)[1]', 'int' )  
+SELECT @ProdID
+</code></pre>
+<h2 id="cast-函数">Cast 函数</h2>
+<p>CAST函数用于将某种数据类型的表达式显式转换为另一种数据类型。CAST()函数的参数是一个表达式，它包括用AS关键字分隔的源值和目标数据类型。</p>
+<p>语法：CAST (expression AS data_type)</p>
+<p>expression：任何有效的SQServer表达式。<br>
+AS：用于分隔两个参数，在AS之前的是要处理的数据，在AS之后是要转换的数据类型。<br>
+data_type：目标系统所提供的数据类型，包括bigint和sql_variant，不能使用用户定义的数据类型。</p>
+<p>可以转换的类型是有限制的。这个类型可以是以下值其中的一个：</p>
+<p>二进制，同带binary前缀的效果 : BINARY<br>
+字符型，可带参数 : CHAR()<br>
+日期 : DATE<br>
+时间: TIME<br>
+日期时间型 : DATETIME<br>
+浮点数 : DECIMAL<br>
+整数 : SIGNED<br>
+无符号整数 : UNSIGNED</p>
+<pre><code class="language-sql">1.SELECT CAST('9.0' AS decimal)  结果：9
+
+2.SELECT CAST('9.5' AS decimal(10,2))  结果：9.50(精度与小数位数分别为10与2。精度是总的数字位数，包括小数点左边和右边位数的总和。而小数位数是小数点右边的位数)
+
+3.SELECT  CAST(NOW() AS   DATE) 
+</code></pre>
+<p><a href="https://blog.csdn.net/qq_21101587/article/details/78642423">原文链接</a></p>
+<h2 id="sql常用方法">SQL常用方法</h2>
+<pre><code class="language-sql">/*
+sql xml 入门:
+    --by jinjazz
+    --http://blog.csdn.net/jinjazz
+    
+    1、xml:        能认识元素、属性和值
+    
+    2、xpath:    寻址语言，类似windows目录的查找(没用过dir命令的话就去面壁)
+                
+                语法格式，这些语法可以组合为条件：
+                &quot;.&quot;表示自己，&quot;..&quot;表示父亲，&quot;/&quot;表示儿子，&quot;//&quot;表示后代，
+                &quot;name&quot;表示按名字查找，&quot;@name&quot;表示按属性查找
+                
+                &quot;集合[条件]&quot; 表示根据条件取集合的子集，条件可以是
+                    数  值：数字,last(),last()-数字 等
+                    布尔值：position()&lt;数字,@name='条件',name='条件'
+                条件是布尔值的时候可以合并计算：and or
+    
+    3、xquery:    基于xpath标的准查询语言，sqlserver xquery包含如下函数
+                exist(xpath条件)：返回布尔值表示节点是否存在
+                query(xpath条件)：返回由符合条件的节点组成的新的xml文档
+                value(xpath条件,数据类型)：返回指定的标量值，xpath条件结果必须唯一
+                nodes(xpath条件): 返回由符合条件的节点组成的一行一列的结果表
+*/
+
+declare @data xml
+set @data='
+&lt;bookstore&gt;
+&lt;book category=&quot;COOKING&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Everyday Italian&lt;/title&gt;
+  &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;30.00&lt;/price&gt;
+&lt;/book&gt;
+&lt;book category=&quot;CHILDREN&quot;&gt;
+  &lt;title lang=&quot;jp&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+&lt;book category=&quot;WEB&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;XQuery Kick Start&lt;/title&gt;
+  &lt;author&gt;James McGovern&lt;/author&gt;
+  &lt;author&gt;Per Bothner&lt;/author&gt;
+  &lt;author&gt;Kurt Cagle&lt;/author&gt;
+  &lt;author&gt;James Linn&lt;/author&gt;
+  &lt;author&gt;Vaidyanathan Nagarajan&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;49.99&lt;/price&gt;
+&lt;/book&gt;
+&lt;book category=&quot;WEB&quot;&gt;
+  &lt;title lang=&quot;cn&quot;&gt;Learning XML&lt;/title&gt;
+  &lt;author&gt;Erik T. Ray&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;39.95&lt;/price&gt;
+&lt;/book&gt;
+&lt;/bookstore&gt;
+'
+
+--测试语句，如果不理解语法请参考上面的xpath规则和xquery函数说明
+
+--1、文档
+select @data
+--2、任意级别是否存在price节点
+select @data.exist('//price')
+--3、获取所有book节点
+select @data.query('//book')
+--4、获取所有包含lang属性的节点
+select @data.query('//*[@lang]') 
+--5、获取第一个book节点
+select @data.query('//book[1]')
+--6、获取前两个book节点
+select @data.query('//book[position()&lt;=2]')
+--7、获取最后一个book节点
+select @data.query('//book[last()]')
+--8、获取price&gt;35的所有book节点
+select @data.query('//book[price&gt;35]')
+--9、获取category=&quot;WEB&quot;的所有book节点
+select @data.query('//book[@category=&quot;WEB&quot;]')
+--10、获取title的lang=&quot;en&quot;的所有book节点
+select @data.query('//book/title[@lang=&quot;en&quot;]')
+--11、获取title的lang=&quot;en&quot;且 price&gt;35的所有book节点
+select @data.query('//book[./title[@lang=&quot;en&quot;] or price&gt;35 ]')
+--12、获取title的lang=&quot;en&quot;且 price&gt;35的第一book的(第一个)title
+select @data.query('//book[./title[@lang=&quot;en&quot;] and price&gt;35 ]').value('(book/title)[1]','varchar(max)')
+--13、等价于12
+select @data.value('(//book[./title[@lang=&quot;en&quot;] and price&gt;35 ]/title)[1]','varchar(max)')
+--14、获取title的lang=&quot;en&quot;且 price&gt;35的第一book的(第一个)title的lang属性
+select @data.value('((//book[@category=&quot;WEB&quot; and price&gt;35 ]/title)[1]/@lang)[1]','varchar(max)')
+--15、获取第一本书的title
+select Tab.Col.value('(book/title)[1]','varchar(max)') as title
+    from @data.nodes('bookstore')as Tab(Col) 
+--16、获取每本书的第一个author
+select Tab.Col.value('author[1]','varchar(max)') as title
+    from @data.nodes('//book')as Tab(Col)
+--17、获取所有book的所有信息
+select
+ T.C.value('title[1]','varchar(max)') as title,
+ T.C.value('year[1]','int') as year,
+ T.C.value('title[1]','varchar(max)')as title,
+ T.C.value('price[1]','float') as price,
+ T.C.value('author[1]','varchar(max)') as author1,
+ T.C.value('author[2]','varchar(max)') as author2,
+ T.C.value('author[3]','varchar(max)') as author3,
+ T.C.value('author[4]','varchar(max)') as author4
+from @data.nodes('//book') as T(C)
+--18、获取不是日语(lang!=&quot;jp&quot;)且价格大于35的书的所有信息
+select
+ T.C.value('title[1]','varchar(max)') as title,
+ T.C.value('year[1]','int') as year,
+ T.C.value('title[1]','varchar(max)')as title,
+ T.C.value('price[1]','float') as price,
+ T.C.value('author[1]','varchar(max)') as author1,
+ T.C.value('author[2]','varchar(max)') as author2,
+ T.C.value('author[3]','varchar(max)') as author3,
+ T.C.value('author[4]','varchar(max)') as author4
+from @data.nodes('//book[./title[@lang!=&quot;jp&quot;] and price&gt;35 ]') as T(C)
+</code></pre>
+<p><a href="https://bbs.csdn.net/topics/390117090">原文链接</a></p>
+<h2 id="如何通过sql语句遍历获取xml的节点值">如何通过sql语句遍历获取xml的节点值</h2>
+<pre><code class="language-sql">declare @data xml 
+set @data='&lt;sqls&gt;
+&lt;sql&gt;abc&lt;/sql&gt;
+&lt;sql&gt;123&lt;/sql&gt;
+  &lt;/sqls&gt;'
+
+select 
+m.c.value('(/sqls/sql)[1]', 'varchar(10)') C1,
+m.c.value('(/sqls/sql)[2]', 'varchar(10)') C2 
+from  (select @data c )m 
+go
+
+C1         C2
+---------- ----------
+abc        123
+
+(1 行受影响)
+
+
+</code></pre>
+<p><a href="https://bbs.csdn.net/topics/392047096">原文链接</a></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://besonn.github.io/shu-xue-jian-mo-shen-jing-wang-luo/" class="post-title gt-a-link">
+                    数学建模——神经网络
+                </a>
+            </div>
+        
+
+        
+            <span id="/sql-server-xue-xi-1/" class="leancloud_visitors" data-flag-title="SQL Server 学习1">
+                <em class="post-meta-item-text">阅读量 </em>
+                <i class="leancloud-visitors-count">0</i>
+            </span>
+        
+
+        
+
+        
+            <script src='https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+
+<style>
+	div#vcomments{
+		width:100%;
+		max-width: 1000px;
+		padding: 2.5%
+	}
+</style>
+
+
+	<div id="vcomments"></div>
+
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'bKYg1Au9RnV1kCJEVERRW0U0-gzGzoHsz',
+		appKey: 'Cs4vaISBke9W9UJelARsdkbx',
+		avatar: '',
+		pageSize: 5,
+		recordIp: true,
+		placeholder: '网警提示您：互联网并非法外之地！',
+		visitor: true,
+	});
+</script>
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        <html>
+<h3>Hello world</h3>
+</html>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://besonn.github.io//atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+
+</body>
+</html>
