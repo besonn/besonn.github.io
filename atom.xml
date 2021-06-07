@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://besonn.github.io/</id>
     <title>伊维的笔记本</title>
-    <updated>2021-04-12T12:56:50.302Z</updated>
+    <updated>2021-06-07T00:02:55.084Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://besonn.github.io/"/>
     <link rel="self" href="https://besonn.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://besonn.github.io/images/avatar.png</logo>
     <icon>https://besonn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 伊维的笔记本</rights>
+    <entry>
+        <title type="html"><![CDATA[阿萨大]]></title>
+        <id>https://besonn.github.io/a-sa-da/</id>
+        <link href="https://besonn.github.io/a-sa-da/">
+        </link>
+        <updated>2021-06-07T00:02:39.000Z</updated>
+        <content type="html"><![CDATA[<p>阿萨大</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SQL Server 学习1]]></title>
         <id>https://besonn.github.io/sql-server-xue-xi-1/</id>
@@ -1464,37 +1473,6 @@ CodePrin文件<br>
 中国人有一句老话：“不入虎穴，焉得虎子。”这句话对于人们的实践是真理，对于认识论也是真理。离开实践的认识是不可能的。</p>
 </blockquote>
 <p>离开了实践的认识是不可能的。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CUDA学习1]]></title>
-        <id>https://besonn.github.io/cuda-1/</id>
-        <link href="https://besonn.github.io/cuda-1/">
-        </link>
-        <updated>2020-04-24T02:38:30.000Z</updated>
-        <content type="html"><![CDATA[<p>写在前面，这一部分主要是CPU、GPU的体系结构和GPU的编程模型，我对这一部分的理解还不是很充分，所以先占个坑，后面的时候再加以补充。</p>
-<p>第一个问题：为什么用GPU进行大型计算不用CPU进行呢？</p>
-<p>简单来说，CPU中除了有一些计算单元之外，还有许多其他的存储单元，计算单元的数量十分有限。然而GPU中的计算单元非常的多，可以用来加速计算，十分的方便，也很快。</p>
-<p>第二个问题：一些基本的软硬件概念。</p>
-<ol>
-<li>
-<p>线程<br>
-线程可以看作一个问题，一个for循环就可以看成是一个线程。</p>
-</li>
-<li>
-<p>线程块<br>
-顾名思义就是许多线程组成的一个模块（blocks）</p>
-</li>
-<li>
-<p>Kernel （核）<br>
-一个Kernel包含许多的线程块</p>
-</li>
-<li>
-<p>Shared Memory（SM）<br>
-SM中存放许多的Kernel。</p>
-</li>
-</ol>
-<p>前面3个的属于软件范畴，后面的SM之后的内容都属于硬件的范畴。</p>
 ]]></content>
     </entry>
 </feed>
