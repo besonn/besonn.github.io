@@ -6,7 +6,7 @@
   <link href="http://besonn.github.io/atom.xml" rel="self"/>
   
   <link href="http://besonn.github.io/"/>
-  <updated>2023-07-07T08:08:19.628Z</updated>
+  <updated>2025-06-05T01:45:18.017Z</updated>
   <id>http://besonn.github.io/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2025_First_Blog</title>
+    <link href="http://besonn.github.io/2025/06/04/2025-First-Blog/"/>
+    <id>http://besonn.github.io/2025/06/04/2025-First-Blog/</id>
+    <published>2025-06-04T14:17:50.000Z</published>
+    <updated>2025-06-05T01:45:18.017Z</updated>
+    
+    <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="eebb7751c68998b59cfbcdd337a56af7139eb82a71f8791464e2cb0353936a42">efa7858a822b7a8283fb177503b9973e9232e887b7075bfb6af580238583ad7b3c68fb3813f8e2947afe0a515dbb557259fc3a394ed14790dfe149ec5df53bacbcd07c8f1d02088ab9bd58a888aba25dc6e70b604101a220752cc8ae122997a7e33e252f4772196c8e3a6a76984c846634166a4291838ebe6b31ef19143a44008770e1d95603dc63ba29c9bef48676a0fc5e884f6e2930f75254e1979629b067b09fd546d8b8f8faac62a18ba728097498c16ab2ad92db7a10bc43c363050ad58f5924d2eac5cbe54014e89805791fcbf190072fa61cbc83962ffacee70fc82f61b64bc8d89cf08f8c40976475ef87221b8753f39de44dd791208eba47f1819cc952532e7298739825cbafbe7e89e1e0fbcf6d6dff0cceb4d0eddbfbbcb58c41</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-default">      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>      </label>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    
+    
+    <summary type="html">Here&#39;s something encrypted, password is required to continue reading.</summary>
+    
+    
+    
+    <category term="随笔" scheme="http://besonn.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>一些小事</title>
